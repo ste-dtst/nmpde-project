@@ -29,7 +29,7 @@
 
 # CMake garbage
 CMakeFiles
-other_files
+hidden_files
 output
 CMakeCache.txt
 

@@ -29,6 +29,8 @@
 
 # CMake garbage
 CMakeFiles
+other_files
+output
 CMakeCache.txt
 
 compile_commands.json

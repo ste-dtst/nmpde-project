@@ -9,9 +9,6 @@ var hierarchy =
     [ "nmpdeProject::HeatEquation< dim >", "classnmpde_project_1_1_heat_equation.html", null ],
     [ "Laplacian< dim >", "class_laplacian.html", null ],
     [ "Subscriptor", "http://www.dealii.org/developer/doxygen/deal.II/classSubscriptor.html", [
-      [ "Function< dim >", "http://www.dealii.org/developer/doxygen/deal.II/classFunction.html", null ],
-      [ "SparseMatrix< double >", "http://www.dealii.org/developer/doxygen/deal.II/classSparseMatrix.html", [
-        [ "MyMatrix", "class_my_matrix.html", null ]
-      ] ]
+      [ "Function< dim >", "http://www.dealii.org/developer/doxygen/deal.II/classFunction.html", null ]
     ] ]
 ];

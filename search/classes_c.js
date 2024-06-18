@@ -133,6 +133,5 @@ var searchData=
   ['multithreadinfo_130',['MultithreadInfo',['http://www.dealii.org/developer/doxygen/deal.II/classMultithreadInfo.html',1,'']]],
   ['muparserbase_131',['muParserBase',['http://www.dealii.org/developer/doxygen/deal.II/classinternal_1_1FunctionParser_1_1muParserBase.html',1,'internal::FunctionParser']]],
   ['mutablebind_132',['MutableBind',['http://www.dealii.org/developer/doxygen/deal.II/classUtilities_1_1MutableBind.html',1,'Utilities']]],
-  ['mutex_133',['Mutex',['http://www.dealii.org/developer/doxygen/deal.II/classThreads_1_1Mutex.html',1,'Threads']]],
-  ['mymatrix_134',['MyMatrix',['../class_my_matrix.html',1,'']]]
+  ['mutex_133',['Mutex',['http://www.dealii.org/developer/doxygen/deal.II/classThreads_1_1Mutex.html',1,'Threads']]]
 ];

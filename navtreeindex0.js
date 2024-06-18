@@ -69,10 +69,6 @@ var NAVTREEINDEX0 =
 "class_laplacian.html#af34dff796995afe7be45fa645d664ca6":[159,0,1,8],
 "class_laplacian.html#afa732c8677160788dad92031cfedfb22":[159,0,1,14],
 "class_laplacian.html#afb5e3bc7ea47f6b81332e13932aa8a21":[159,0,1,6],
-"class_my_matrix.html":[159,0,2],
-"class_my_matrix.html#a0714dbf9b209377343d64dd9ad6350ab":[159,0,2,1],
-"class_my_matrix.html#a96c2df5d3934730061932ea1cbfd13d5":[159,0,2,0],
-"class_my_matrix.html#ad5a177792218dd5704804e0dcb053b88":[159,0,2,2],
 "classes.html":[159,1],
 "classnmpde_project_1_1_boundary_values.html":[158,0,0,0],
 "classnmpde_project_1_1_boundary_values.html":[159,0,0,0],
@@ -161,7 +157,6 @@ var NAVTREEINDEX0 =
 "functions_vars.html":[159,3,2],
 "globals.html":[160,1,0],
 "globals_func.html":[160,1,1],
-"globals_vars.html":[160,1,2],
 "hierarchy.html":[159,2],
 "index.html":[],
 "laplacian_8cc.html":[160,0,0,0,1,0],
@@ -249,5 +244,10 @@ var NAVTREEINDEX0 =
 "step_70.html":[119],
 "step_71.html":[120],
 "step_72.html":[121],
-"step_74.html":[122]
+"step_74.html":[122],
+"step_75.html":[123],
+"step_76.html":[124],
+"step_77.html":[125],
+"step_78.html":[126],
+"step_79.html":[127]
 };

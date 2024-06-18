@@ -36,6 +36,5 @@ var searchData=
   ['surface_5fmesh_33',['Surface_mesh',['http://www.dealii.org/developer/doxygen/deal.II/namespaceCGALWrappers.html#a1b2adf82a8a15271cfe89380f8bf811f',1,'CGALWrappers']]],
   ['symbol_5fvector_34',['symbol_vector',['http://www.dealii.org/developer/doxygen/deal.II/namespaceDifferentiation_1_1SD_1_1types.html#a3851c361f9dae70bd4fa3c005ce295e0',1,'Differentiation::SD::types']]],
   ['symbol_5fvector_5fpair_35',['symbol_vector_pair',['http://www.dealii.org/developer/doxygen/deal.II/classDifferentiation_1_1SD_1_1internal_1_1CSEDictionaryVisitor.html#aff2684f63a1cefee82d543b882120b69',1,'Differentiation::SD::internal::CSEDictionaryVisitor']]],
-  ['symmetric_5fgradient_5ftype_36',['symmetric_gradient_type',['http://www.dealii.org/developer/doxygen/deal.II/classFEValuesViews_1_1Vector.html#a3ec9685c058ef0ad8f7d2902b1807635',1,'FEValuesViews::Vector']]],
-  ['synciterators_37',['SyncIterators',['http://www.dealii.org/developer/doxygen/deal.II/namespaceparallel.html#a4303a39cac708a9f5108dfc4fd7b3962',1,'parallel']]]
+  ['symmetric_5fgradient_5ftype_36',['symmetric_gradient_type',['http://www.dealii.org/developer/doxygen/deal.II/classFEValuesViews_1_1Vector.html#a3ec9685c058ef0ad8f7d2902b1807635',1,'FEValuesViews::Vector']]]
 ];

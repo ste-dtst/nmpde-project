@@ -183,9 +183,13 @@ var NAVTREE =
     [ "The 'Time-dependent Navier-Stokes' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_time_dependent_navier_stokes.html", null ],
     [ "The 'Two phase flow interaction ' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_two_phase_flow.html", null ],
     [ "The deal.II code gallery", "http://www.dealii.org/developer/doxygen/deal.II/CodeGallery.html", null ],
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ]
+    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
@@ -196,7 +200,8 @@ var NAVTREE =
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ]
+        [ "Functions", "globals_func.html", null ],
+        [ "Variables", "globals_vars.html", null ]
       ] ]
     ] ]
   ] ]
@@ -204,7 +209,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"CodeGallery.html"
+"CodeGallery.html",
+"step_75.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

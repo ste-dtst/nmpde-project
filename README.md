@@ -1,4 +1,24 @@
-Bare template for deal.II Application
+NMPDE Project
+=====================================
+
+This project is a modification of Step 26 of the deal.II tutorial.
+Instead of using Rothe's method, we will use the method of lines to solve the heat equation. The boundary conditions will be imposed via Nitsche's method. For the moment, no grid refinement will be performed. For the integration in time, we will rely on the ARKode package that is part of the SUNDIALS suite.
+
+We will consider the following problem:
+$$
+\begin{cases}
+u_t(x,t) - \Delta u(x,t) = f(x,t) & (x,t) \in \Omega \times (0,T)
+u(x,0) = 0 & x \in \Omega
+u(x,t) = 0 & x \in \partial\Omega, t \in (0,T)
+\end{cases}
+$$
+whose weak form is
+$$
+insert_something
+$$
+
+
+About this template
 =====================================
 
 [![Build Status](https://travis-ci.org/luca-heltai/bare-dealii-app.svg)](https://travis-ci.org/luca-heltai/bare-dealii-app)

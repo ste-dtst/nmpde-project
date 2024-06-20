@@ -41,18 +41,9 @@ My code is yet to be set up in the context of this deal.II template. At the mome
 In the `output` directory you can find the output of the program and an animation generated with it.
 
 
-**Possible typos found in the documentation**
-
-- In the documentation of Step 26: in the definition of f(x,t) (paragraph *Testcase*, there's a $\tau$ missing in the second case ($0.5 \le t \le 0.7 \tau$ should be $0.5 \tau \le t \le 0.7 \tau$).
-
-- In the documentation of `LinearSolveFunction`, `SundialsOperator` and `SundialsPreconditioner` are mentioned as arguments, then those are referred to be objects of class `LinearOperator`. Could this be a typo?
-
-- In the documentation of ARKode, the Detailed Description says that the solve_mass function *can* be provided to use a custom solver instead of the default one (SPGMR), but the documentation of solve_mass says that this function is mandatory if the mass matrix is not the identity. In other words, SPGMR is not used automatically if solve_mass is not provided, and indeed not providing this function results in a runtime exception related to `arkStep_FullRHS`.
-
-- In the documentation of ARKode and in the file arkode.h, the function `mass_preconditioner_solve` has 5 arguments, but the documentation says that there's also a sixth parameter `gamma`.
-
-
 **Possible ToDo list and some questions**
+
+- Compare the solution generated this way with the solution generated in Step 26. Check the accuracy of the method via some manufactured solution.
 
 - Integrate project.cc in the context of the bare deal.II app template.
 
@@ -64,13 +55,24 @@ In the `output` directory you can find the output of the program and an animatio
 
 - Is there a way to get from SUNDIALS a "history" of the time step size during the integration process?
 
-- Does deal.II provide an efficient way to do the assembly of symmetric matrices by only computing the upper triangular part and then symmetrizing the whole matrix?
+- In order to save computational resources, is there a simple way to do the assembly of global symmetric matrices by only computing the upper triangular part and then symmetrizing the whole matrix? Is it just sufficient to do this on the local matrices?
 
 - (?) Implement a function also for the initial condition (eventually use a parameter handler).
 
 - (?) Use meshloop for the assembly loops.
 
 - (?) Consider a different time-dependent problem???
+
+
+**Possible typos found in the documentation**
+
+- In the documentation of Step 26: in the definition of f(x,t) (paragraph *Testcase*, there's a $\tau$ missing in the second case ($0.5 \le t \le 0.7 \tau$ should be $0.5 \tau \le t \le 0.7 \tau$).
+
+- In the documentation of `LinearSolveFunction`, `SundialsOperator` and `SundialsPreconditioner` are mentioned as arguments, then those are referred to be objects of class `LinearOperator`. Could this be a typo?
+
+- In the documentation of ARKode, the Detailed Description says that the solve_mass function *can* be provided to use a custom solver instead of the default one (SPGMR), but the documentation of solve_mass says that this function is mandatory if the mass matrix is not the identity. In other words, SPGMR is not used automatically if solve_mass is not provided, and indeed not providing this function results in a runtime exception related to `arkStep_FullRHS`.
+
+- In the documentation of ARKode and in the file arkode.h, the function `mass_preconditioner_solve` has 5 arguments, but the documentation says that there's also a sixth parameter `gamma`.
 
 
 About this template

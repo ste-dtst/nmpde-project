@@ -2,20 +2,61 @@ NMPDE Project
 =====================================
 
 This project is a modification of Step 26 of the deal.II tutorial.
-Instead of using Rothe's method, we will use the method of lines to solve the heat equation. The boundary conditions will be imposed via Nitsche's method. For the moment, no grid refinement will be performed. For the integration in time, we will rely on the ARKode package that is part of the SUNDIALS suite.
+Instead of using Rothe's method, we will use the method of lines to solve the heat equation. The boundary conditions will be imposed via Nitsche's method. For the moment, no mesh refinement will be performed. For the integration in time, we will rely on the ARKode package that is part of the SUNDIALS suite.
 
-We will consider the following problem:
+We will consider the heat equation $u_t(x,t) - \Delta u(x,t) = f(x,t)$ in 2D, with $x$ in a hyper_L domain and $t \in (0,0.5)$. In particular, the initial condition $u_0(x)$ and the boundary condition $g(x,t)$ are chosen to be zero, $f$ is the same as in Step 26.
+
+The weak form we obtain by using Nitsche's method is the following:
+
 $$
-\begin{cases}
-u_t(x,t) - \Delta u(x,t) = f(x,t) & (x,t) \in \Omega \times (0,T)
-u(x,0) = 0 & x \in \Omega
-u(x,t) = 0 & x \in \partial\Omega, t \in (0,T)
-\end{cases}
+(u_t, v)_\Omega + (\nabla u, \nabla v)_\Omega - \langle \nabla u \cdot n,v \rangle_\Gamma - - \langle u, \nabla v \cdot n \rangle_\Gamma + \gamma \langle u,v \rangle_\Gamma = (f,v)_\Omega - \langle g, \nabla v \cdot n \rangle_\Gamma + \gamma - \langle g,v \rangle_\Gamma.
 $$
-whose weak form is
+where $\Gamma$ is the boundary of $\Omega$, $n$ the normal to $\Gamma$.
+
+If $u(x,t) = \sum U_i(t) \phi_i(x)$, this leads to solving the following ODE:
 $$
-insert_something
+M \mathbf{u}' = f_E(t,u) + f_I(t,u),
 $$
+where $\mathbf{u}_i=U_i(t)$, $f_I(t,u) = J u$ and
+$$
+M_{ij}=(\phi_i,\phi_j)_\Omega
+$$
+$$
+f_E(t,u) = (f(\cdot,t),\phi_i)_\Omega + \gamma \langle g(\cdot,t),\phi_i \rangle_\Gamma - \langle g(\cdot,t),\nabla\phi_i \cdot n \rangle_\Gamma
+$$
+$$
+J_{ij} = -(\nabla\phi_i,\nabla\phi_j)_\Omega + \langle \phi_i,\nabla\phi_j \cdot n \rangle_\Gamma + \langle \nabla\phi_i \cdot n,\phi_j \rangle_\Gamma - \gamma \langle \phi_i,\phi_j \rangle_\Gamma
+$$
+
+In particular, it is clear that the matrices $M$ and $J$ are independent of time, therefore they need to be evaluated only one time (and re-evaluated only when the mesh is changed).
+
+My code is yet to be set up in the context of this deal.II template. At the moment, the main program is in the file source/project.cc and can work on itself with the correct CMakeLists.txt file.
+
+
+**Possible typos found in the documentation**
+
+- In the documentation of Step 26: in the definition of f(x,t) (paragraph *Testcase*, there's a \tau missing in the second case ($0.5 \le t \le 0.7 \tau$ should be $0.5 \tau \le t \le 0.7 \tau$).
+
+- In the documentation of LinearSolveFunction, SundialsOperator and SundialsPreconditioner are mentioned as arguments, then those are referred to be objects of class LinearOperator. Could this be a typo?
+
+- In the documentation of ARKode, the Detailed Description says that the solve_mass function *can* be provided to use a custom solver instead of the default one (SPGMR), but the documentation of solve_mass says that this function is mandatory if the mass matrix is not the identity. In other words, SPGMR is not used automatically if solve_mass is not provided, and indeed not providing this function results in a runtime exception related to arkStep_FullRHS.
+
+- In the documentation of ARKode and in the file arkode.h, the function mass_preconditioner_solve has 5 arguments, but the documentation says that there's also a sixth parameter gamma.
+
+
+**Possible ToDo list and some questions**
+
+- Use an AffineConstraints object to distibute local to global and implement adaptive mesh refinement via SolutionTransfer and the solver_should_restart function. Is there any *caveat* in using constraints with two different linear systems to be solved?
+
+- The Jacobian matrix is symmetric. Is it also positive definite for suitable values of the gamma parameter in Nitsche's method? If so, or even if it is not, could it be interesting to provide a custom solver (PCG or MINRES) also for the linearized system? However, I encountered some implementation problems due to gamma (the one in the linearized system) being provided by SUNDIALS but unknown to me. See in other_files/temp_dummy.cc for further explanations.
+
+- (?) Implement a function also for the initial condition (eventually use a parameter handler).
+
+- (?) Use meshloop for the assembly loops
+
+- Is there a way to get from SUNDIALS a "history" of the time step size during the integration process?
+
+- Does deal.II provide a simple way to do the assembly of symmetric matrices by only computing the upper triangular part and then symmetrizing the whole matrix?
 
 
 About this template

@@ -4,13 +4,13 @@ NMPDE Project
 This project is a modification of Step 26 of the deal.II tutorial.
 Instead of using Rothe's method, we will use the method of lines to solve the heat equation. The boundary conditions will be imposed via Nitsche's method. For the moment, no mesh refinement will be performed. For the integration in time, we will rely on the ARKode package that is part of the SUNDIALS suite.
 
-We will consider the heat equation $u_t(x,t) - \Delta u(x,t) = f(x,t)$ in 2D, with $x$ in a hyper_L domain and $t \in (0,0.5)$. In particular, the initial condition $u_0(x)$ and the boundary condition $g(x,t)$ are chosen to be zero, $f$ is the same as in Step 26.
+We will consider the heat equation $u_t(x,t) - \Delta u(x,t) = f(x,t)$ in 2D, with $x$ in a hyper_L domain and $t \in (0,0.5)$. In particular, $f$ is the same as in Step 26 and so are the initial condition $u_0(x)$ and the boundary condition $g(x,t)$ (either equal to zero).
 
 The weak form we obtain by using Nitsche's method is the following:
 
-$(u_t, v)_\Omega + (\nabla u, \nabla v)_\Omega - \langle \nabla u \cdot n,v \rangle_\Gamma - - \langle u, \nabla v \cdot n \rangle_\Gamma + \gamma \langle u,v \rangle_\Gamma = (f,v)_\Omega - \langle g, \nabla v \cdot n \rangle_\Gamma + \gamma - \langle g,v \rangle_\Gamma$
+$(u_t, v)_\Omega + (\nabla u, \nabla v)_\Omega - < \nabla u \cdot n,v >_\Gamma - < u, \nabla v \cdot n >_\Gamma + \gamma < u,v >_\Gamma = (f,v)_\Omega - < g, \nabla v \cdot n >_\Gamma + \gamma - < g,v >_\Gamma$
 
-where $\Gamma$ is the boundary of $\Omega$, $n$ the normal to $\Gamma$.
+where $\Gamma$ is the boundary of $\Omega$, $n$ is the normal to $\Gamma$.
 
 If $u(x,t) = \sum U_i(t) \phi_i(x)$, this leads to solving the following ODE:
 
@@ -20,9 +20,9 @@ where $\mathbf{u}_i=U_i(t)$, $f_I(t,u) = J u$ and
 
 $M_{ij}=(\phi_i,\phi_j)_\Omega$
 
-$f_E(t,u) = (f(\cdot,t),\phi_i)_\Omega + \gamma \langle g(\cdot,t),\phi_i \rangle_\Gamma - \langle g(\cdot,t),\nabla\phi_i \cdot n \rangle_\Gamma$
+$f_E(t,u) = (f(\cdot,t),\phi_i)_\Omega + \gamma < g(\cdot,t),\phi_i >_\Gamma - < g(\cdot,t),\nabla\phi_i \cdot n >_\Gamma$
 
-$J_{ij} = -(\nabla\phi_i,\nabla\phi_j)_\Omega + \langle \phi_i,\nabla\phi_j \cdot n \rangle_\Gamma + \langle \nabla\phi_i \cdot n,\phi_j \rangle_\Gamma - \gamma \langle \phi_i,\phi_j \rangle_\Gamma$
+$J_{ij} = -(\nabla\phi_i,\nabla\phi_j)_\Omega + < \phi_i,\nabla\phi_j \cdot n >_\Gamma + < \nabla\phi_i \cdot n,\phi_j >_\Gamma - \gamma < \phi_i,\phi_j >_\Gamma$
 
 In particular, it is clear that the matrices $M$ and $J$ are independent of time, therefore they need to be evaluated only one time (and re-evaluated only when the mesh is changed).
 

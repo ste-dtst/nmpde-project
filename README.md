@@ -20,9 +20,7 @@ where $\mathbf{u}_i=U_i(t)$, $f_I(t,u) = J u$ and
 
 $M_{ij}=(\phi_i,\phi_j)_\Omega$
 
-$f_E(t,u) = (f(\cdot,t),\phi_i)_\Omega + \gamma \langle g(\cdot,t),\phi_i \rangle_\Gamma -$
-
-$\langle g(\cdot,t),\nabla\phi_i \cdot n \rangle_\Gamma$
+$f_E(t,u) = (f(\cdot,t),\phi_i) + \gamma \langle g(\cdot,t),\phi_i \rangle - \langle g(\cdot,t),\nabla\phi_i \cdot n \rangle$
 
 $J_{ij} = -(\nabla\phi_i,\nabla\phi_j)_\Omega + \langle \phi_i,\nabla\phi_j \cdot n \rangle_\Gamma + \langle \nabla\phi_i \cdot n,\phi_j \rangle_\Gamma - \gamma \langle \phi_i,\phi_j \rangle_\Gamma$
 

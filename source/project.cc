@@ -507,8 +507,9 @@ namespace nmpdeProject
       solver.solve(mass_matrix, x, b, preconditioner);
     };
 
-    // QUESTION: is also the Jacobian matrix positive definite for
-    // appropriate values of gamma? If so, we could use CG
+    // QUESTION: is also the matrix of the linearized system
+    // positive definite for appropriate values of gamma?
+    // If so, we could use CG (or at least MINRES)
     // also for the implicit part of the ODE.
     // However, I've encountered some problems in supplying the
     // ode.solve_linearized_system function, see temp_dummy.cc

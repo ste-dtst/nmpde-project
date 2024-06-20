@@ -36,7 +36,7 @@ $$
 
 In particular, it is clear that the matrices $M$ and $J$ are independent of time, therefore they need to be evaluated only one time (and re-evaluated only when the mesh is changed).
 
-My code is yet to be set up in the context of this deal.II template. At the moment, the main program is in the file source/project.cc and can work by itself with a custom CMakeLists.txt file, which I substituted to the original one of this template (it has been moved to the directory `other_files`).
+My code is yet to be set up in the context of this deal.II template. At the moment, the main program is in the file `source/project.cc` and can work by itself with a custom CMakeLists.txt file, which I substituted to the original one of this template (it has been moved to the directory `other_files`).
 
 In the `output` directory you can find the output of the program and an animation generated with it.
 
@@ -51,7 +51,7 @@ In the `output` directory you can find the output of the program and an animatio
 
 - Use an `AffineConstraints` object to distibute local to global and implement adaptive mesh refinement via `SolutionTransfer` and the `solver_should_restart` function. Is there any *caveat* in using constraints with two different linear systems to be solved?
 
-- The Jacobian matrix is symmetric. Is it also positive definite for suitable values of the gamma parameter in Nitsche's method? If so, or even if it is not, could it be interesting to provide a custom solver (PCG or MINRES) also for the linearized system? However, I encountered some implementation problems due to gamma (the one in the linearized system) being provided by SUNDIALS but unknown to me. See in other_files/temp_dummy.cc for further explanations.
+- The matrices $M$ and $J$ are symmetric, hence the matrix of the linearized system $M - \gamma_{RK} J$ is symmetric too. Is it also positive definite for suitable values of the `gamma` parameter in Nitsche's method? If so, or even if it is not, could it be interesting to provide a custom solver (PCG or MINRES) also for the linearized system? However, I encountered some implementation problems due to $\gamma_{RK}$ (the one in the linearized system) being provided by SUNDIALS but unknown to me. See in `other_files/temp_dummy.cc` for further explanations.
 
 - Is there a way to get from SUNDIALS a "history" of the time step size during the integration process?
 

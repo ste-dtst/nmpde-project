@@ -17,17 +17,17 @@ where $(\cdot,\cdot)$ is the inner product in $\Omega$, $\langle \cdot,\cdot \ra
 If $u(x,t) = \sum U_i(t) \phi_i(x)$, this leads to solving the following ODE:
 
 $$
-M \mathbf{u}' = f_E(t,u) + f_I(t,u)
+M \mathbf{u}' = f_E(t,\mathbf{u}) + f_I(t,\mathbf{u})
 $$
 
-where $\mathbf{u}_i=U_i(t)$, $f_I(t,u) = J u$ and
+where $\mathbf{u}_i=U_i(t)$, $f_I(t,\mathbf{u}) = J \mathbf{u}$ and
 
 $$
 M_{ij}=(\phi_i,\phi_j)
 $$
 
 $$
-f_E(t,u)_i = (f(\cdot,t),\phi_i) + \gamma \langle g(\cdot,t),\phi_i \rangle - \langle g(\cdot,t),\nabla\phi_i \cdot n \rangle
+f_E(t,\mathbf{u})_i = (f(\cdot,t),\phi_i) + \gamma \langle g(\cdot,t),\phi_i \rangle - \langle g(\cdot,t),\nabla\phi_i \cdot n \rangle
 $$
 
 $$

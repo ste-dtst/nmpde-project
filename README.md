@@ -8,21 +8,28 @@ We will consider the heat equation $u_t(x,t) - \Delta u(x,t) = f(x,t)$ in 2D, wi
 
 The weak form we obtain by using Nitsche's method is the following:
 
-$(u_t, v)_\Omega + (\nabla u, \nabla v)_\Omega - \langle \nabla u \cdot n,v \rangle_\Gamma - \langle u, \nabla v \cdot n \rangle_\Gamma + \gamma \langle u,v \rangle_\Gamma = (f,v)_\Omega - \langle g, \nabla v \cdot n \rangle_\Gamma + \gamma - \langle g,v \rangle_\Gamma$
+$(u_t, v) + (\nabla u, \nabla v) - \langle \nabla u \cdot n,v \rangle - \langle u, \nabla v \cdot n \rangle + \gamma \langle u,v \rangle = (f,v) - \langle g, \nabla v \cdot n \rangle + \gamma - \langle g,v \rangle$
 
-where $\Gamma$ is the boundary of $\Omega$, $n$ is the normal to $\Gamma$.
+where $(\cdot,\cdot)$ indicates the inner product in $\Omega$, $\langle \cdot,\cdot \rangle$ the inner product in $\Gamma = \partial\Omega$ and $n$ is the normal to $\Gamma$.
 
 If $u(x,t) = \sum U_i(t) \phi_i(x)$, this leads to solving the following ODE:
-
-$M \mathbf{u}' = f_E(t,u) + f_I(t,u),$
+$$
+M \mathbf{u}' = f_E(t,u) + f_I(t,u),
+$$
 
 where $\mathbf{u}_i=U_i(t)$, $f_I(t,u) = J u$ and
 
-$M_{ij}=(\phi_i,\phi_j)_\Omega$
+$$
+M_{ij}=(\phi_i,\phi_j)
+$$
 
-$f_E(t,u) = (f(\cdot,t),\phi_i) + \gamma \langle g(\cdot,t),\phi_i \rangle - \langle g(\cdot,t),\nabla\phi_i \cdot n \rangle$
+$$
+f_E(t,u) = (f(\cdot,t),\phi_i) + \gamma \langle g(\cdot,t),\phi_i \rangle - \langle g(\cdot,t),\nabla\phi_i \cdot n \rangle
+$$
 
-$J_{ij} = -(\nabla\phi_i,\nabla\phi_j)_\Omega + \langle \phi_i,\nabla\phi_j \cdot n \rangle_\Gamma + \langle \nabla\phi_i \cdot n,\phi_j \rangle_\Gamma - \gamma \langle \phi_i,\phi_j \rangle_\Gamma$
+$$
+J_{ij} = -(\nabla\phi_i,\nabla\phi_j) + \langle \phi_i,\nabla\phi_j \cdot n \rangle + \langle \nabla\phi_i \cdot n,\phi_j \rangle - \gamma \langle \phi_i,\phi_j \rangle
+$$
 
 In particular, it is clear that the matrices $M$ and $J$ are independent of time, therefore they need to be evaluated only one time (and re-evaluated only when the mesh is changed).
 

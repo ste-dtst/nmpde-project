@@ -30,7 +30,6 @@
 # CMake garbage
 CMakeFiles
 hidden_files
-output
 CMakeCache.txt
 
 compile_commands.json

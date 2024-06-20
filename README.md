@@ -7,6 +7,7 @@ Instead of using Rothe's method, we will use the method of lines to solve the he
 We will consider the heat equation $u_t(x,t) - \Delta u(x,t) = f(x,t)$ in 2D, with $x$ in a `hyper_L` domain and $t \in (0,0.5)$. In particular, $f$ is the same as in Step 26 and so are the initial condition $u_0(x)$ and the boundary condition $g(x,t)$ (either equal to zero).
 
 The weak form we obtain by using Nitsche's method is the following:
+
 $$
 (u_t, v) + (\nabla u, \nabla v) - \langle \nabla u \cdot n,v \rangle - \langle u, \nabla v \cdot n \rangle + \gamma \langle u,v \rangle = (f,v) - \langle g, \nabla v \cdot n \rangle + \gamma \langle g,v \rangle
 $$
@@ -14,11 +15,13 @@ $$
 where $(\cdot,\cdot)$ is the inner product in $\Omega$, $\langle \cdot,\cdot \rangle$ the inner product in $\Gamma = \partial\Omega$ and $n$ is the normal to $\Gamma$.
 
 If $u(x,t) = \sum U_i(t) \phi_i(x)$, this leads to solving the following ODE:
+
 $$
 M \mathbf{u}' = f_E(t,u) + f_I(t,u)
 $$
 
 where $\mathbf{u}_i=U_i(t)$, $f_I(t,u) = J u$ and
+
 $$
 M_{ij}=(\phi_i,\phi_j)
 $$
@@ -56,6 +59,8 @@ My code is yet to be set up in the context of this deal.II template. At the mome
 - (?) Implement a function also for the initial condition (eventually use a parameter handler).
 
 - (?) Use meshloop for the assembly loops
+
+- (?) Consider a different time-dependent problem?
 
 - Is there a way to get from SUNDIALS a "history" of the time step size during the integration process?
 

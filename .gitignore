@@ -29,14 +29,7 @@
 
 # CMake garbage
 CMakeFiles
+hidden_files
 CMakeCache.txt
 
-# Project-related directories and files
-hidden_files
-output
-project
-
-# Build-related files
-Makefile
-cmake_install.cmake
 compile_commands.json

@@ -38,8 +38,6 @@ In particular, it is clear that the matrices $M$ and $J$ are independent of time
 
 My code is yet to be set up in the context of this deal.II template. At the moment, the main program is in the file `source/project.cc` and can work by itself with a custom CMakeLists.txt file, which I substituted to the original one of this template (it has been moved to the directory `other_files`).
 
-In the `output` directory you can find the output of the program and an animation generated with it.
-
 
 **Possible ToDo list and some questions**
 

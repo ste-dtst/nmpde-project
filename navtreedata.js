@@ -179,6 +179,7 @@ var NAVTREE =
     [ "The 'Laplace equation coupled to an external simulation program' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_coupled_laplace_problem.html", null ],
     [ "The 'Goal-oriented mesh adaptivity in elastoplasticity problems' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_goal_oriented_elastoplasticity.html", null ],
     [ "The 'Information density-based mesh refinement' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_information_based_mesh_refinement.html", null ],
+    [ "The 'Nonlinear heat transfer problem' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_nonlinear_heat_transfer_with_AD_NOX.html", null ],
     [ "The 'Parallel in Time Heat Equation' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_parallel_in_time.html", null ],
     [ "The 'Time-dependent Navier-Stokes' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_time_dependent_navier_stokes.html", null ],
     [ "The 'Two phase flow interaction ' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_two_phase_flow.html", null ],
@@ -209,7 +210,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CodeGallery.html",
-"step_8.html"
+"step_79.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

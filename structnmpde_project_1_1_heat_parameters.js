@@ -1,0 +1,27 @@
+var structnmpde_project_1_1_heat_parameters =
+[
+    [ "HeatParameters", "structnmpde_project_1_1_heat_parameters.html#a07a7e1f78a28ed9480bb9f513175a56d", null ],
+    [ "absolute_tolerance", "structnmpde_project_1_1_heat_parameters.html#a17c5387e76301d25dc86ac2c4eb3091f", null ],
+    [ "boundary_expression", "structnmpde_project_1_1_heat_parameters.html#a505fae32f3ceb2c4aafd760798a69078", null ],
+    [ "boundary_value", "structnmpde_project_1_1_heat_parameters.html#a85fbc0684e7c1cbdfdc0f20d8fd32045", null ],
+    [ "exact_solution", "structnmpde_project_1_1_heat_parameters.html#aa865eb31806a0951150861cf11e53562", null ],
+    [ "exact_solution_expression", "structnmpde_project_1_1_heat_parameters.html#a8f0b8f8347e8eaa2b2b96fc00102aaa9", null ],
+    [ "fe_degree", "structnmpde_project_1_1_heat_parameters.html#a110a0831abb28896ff13beac41176e96", null ],
+    [ "final_time", "structnmpde_project_1_1_heat_parameters.html#a4acf931480deb9ef4b5c56b1e845942b", null ],
+    [ "gamma", "structnmpde_project_1_1_heat_parameters.html#aeba32146605d276aecf3a6fb30b0ea13", null ],
+    [ "initial_expression", "structnmpde_project_1_1_heat_parameters.html#a693c187d98f00e891734026f36e68c9b", null ],
+    [ "initial_refinement", "structnmpde_project_1_1_heat_parameters.html#a0ea30f6f66dd4861bd7584b09eb94c64", null ],
+    [ "initial_step_size", "structnmpde_project_1_1_heat_parameters.html#a45f95d9e45c04512af87f7bc2b1bd0d1", null ],
+    [ "initial_time", "structnmpde_project_1_1_heat_parameters.html#acf3d809647e2e4812c79de716e1394c3", null ],
+    [ "initial_value", "structnmpde_project_1_1_heat_parameters.html#ae08c5b84f7f9a4a1b83c6dbb7cb6ec54", null ],
+    [ "maximum_order", "structnmpde_project_1_1_heat_parameters.html#aa37583d265a6d6bc1b1ad41df54818d0", null ],
+    [ "minimum_step_size", "structnmpde_project_1_1_heat_parameters.html#ad1257717075623e8a40be2bb1634739a", null ],
+    [ "nsteps", "structnmpde_project_1_1_heat_parameters.html#a0a79e920dcb41feb45af1b6f39a4d97b", null ],
+    [ "prm", "structnmpde_project_1_1_heat_parameters.html#aeaea32d76c3de0cc6772c63e052b99a6", null ],
+    [ "refinement_bottom_fraction", "structnmpde_project_1_1_heat_parameters.html#af1028db6b9d972eb5f903a94401ecc65", null ],
+    [ "refinement_top_fraction", "structnmpde_project_1_1_heat_parameters.html#ad69a7f7b2c99df9e8026865fe9a84d60", null ],
+    [ "relative_tolerance", "structnmpde_project_1_1_heat_parameters.html#a375c05f5e08268d1e44c5dc1ac1edaf8", null ],
+    [ "rhs_expression", "structnmpde_project_1_1_heat_parameters.html#a57caf9a25754ad5f4e5f7ea760b11c0b", null ],
+    [ "right_hand_side", "structnmpde_project_1_1_heat_parameters.html#a5985fcf937fcf17c6831f492d3be447e", null ],
+    [ "sol_is_known", "structnmpde_project_1_1_heat_parameters.html#a4a640bea38f17a8ca95e7500ad15de2f", null ]
+];

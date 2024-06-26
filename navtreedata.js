@@ -190,7 +190,6 @@ var NAVTREE =
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
@@ -210,7 +209,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CodeGallery.html",
-"step_79.html"
+"structnmpde_project_1_1_heat_parameters.html#a45f95d9e45c04512af87f7bc2b1bd0d1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

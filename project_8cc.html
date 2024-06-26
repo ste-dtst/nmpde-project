@@ -116,8 +116,7 @@ $(function(){initNavTree('project_8cc.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">project.cc File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/function_8h.html">deal.II/base/function.h</a>&gt;</code><br />
-<code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/logstream_8h.html">deal.II/base/logstream.h</a>&gt;</code><br />
+<div class="textblock"><code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/logstream_8h.html">deal.II/base/logstream.h</a>&gt;</code><br />
 <code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/quadrature__lib_8h.html">deal.II/base/quadrature_lib.h</a>&gt;</code><br />
 <code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/include_2deal_8II_2base_2utilities_8h.html">deal.II/base/utilities.h</a>&gt;</code><br />
 <code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/dof__handler_8h.html">deal.II/dofs/dof_handler.h</a>&gt;</code><br />
@@ -140,6 +139,11 @@ $(function(){initNavTree('project_8cc.html',''); initResizable(true); });
 <code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/matrix__tools_8h.html">deal.II/numerics/matrix_tools.h</a>&gt;</code><br />
 <code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/numerics_2solution__transfer_8h.html">deal.II/numerics/solution_transfer.h</a>&gt;</code><br />
 <code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/vector__tools_8h.html">deal.II/numerics/vector_tools.h</a>&gt;</code><br />
+<code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/function_8h.html">deal.II/base/function.h</a>&gt;</code><br />
+<code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/function__lib_8h.html">deal.II/base/function_lib.h</a>&gt;</code><br />
+<code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/function__parser_8h.html">deal.II/base/function_parser.h</a>&gt;</code><br />
+<code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/parameter__handler_8h.html">deal.II/base/parameter_handler.h</a>&gt;</code><br />
+<code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/path__search_8h.html">deal.II/base/path_search.h</a>&gt;</code><br />
 <code>#include &lt;<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/arkode_8h.html">deal.II/sundials/arkode.h</a>&gt;</code><br />
 <code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
@@ -148,11 +152,9 @@ $(function(){initNavTree('project_8cc.html',''); initResizable(true); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmpde_project_1_1_heat_parameters.html">nmpdeProject::HeatParameters&lt; dim &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation&lt; dim &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnmpde_project_1_1_right_hand_side.html">nmpdeProject::RightHandSide&lt; dim &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnmpde_project_1_1_boundary_values.html">nmpdeProject::BoundaryValues&lt; dim &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -181,9 +183,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00612">612</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00710">710</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
 
-<p class="reference">References <a class="el" href="project_8cc_source.html#l00589">nmpdeProject::HeatEquation&lt; dim &gt;::run()</a>.</p>
+<p class="reference">References <a class="el" href="project_8cc_source.html#l00673">nmpdeProject::HeatEquation&lt; dim &gt;::run()</a>.</p>
 
 </div>
 </div>
@@ -193,7 +195,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aa394cd1d9abb8ffe941d9aaafca8d03.html">github</a></li><li class="navelem"><a class="el" href="dir_c52569aa89a7adbb6029022c2fa60a11.html">workspace</a></li><li class="navelem"><a class="el" href="dir_37bdb9d2191b5493db509660c6a8c15a.html">source</a></li><li class="navelem"><a class="el" href="project_8cc.html">project.cc</a></li>
-    <li class="footer">Generated on Tue Jun 25 2024 13:48:09 for Template Deal.II Application by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
+    <li class="footer">Generated on Wed Jun 26 2024 22:26:06 for Template Deal.II Application by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
   </ul>
 </div>
 </body>

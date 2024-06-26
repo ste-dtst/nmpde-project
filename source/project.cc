@@ -27,7 +27,6 @@
 // package that is part of the SUNDIALS suite.
 
 // We include some standard deal.II headers
-#include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/utilities.h>
@@ -57,6 +56,16 @@
 #include <deal.II/numerics/solution_transfer.h>
 #include <deal.II/numerics/vector_tools.h>
 
+// We include some headers to deal with parameters and
+// functions which are read from an input file
+#include <deal.II/base/function.h>
+#include <deal.II/base/function_lib.h>
+#include <deal.II/base/function_parser.h>
+#include <deal.II/base/parameter_handler.h>
+
+// This is needed to catch the exception when the parameters file does not exist
+#include <deal.II/base/path_search.h>
+
 // This will be needed to integrate in time
 #include <deal.II/sundials/arkode.h>
 
@@ -69,12 +78,173 @@ namespace nmpdeProject
 {
   using namespace dealii;
 
+  // We store the parameters for the problem in a new struct,
+  // using a ParameterHandler object to read them from an input file.
+  template <int dim>
+  struct HeatParameters
+  {
+    HeatParameters()
+    {
+      // These are the parameters. Check below for more info
+      // on their meaning.
+      prm.enter_subsection("Heat equation functions");
+      {
+        prm.add_parameter(
+          "Exact solution expression",
+          exact_solution_expression,
+          "If you don't know the solution, write   unknown   below.");
+        prm.add_parameter("Right hand side expression", rhs_expression);
+        prm.add_parameter("Initial value expression", initial_expression);
+        prm.add_parameter("Boundary value expression", boundary_expression);
+      }
+      prm.leave_subsection();
+
+      prm.enter_subsection("FEM parameters");
+      {
+        prm.add_parameter("Finite element degree", fe_degree);
+        prm.add_parameter("Initial global refinement", initial_refinement);
+        prm.add_parameter("Refinement top fraction", refinement_top_fraction);
+        prm.add_parameter("Refinement bottom fraction",
+                          refinement_bottom_fraction);
+        prm.add_parameter("Gamma for Nitsche's method", gamma);
+      }
+      prm.leave_subsection();
+
+      prm.enter_subsection("ARKode solver parameters");
+      {
+        prm.add_parameter("Initial time", initial_time);
+        prm.add_parameter("Final time", final_time);
+        prm.add_parameter("Initial step size", initial_step_size);
+        prm.add_parameter("Number of solution outputs", nsteps);
+        prm.add_parameter("Minimum step size", minimum_step_size);
+        prm.add_parameter("Maximum order", maximum_order);
+        prm.add_parameter("Absolute tolerance", absolute_tolerance);
+        prm.add_parameter("Relative tolerance", relative_tolerance);
+      }
+      prm.leave_subsection();
+
+      // prm.enter_subsection("Convergence table");
+      // convergence_table.add_parameters(prm);
+      // prm.leave_subsection();
+
+      // We try to parse the input file
+      try
+        {
+          prm.parse_input("parameters/heat_" + std::to_string(dim) + "d.prm");
+        }
+      // If .prm file does not exist, it is created with default values and then
+      // parsed
+      catch (dealii::PathSearch::ExcFileNotFound &exc)
+        {
+          std::cout << "Parameters file for " << dim << "D case not found."
+                    << std::endl
+                    << "I've created one for you with default values."
+                    << std::endl
+                    << std::endl;
+          prm.print_parameters("parameters/heat_" + std::to_string(dim) +
+                                 "d.prm",
+                               ParameterHandler::KeepDeclarationOrder);
+          prm.parse_input("parameters/heat_" + std::to_string(dim) + "d.prm");
+        }
+      // If something else goes wrong with parsing, then the program is
+      // terminated
+
+      // Initialization of the FunctionParser objects.
+      // Remark: when a function is time-dependent,
+      // we include "t" in the list of variables at the last spot and
+      // we set to true the fourth argument "time_dependent".
+
+      // Constants
+      std::map<std::string, double> constants;
+      constants["pi"] = numbers::PI;
+
+      // We initialize exact_solution only if it is known.
+      if (exact_solution_expression != "unknown")
+        {
+          exact_solution.initialize(
+            FunctionParser<dim>::default_variable_names() + ",t",
+            {exact_solution_expression},
+            constants,
+            true);
+          sol_is_known = true;
+        }
+      else
+        sol_is_known = false;
+
+      right_hand_side.initialize(FunctionParser<dim>::default_variable_names() +
+                                   ",t",
+                                 {rhs_expression},
+                                 constants,
+                                 true);
+      initial_value.initialize(FunctionParser<dim>::default_variable_names(),
+                               {initial_expression},
+                               constants);
+      boundary_value.initialize(FunctionParser<dim>::default_variable_names() +
+                                  ",t",
+                                {boundary_expression},
+                                constants,
+                                true);
+    }
+
+    // Default parameters:
+
+    // Expressions for each function involved in the problem
+    std::string exact_solution_expression = "0";
+    std::string rhs_expression            = "0";
+    std::string initial_expression        = "0";
+    std::string boundary_expression       = "0";
+
+    // FE degree
+    unsigned int fe_degree = 1;
+
+    // Global refinement steps to be performed before integration
+    unsigned int initial_refinement = 3;
+
+    // Parameters for the adaptive mesh refinement
+    double refinement_top_fraction    = .3;
+    double refinement_bottom_fraction = 0.0;
+
+    // This is the gamma parameter for the penalty term in Nitsche's method
+    double gamma = 20.0;
+
+    // Parameters for the ARKode solver
+    double       initial_time       = 0.0;
+    double       final_time         = 1.0;
+    double       initial_step_size  = 1e-2;
+    double       minimum_step_size  = 1e-6;
+    unsigned int maximum_order      = 5;
+    double       absolute_tolerance = 1e-6;
+    double       relative_tolerance = 1e-5;
+
+    // In this variable we set the number of time steps, other than
+    // initial_time, at which we want to produce a solution output
+    unsigned int nsteps = 100;
+
+    // Function objects for the functions involved in the problem.
+    // Since we will need to evaluate them at different times,
+    // we declare the time-dependent ones mutable, in order to
+    // use a const HeatParameters object in the main program.
+    mutable FunctionParser<dim> exact_solution;
+    FunctionParser<dim>         initial_value;
+    mutable FunctionParser<dim> boundary_value;
+    mutable FunctionParser<dim> right_hand_side;
+
+    // Additional flag to check if the exact solution is known.
+    // If it is, we will compute the error at final_time.
+    bool sol_is_known;
+
+    // mutable ParsedConvergenceTable convergence_table;
+
+    ParameterHandler prm;
+  };
+
+
 
   template <int dim>
   class HeatEquation
   {
   public:
-    HeatEquation();
+    HeatEquation(const HeatParameters<dim> &parameters);
     void
     run();
 
@@ -92,6 +262,8 @@ namespace nmpdeProject
     // void refine_mesh(const unsigned int min_grid_level,
     //                  const unsigned int max_grid_level);
 
+    const HeatParameters<dim> &par;
+
     Triangulation<dim> triangulation;
     FE_Q<dim>          fe;
     DoFHandler<dim>    dof_handler;
@@ -107,102 +279,16 @@ namespace nmpdeProject
     Vector<double> solution;
     Vector<double> explicit_part;
 
-    // Global refinement steps to be performed before integration
-    const unsigned int initial_global_refinement = 3;
-
-    // Some parameters for the ARKode solver
-    double       initial_time = 0.0;
-    double       final_time   = 0.5;
-    const double min_step     = 1e-6; // Minimum step size of the solver
-
-    // In this variable we set the number of time steps, other than
-    // initial_time, at which we want to produce a solution output
-    unsigned int nsteps = 100;
-
-    // This is the gamma parameter for the penalty term in Nitsche's method
-    const double gamma = 20;
-  };
-
-
-
-  // The right-hand side and the boundary values of the heat equation
-  // are exactly the same as in Step 26.
-  template <int dim>
-  class RightHandSide : public Function<dim>
-  {
-  public:
-    RightHandSide()
-      : Function<dim>()
-      , period(0.2)
-    {}
-
-    virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
-
-  private:
-    const double period;
+    // Vector<float>  estimated_error_per_cell;
+    // Vector<float>  kelly_estimated_error_per_cell;
   };
 
 
 
   template <int dim>
-  double
-  RightHandSide<dim>::value(const Point<dim>  &p,
-                            const unsigned int component) const
-  {
-    (void)component;
-    AssertIndexRange(component, 1);
-    Assert(dim == 2, ExcNotImplemented());
-
-    const double time = this->get_time();
-    const double point_within_period =
-      (time / period - std::floor(time / period));
-
-    if ((point_within_period >= 0.0) && (point_within_period <= 0.2))
-      {
-        if ((p[0] > 0.5) && (p[1] > -0.5))
-          return 1;
-        else
-          return 0;
-      }
-    else if ((point_within_period >= 0.5) && (point_within_period <= 0.7))
-      {
-        if ((p[0] > -0.5) && (p[1] > 0.5))
-          return 1;
-        else
-          return 0;
-      }
-    else
-      return 0;
-  }
-
-
-
-  template <int dim>
-  class BoundaryValues : public Function<dim>
-  {
-  public:
-    virtual double
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
-  };
-
-
-
-  template <int dim>
-  double
-  BoundaryValues<dim>::value(const Point<dim> & /*p*/,
-                             const unsigned int component) const
-  {
-    (void)component;
-    Assert(component == 0, ExcIndexRange(component, 0, 1));
-    return 0;
-  }
-
-
-
-  template <int dim>
-  HeatEquation<dim>::HeatEquation()
-    : fe(1)
+  HeatEquation<dim>::HeatEquation(const HeatParameters<dim> &par)
+    : par(par)
+    , fe(par.fe_degree)
     , dof_handler(triangulation)
   {}
 
@@ -323,7 +409,7 @@ namespace nmpdeProject
                            fe_face_values.shape_value(j,
                                                       q_index)) *  // phi_j(x_q)
                           fe_face_values.normal_vector(q_index) -  // n
-                        gamma / (face->diameter()) *               // gamma/h
+                        par.gamma / (face->diameter()) *           // gamma/h
                           fe_face_values.shape_value(i, q_index) * // phi_i(x_q)
                           fe_face_values.shape_value(j,
                                                      q_index)) * // phi_j(x_q)
@@ -378,13 +464,9 @@ namespace nmpdeProject
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    // Declare the right-hand side and boundary values objects
-    RightHandSide<dim>  right_hand_side;
-    BoundaryValues<dim> boundary_values;
-
-    // Set these objects' time to t
-    right_hand_side.set_time(t);
-    boundary_values.set_time(t);
+    // Set the right-hand side and boundary value's time to t
+    par.right_hand_side.set_time(t);
+    par.boundary_value.set_time(t);
 
     // Loop over cells
     for (const auto &cell : dof_handler.active_cell_iterators())
@@ -402,7 +484,7 @@ namespace nmpdeProject
             for (const unsigned int i : fe_values.dof_indices())
               cell_explicit_part(i) +=
                 (fe_values.shape_value(i, q_index) * // phi_i(x_q)
-                 right_hand_side.value(x_q) *        // f(x_q)
+                 par.right_hand_side.value(x_q) *    // f(x_q)
                  fe_values.JxW(q_index));            // dx
           }
 
@@ -422,12 +504,12 @@ namespace nmpdeProject
                   const auto &x_q = fe_face_values.quadrature_point(q_index);
                   for (const unsigned int i : fe_face_values.dof_indices())
                     cell_explicit_part(i) +=
-                      ((gamma / (face->diameter()) *               // gamma/h
+                      ((par.gamma / (face->diameter()) *           // gamma/h
                           fe_face_values.shape_value(i, q_index) - // phi_i(x_q)
                         fe_face_values.shape_grad(i,
                                                   q_index) * // grad phi_i(x_q)
                           fe_face_values.normal_vector(q_index)) * // n
-                       boundary_values.value(x_q) *                // g(x_q)
+                       par.boundary_value.value(x_q) *             // g(x_q)
                        fe_face_values.JxW(q_index));               // dx
                 }
             }
@@ -450,18 +532,21 @@ namespace nmpdeProject
     // We set some additional data for the solver. In particular,
     // we want to exploit the fact that the mass matrix and the
     // Jacobian matrix are independent of time.
-    const double out_prd = (final_time - initial_time) / nsteps;
+    const double out_prd = (par.final_time - par.initial_time) / par.nsteps;
     SUNDIALS::ARKode<Vector<double>>::AdditionalData data(
-      initial_time,
-      final_time,
-      1e-2,     // Initial step size
-      out_prd,  // Output period
-      min_step, // Minimum step size
-      5,        // Maximum order
-      10,       // Maximum nonlinear iterations
-      true,     // implicit_function_is_linear
-      true,     // implicit_function_is_time_independent
-      true);    // mass_is_time_independent
+      par.initial_time,        // Initial time
+      par.final_time,          // Final time
+      par.initial_step_size,   // Initial step size
+      out_prd,                 // Output period
+      par.minimum_step_size,   // Minimum step size
+      par.maximum_order,       // Maximum order
+      10,                      // Maximum nonlinear iterations (irrelevant)
+      true,                    // implicit_function_is_linear
+      true,                    // implicit_function_is_time_independent
+      true,                    // mass_is_time_independent
+      3,                       // anderson_acceleration_subspace (irrelevant)
+      par.absolute_tolerance,  // Absolute tolerance
+      par.relative_tolerance); // Relative tolerance
 
     // Here we declare the ARKode object
     SUNDIALS::ARKode<Vector<double>> ode(data);
@@ -531,10 +616,9 @@ namespace nmpdeProject
       solver.solve(mass_matrix, x, b, preconditioner);
     };
 
-    // QUESTION: is also the matrix of the linearized system
-    // positive definite for appropriate values of gamma?
-    // If so, we could use CG (or at least MINRES)
-    // also for the implicit part of the ODE.
+    // Also the matrix of the linearized system is
+    // positive definite for any legal choice of gamma.
+    // Therefore, we should use CG also for the implicit part of the ODE.
     // However, I've encountered some problems in supplying the
     // ode.solve_linearized_system function, see temp_dummy.cc
     // in the directory other_files.
@@ -545,7 +629,7 @@ namespace nmpdeProject
                           const unsigned int    step_number) {
       std::cout << "Time step " << step_number << " at t = " << t << "."
                 << std::endl;
-      std::cout << "l_inf norm of solution: " << solution.linfty_norm()
+      std::cout << "L_inf norm of solution: " << solution.linfty_norm()
                 << std::endl;
 
       output_results(sol, step_number);
@@ -590,20 +674,34 @@ namespace nmpdeProject
   {
     // Mesh generation, DoF distribution and sparsity pattern allocation
     GridGenerator::hyper_L(triangulation);
-    triangulation.refine_global(initial_global_refinement);
+    triangulation.refine_global(par.initial_refinement);
 
     setup_ode();
 
     // Assembly of the mass matrix and the implicit part of the ODE
     assemble_ode_matrices();
 
-    // For a simpler test, we set the initial condition to zero
-    VectorTools::interpolate(dof_handler,
-                             Functions::ZeroFunction<dim>(),
-                             solution);
+    // We set the initial condition
+    VectorTools::interpolate(dof_handler, par.initial_value, solution);
 
     // ODE solution
     solve_ode();
+
+    // If the exact solution is known, we compute the error
+    // at par.final_time
+    if (par.sol_is_known)
+      {
+        par.exact_solution.set_time(par.final_time);
+        Vector<double> error(solution.size());
+        VectorTools::integrate_difference(dof_handler,
+                                          solution,
+                                          par.exact_solution,
+                                          error,
+                                          QGauss<dim>(fe.degree + 1),
+                                          VectorTools::L2_norm);
+        std::cout << "===========================================" << std::endl
+                  << "L2 error at final time: " << error.l2_norm() << std::endl;
+      }
   }
 } // namespace nmpdeProject
 
@@ -615,7 +713,8 @@ main()
     {
       using namespace nmpdeProject;
 
-      HeatEquation<2> heat_equation_solver;
+      HeatParameters<2> par;
+      HeatEquation<2>   heat_equation_solver(par);
       heat_equation_solver.run();
     }
   catch (std::exception &exc)

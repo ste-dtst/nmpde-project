@@ -1,0 +1,38 @@
+A moving front:
+
+  set Exact solution expression  = 2-(x-t)*(x-t)
+  set Right hand side expression = 2*(x-t+1)
+  set Initial value expression   = 2-(x+1)*(x+1)
+  set Boundary value expression  = 2-(x-t)*(x-t)
+
+  t in [-1,1]
+
+
+A steeper moving front:
+
+  set Exact solution expression  = 2-10*(x-t)*(x-t)
+  set Right hand side expression = 2*10*(x-t+1)
+  set Initial value expression   = 2-10*(x+1)*(x+1)
+  set Boundary value expression  = 2-10*(x-t)*(x-t)
+
+  t in [-1,1]
+
+
+Cold/hot pattern:
+
+  set Exact solution expression  = 4*t*(y*y+y-x*x-x)
+  set Right hand side expression = -4*x^2 - 4*x + 4*y^2 + 4*y
+  set Initial value expression   = 0
+  set Boundary value expression  = 4*t*(y*y+y-x*x-x)
+
+  t in [0,2]
+
+
+A Gaussian with moving center:
+
+  set Exact solution expression  = exp(-2* ( (x-0.5*cos(pi*(t+0.5)))*(x-0.5*cos(pi*(t+0.5))) + (y-0.5*sin(pi*(t+0.5)))*(y-0.5*sin(pi*(t+0.5))) ) )
+  set Right hand side expression = -16*(-x + 0.5*cos(pi*(t + 0.5)))^2*exp(-2*(x - 0.5*cos(pi*(t + 0.5)))^2 - 2*(y - 0.5*sin(pi*(t + 0.5)))^2) - 16*(-y + 0.5*sin(pi*(t + 0.5)))^2*exp(-2*(x - 0.5*cos(pi*(t + 0.5)))^2 - 2*(y - 0.5*sin(pi*(t + 0.5)))^2) + (-2.0*pi*(x - 0.5*cos(pi*(t + 0.5)))*sin(pi*(t + 0.5)) + 2.0*pi*(y - 0.5*sin(pi*(t + 0.5)))*cos(pi*(t + 0.5)))*exp(-2*(x - 0.5*cos(pi*(t + 0.5)))^2 - 2*(y - 0.5*sin(pi*(t + 0.5)))^2) + 8*exp(-2*(x - 0.5*cos(pi*(t + 0.5)))^2 - 2*(y - 0.5*sin(pi*(t + 0.5)))^2)
+  set Initial value expression   = exp(-2* (x*x + (y-0.5)*(y-0.5)) )
+  set Boundary value expression  = exp(-2* ( (x-0.5*cos(pi*(t+0.5)))*(x-0.5*cos(pi*(t+0.5))) + (y-0.5*sin(pi*(t+0.5)))*(y-0.5*sin(pi*(t+0.5))) ) )
+
+  t in [0,1.5]

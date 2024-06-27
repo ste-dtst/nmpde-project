@@ -632,6 +632,19 @@ namespace nmpdeProject
       std::cout << "L_inf norm of solution: " << solution.linfty_norm()
                 << std::endl;
 
+      // If the exact solution is known, we compute the error at time t
+      if (par.sol_is_known)
+        {
+          par.exact_solution.set_time(t);
+          Vector<double> error(solution.size());
+          VectorTools::integrate_difference(dof_handler,
+                                            solution,
+                                            par.exact_solution,
+                                            error,
+                                            QGauss<dim>(fe.degree + 1),
+                                            VectorTools::L2_norm);
+          std::cout << "L2 error: " << error.l2_norm() << std::endl;
+        }
       output_results(sol, step_number);
     };
 
@@ -687,21 +700,23 @@ namespace nmpdeProject
     // ODE solution
     solve_ode();
 
-    // If the exact solution is known, we compute the error
-    // at par.final_time
-    if (par.sol_is_known)
-      {
-        par.exact_solution.set_time(par.final_time);
-        Vector<double> error(solution.size());
-        VectorTools::integrate_difference(dof_handler,
-                                          solution,
-                                          par.exact_solution,
-                                          error,
-                                          QGauss<dim>(fe.degree + 1),
-                                          VectorTools::L2_norm);
-        std::cout << "===========================================" << std::endl
-                  << "L2 error at final time: " << error.l2_norm() << std::endl;
-      }
+    // // If the exact solution is known, we compute the error
+    // // at par.final_time
+    // if (par.sol_is_known)
+    //   {
+    //     par.exact_solution.set_time(par.final_time);
+    //     Vector<double> error(solution.size());
+    //     VectorTools::integrate_difference(dof_handler,
+    //                                       solution,
+    //                                       par.exact_solution,
+    //                                       error,
+    //                                       QGauss<dim>(fe.degree + 1),
+    //                                       VectorTools::L2_norm);
+    //     std::cout << "===========================================" <<
+    //     std::endl
+    //               << "L2 error at final time: " << error.l2_norm() <<
+    //               std::endl;
+    //   }
   }
 } // namespace nmpdeProject
 

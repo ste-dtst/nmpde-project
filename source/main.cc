@@ -1,8 +1,8 @@
 /* ---------------------------------------------------------------------
  *
- * Copyright (C) 2000 - 2020 by the deal.II authors
- *
- * This file is part of the deal.II library.
+ * This is a project for the final exam of the course
+ * Numerical Methods for Partial Differential Equations,
+ * held by prof. Luca Heltai in University of Pisa in 2024.
  *
  * The deal.II library is free software; you can use it, redistribute
  * it, and/or modify it under the terms of the GNU Lesser General
@@ -12,20 +12,24 @@
  * the top level directory of deal.II.
  *
  * ---------------------------------------------------------------------
+
  *
- * Author: Wolfgang Bangerth, University of Heidelberg, 2000
- * Modified by: Luca Heltai, 2020
+ * Author: Stefano Mancini (?), 2024
+ * Based on the bare-dealii-app template by Luca Heltai, 2020
  */
 
-#include "laplacian.h"
+#include "project.h"
 
 int
 main()
 {
   try
     {
-      Laplacian<DEAL_DIMENSION> laplace_problem;
-      laplace_problem.run();
+      using namespace nmpdeProject;
+
+      HeatParameters<DEAL_DIMENSION> par;
+      HeatEquation<DEAL_DIMENSION> heat_equation_solver(par);
+      heat_equation_solver.run();
     }
   catch (std::exception &exc)
     {

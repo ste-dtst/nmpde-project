@@ -33,11 +33,14 @@ CMakeCache.txt
 
 # Project-related directories and files
 hidden_files
-output
+output_1d
+output_2d
+output_3d
 parameters
-project
+*.g
 
 # Build-related files
 Makefile
 cmake_install.cmake
+CTestTestfile.cmake
 compile_commands.json

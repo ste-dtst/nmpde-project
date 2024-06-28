@@ -230,7 +230,7 @@ namespace nmpdeProject
     mutable FunctionParser<dim> right_hand_side;
 
     // Additional flag to check if the exact solution is known.
-    // If it is, we will compute the error at final_time.
+    // If it is, we will compute the L2 error at each output time.
     bool sol_is_known;
 
     // mutable ParsedConvergenceTable convergence_table;
@@ -686,7 +686,10 @@ namespace nmpdeProject
   HeatEquation<dim>::run()
   {
     // Mesh generation, DoF distribution and sparsity pattern allocation
-    GridGenerator::hyper_L(triangulation);
+    if (dim == 1)
+      GridGenerator::hyper_cube(triangulation, -1, 1);
+    else
+      GridGenerator::hyper_L(triangulation);
     triangulation.refine_global(par.initial_refinement);
 
     setup_ode();

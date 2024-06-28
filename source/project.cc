@@ -143,11 +143,10 @@ HeatEquation<dim>::assemble_ode_matrices()
                             update_quadrature_points | update_JxW_values);
 
   FEFaceValues<dim> fe_face_values(fe,
-                                    QGauss<dim - 1>(fe.degree + 1),
-                                    update_values | update_gradients |
-                                      update_quadrature_points |
-                                      update_normal_vectors |
-                                      update_JxW_values);
+                                   QGauss<dim - 1>(fe.degree + 1),
+                                   update_values | update_gradients |
+                                     update_quadrature_points |
+                                     update_normal_vectors | update_JxW_values);
 
   // Set the usual cell-related objects
   const unsigned int dofs_per_cell = fe.n_dofs_per_cell();
@@ -174,13 +173,13 @@ HeatEquation<dim>::assemble_ode_matrices()
             {
               cell_mass_matrix(i, j) +=
                 (fe_values.shape_value(i, q_index) * // phi_i(x_q)
-                  fe_values.shape_value(j, q_index) * // phi_j(x_q)
-                  fe_values.JxW(q_index));            // dx
+                 fe_values.shape_value(j, q_index) * // phi_j(x_q)
+                 fe_values.JxW(q_index));            // dx
 
               cell_jacobian_matrix(i, j) -=
                 (fe_values.shape_grad(i, q_index) * // grad phi_i(x_q)
-                  fe_values.shape_grad(j, q_index) * // grad phi_j(x_q)
-                  fe_values.JxW(q_index));           // dx
+                 fe_values.shape_grad(j, q_index) * // grad phi_j(x_q)
+                 fe_values.JxW(q_index));           // dx
             }
 
       // Loop over faces at the boundary of the current cell (if there are
@@ -203,23 +202,23 @@ HeatEquation<dim>::assemble_ode_matrices()
             // Loop over face quadrature points. The formulas are a bit
             // condensed, in order to do less arithmetic operations.
             for (const unsigned int q_index :
-                  fe_face_values.quadrature_point_indices())
+                 fe_face_values.quadrature_point_indices())
               for (const unsigned int i : fe_face_values.dof_indices())
                 for (const unsigned int j : fe_face_values.dof_indices())
                   cell_jacobian_matrix(i, j) +=
                     (((fe_face_values.shape_value(i, q_index) * // phi_i(x_q)
-                          fe_face_values.shape_grad(
-                            j, q_index) + // grad phi_j(x_q)
-                        fe_face_values.shape_grad(i,
-                                                  q_index) * // grad phi_i(x_q)
-                          fe_face_values.shape_value(j,
+                         fe_face_values.shape_grad(j,
+                                                   q_index) + // grad phi_j(x_q)
+                       fe_face_values.shape_grad(i,
+                                                 q_index) * // grad phi_i(x_q)
+                         fe_face_values.shape_value(j,
                                                     q_index)) *  // phi_j(x_q)
                         fe_face_values.normal_vector(q_index) -  // n
                       par.gamma / face_diam *                    // gamma/h
                         fe_face_values.shape_value(i, q_index) * // phi_i(x_q)
                         fe_face_values.shape_value(j,
-                                                    q_index)) * // phi_j(x_q)
-                      fe_face_values.JxW(q_index));             // dx
+                                                   q_index)) * // phi_j(x_q)
+                     fe_face_values.JxW(q_index));             // dx
           }
 
       // Initialize the local dof indices to current cell
@@ -257,11 +256,10 @@ HeatEquation<dim>::assemble_ode_explicit_part(const double t)
                             update_quadrature_points | update_JxW_values);
 
   FEFaceValues<dim> fe_face_values(fe,
-                                    QGauss<dim - 1>(fe.degree + 1),
-                                    update_values | update_gradients |
-                                      update_quadrature_points |
-                                      update_normal_vectors |
-                                      update_JxW_values);
+                                   QGauss<dim - 1>(fe.degree + 1),
+                                   update_values | update_gradients |
+                                     update_quadrature_points |
+                                     update_normal_vectors | update_JxW_values);
 
   // Set the cell-related objects
   const unsigned int dofs_per_cell = fe.n_dofs_per_cell();
@@ -290,8 +288,8 @@ HeatEquation<dim>::assemble_ode_explicit_part(const double t)
           for (const unsigned int i : fe_values.dof_indices())
             cell_explicit_part(i) +=
               (fe_values.shape_value(i, q_index) * // phi_i(x_q)
-                par.right_hand_side.value(x_q) *    // f(x_q)
-                fe_values.JxW(q_index));            // dx
+               par.right_hand_side.value(x_q) *    // f(x_q)
+               fe_values.JxW(q_index));            // dx
         }
 
       // Loop over faces at the boundary of the current cell (if there are
@@ -314,18 +312,18 @@ HeatEquation<dim>::assemble_ode_explicit_part(const double t)
             // Loop over face quadrature points. The formula is a bit
             // condensed, in order to do less arithmetic operations.
             for (const unsigned int q_index :
-                  fe_face_values.quadrature_point_indices())
+                 fe_face_values.quadrature_point_indices())
               {
                 const auto &x_q = fe_face_values.quadrature_point(q_index);
                 for (const unsigned int i : fe_face_values.dof_indices())
                   cell_explicit_part(i) +=
-                    ((par.gamma / face_diam *           // gamma/h
+                    ((par.gamma / face_diam *                    // gamma/h
                         fe_face_values.shape_value(i, q_index) - // phi_i(x_q)
                       fe_face_values.shape_grad(i,
                                                 q_index) * // grad phi_i(x_q)
                         fe_face_values.normal_vector(q_index)) * // n
-                      par.boundary_value.value(x_q) *             // g(x_q)
-                      fe_face_values.JxW(q_index));               // dx
+                     par.boundary_value.value(x_q) *             // g(x_q)
+                     fe_face_values.JxW(q_index));               // dx
               }
           }
 
@@ -411,10 +409,10 @@ HeatEquation<dim>::solve_ode()
   // positive definite, therefore we can use a preconditioned
   // conjugate gradient method. We have to specify this to the solver.
   ode.solve_mass = [&](SUNDIALS::SundialsOperator<Vector<double>>       &op,
-                        SUNDIALS::SundialsPreconditioner<Vector<double>> &prec,
-                        Vector<double>                                   &x,
-                        const Vector<double>                             &b,
-                        double tol) {
+                       SUNDIALS::SundialsPreconditioner<Vector<double>> &prec,
+                       Vector<double>                                   &x,
+                       const Vector<double>                             &b,
+                       double                                            tol) {
     // We forget about op and prec, since we want to provide
     // our custom preconditioner and solver
     (void)op;
@@ -481,9 +479,8 @@ HeatEquation<dim>::output_results(const Vector<double> &sol,
 
   data_out.build_patches();
 
-  const std::string filename =
-    "output_" + std::to_string(dim) + "d/solution-" +
-    Utilities::int_to_string(step_no, 3) + ".vtu";
+  const std::string filename = "output_" + std::to_string(dim) + "d/solution-" +
+                               Utilities::int_to_string(step_no, 3) + ".vtu";
   std::ofstream output(filename);
   data_out.write_vtu(output);
 

@@ -28,7 +28,7 @@ main()
       using namespace nmpdeProject;
 
       HeatParameters<DEAL_DIMENSION> par;
-      HeatEquation<DEAL_DIMENSION> heat_equation_solver(par);
+      HeatEquation<DEAL_DIMENSION>   heat_equation_solver(par);
       heat_equation_solver.run();
     }
   catch (std::exception &exc)

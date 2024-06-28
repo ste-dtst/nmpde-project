@@ -1,10 +1,12 @@
 NMPDE Project
 =====================================
 
-This project is a modification of Step 26 of the deal.II tutorial.
-Instead of using Rothe's method, we will use the method of lines to solve the heat equation. The boundary conditions will be imposed via Nitsche's method. For the moment, no mesh refinement will be performed. For the integration in time, we will rely on the ARKode package that is part of the SUNDIALS suite.
+This project is based on Step 26 of the deal.II tutorial. It has been set up to work with the *bare-dealii-app* template by Luca Heltai (read below for further info).
+Instead of using Rothe's method, we will use the method of lines to solve the heat equation. The boundary conditions will be imposed via Nitsche's method. For the integration in time, we will rely on the ARKode package that is part of the SUNDIALS suite. Adaptive mesh refinement will be implemented via solution transfer.
 
-We will consider the heat equation $u_t(x,t) - \Delta u(x,t) = f(x,t)$ in 2D, with $x$ in a `hyper_L` domain and $t \in (0,0.5)$. In particular, $f$ is the same as in Step 26 and so are the initial condition $u_0(x)$ and the boundary condition $g(x,t)$ (either equal to zero).
+**The problem**
+
+We consider the heat equation $u_t(x,t) - \Delta u(x,t) = f(x,t)$, with initial condition $u_0(x)$ and boundary condition $g(x,t)$. The domain for the space variable $x$ is a `hyper_L` (2D and 3D case) or the interval $[-1,1]$ (1D case), while the time variable $t$ is in a given interval $[t_0,t_1]$. The user can customize $f$, $u_0$, $g$, $t_0$ and $t_1$ via a .prm file. If also the exact solution $u$ is provided, then the program will compute the $L^2$ error for the numerical solution. In particular, if you want to test a *manufactured solution*, you can use the Jupyter Notebook `other_files/manufactured_heat.ipynb` to compute the correct $f$ automatically, given $u$.
 
 The weak form we obtain by using Nitsche's method is the following:
 
@@ -36,41 +38,35 @@ $$
 
 In particular, it is clear that the matrices $M$ and $J$ are independent of time, therefore they need to be evaluated only one time (and re-evaluated only when the mesh is changed).
 
-My code is yet to be set up in the context of this deal.II template. At the moment, the main program is in the file `source/project.cc` and can work by itself with a custom CMakeLists.txt file, which I substituted to the original one of this template (it has been moved to the directory `other_files`).
+The .prm file can also be used to customize a variety of parameters for the ARKode solver, as well as $\gamma$, the finite element degree and the mesh refinement strategy.
 
+**Before you start**
 
-**Possible ToDo list and some questions**
+The program will look for the following directories to write its output and parameters:
 
-- Compare the solution generated this way with the solution generated in Step 26. Check the accuracy of the method via some manufactured solution.
+- `output_1d`
 
-- Integrate project.cc in the context of the bare deal.II app template.
+- `output_2d`
 
-- Initializing the `solution` vector with `VectorTools::interpolate` seems to generate an invalid `solution-000.vtu` file, which also makes Paraview unable to open the .pvd record. How is this possible?
+- `output_3d`
 
-- Use an `AffineConstraints` object to distibute local to global and implement adaptive mesh refinement via `SolutionTransfer` and the `solver_should_restart` function. Is there any *caveat* in using constraints with two different linear systems to be solved?
+- `parameters`
 
-- The matrices $M$ and $J$ are symmetric, hence the matrix of the linearized system $M - \gamma_{RK} J$ is symmetric too. Is it also positive definite for suitable values of the `gamma` parameter in Nitsche's method? If so, or even if it is not, could it be interesting to provide a custom solver (PCG or MINRES) also for the linearized system? However, I encountered some implementation problems due to $\gamma_{RK}$ (the one in the linearized system) being provided by SUNDIALS but unknown to me. See in `other_files/temp_dummy.cc` for further explanations.
+Make sure to create them in advance in the folder where you will put the executables.
 
-- Is there a way to get from SUNDIALS a "history" of the time step size during the integration process?
+Also, in the code (*at the moment, but may not be necessary*) there is a `if constexpr` statement, which requires your compiler to support at least C++17.
 
-- In order to save computational resources, is there a simple way to do the assembly of global symmetric matrices by only computing the upper triangular part and then symmetrizing the whole matrix? Is it just sufficient to do this on the local matrices?
+**ToDo list**
 
-- (?) Implement a function also for the initial condition (eventually use a parameter handler).
+- Show some accuracy tests.
 
-- (?) Use meshloop for the assembly loops.
+- Implement adaptive mesh refinement.
 
-- (?) Consider a different time-dependent problem???
+- Provide a good PCG solver to SUNDIALS and save some computational resources.
 
+- Output some more information during time stepping.
 
-**Possible typos found in the documentation**
-
-- In the documentation of Step 26: in the definition of f(x,t) (paragraph *Testcase*, there's a $\tau$ missing in the second case ($0.5 \le t \le 0.7 \tau$ should be $0.5 \tau \le t \le 0.7 \tau$).
-
-- In the documentation of `LinearSolveFunction`, `SundialsOperator` and `SundialsPreconditioner` are mentioned as arguments, then those are referred to be objects of class `LinearOperator`. Could this be a typo?
-
-- In the documentation of ARKode, the Detailed Description says that the solve_mass function *can* be provided to use a custom solver instead of the default one (SPGMR), but the documentation of solve_mass says that this function is mandatory if the mass matrix is not the identity. In other words, SPGMR is not used automatically if solve_mass is not provided, and indeed not providing this function results in a runtime exception related to `arkStep_FullRHS`.
-
-- In the documentation of ARKode and in the file arkode.h, the function `mass_preconditioner_solve` has 5 arguments, but the documentation says that there's also a sixth parameter `gamma`.
+- Use meshloop for the assembly loops.
 
 
 About this template

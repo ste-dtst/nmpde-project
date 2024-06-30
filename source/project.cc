@@ -30,29 +30,22 @@
 // We start including the header file of the project
 #include "project.h"
 
-// We include some standard deal.II headers
+// We include some other standard deal.II headers
 #include <deal.II/base/logstream.h>
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/utilities.h>
 
-#include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_values.h>
 
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_out.h>
 #include <deal.II/grid/grid_refinement.h>
-#include <deal.II/grid/tria.h>
 
-#include <deal.II/lac/affine_constraints.h>
-#include <deal.II/lac/dynamic_sparsity_pattern.h>
 #include <deal.II/lac/full_matrix.h>
 #include <deal.II/lac/precondition.h>
 #include <deal.II/lac/solver_cg.h>
-#include <deal.II/lac/sparse_matrix.h>
-#include <deal.II/lac/vector.h>
 
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/error_estimator.h>
@@ -60,22 +53,8 @@
 #include <deal.II/numerics/solution_transfer.h>
 #include <deal.II/numerics/vector_tools.h>
 
-// We include some headers to deal with parameters and
-// functions which are read from an input file
-#include <deal.II/base/function.h>
-#include <deal.II/base/function_lib.h>
-#include <deal.II/base/function_parser.h>
-#include <deal.II/base/parameter_handler.h>
-
-// This is needed to catch the exception when the parameters file does not exist
-#include <deal.II/base/path_search.h>
-
 // This will be needed to integrate in time
 #include <deal.II/sundials/arkode.h>
-
-// Standard C++ headers
-#include <fstream>
-#include <iostream>
 
 // Finally, we import the custom namespace we have created
 using namespace nmpdeProject;

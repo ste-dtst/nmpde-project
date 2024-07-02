@@ -192,8 +192,8 @@ namespace nmpdeProject
     // Parameters for the adaptive mesh refinement
     double refinement_top_fraction    = .3;
     double refinement_bottom_fraction = .1;
-    double min_refinement = 1;
-    double max_refinement = 6;
+    double min_refinement             = 1;
+    double max_refinement             = 6;
 
     // This is the gamma parameter for the penalty term in Nitsche's method
     double gamma = 10.0;
@@ -249,7 +249,7 @@ namespace nmpdeProject
     void
     assemble_ode_explicit_part(const double t);
     void
-    refine_mesh(Vector<double> &sol,
+    refine_mesh(Vector<double>    &sol,
                 const unsigned int min_grid_level,
                 const unsigned int max_grid_level);
     void

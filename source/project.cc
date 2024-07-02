@@ -323,9 +323,10 @@ HeatEquation<dim>::assemble_ode_explicit_part(const double t)
 
 
 template <int dim>
-void HeatEquation<dim>::refine_mesh(Vector<double> &sol,
-                                    const unsigned int min_grid_level,
-                                    const unsigned int max_grid_level)
+void
+HeatEquation<dim>::refine_mesh(Vector<double>    &sol,
+                               const unsigned int min_grid_level,
+                               const unsigned int max_grid_level)
 {
   // If we want to refine the mesh, we have to update the dimension
   // of matrices and vectors accordingly, update mass_matrix and
@@ -346,10 +347,11 @@ void HeatEquation<dim>::refine_mesh(Vector<double> &sol,
     estimated_error_per_cell);
 
   // We then mark the cells that have to be refined or coarsed
-  GridRefinement::refine_and_coarsen_fixed_fraction(triangulation,
-                                                    estimated_error_per_cell,
-                                                    par.refinement_top_fraction,
-                                                    par.refinement_bottom_fraction);
+  GridRefinement::refine_and_coarsen_fixed_fraction(
+    triangulation,
+    estimated_error_per_cell,
+    par.refinement_top_fraction,
+    par.refinement_bottom_fraction);
 
   // We clear the flags that would make the mesh too coarse or too fine
   if (triangulation.n_levels() > max_grid_level)
@@ -369,7 +371,7 @@ void HeatEquation<dim>::refine_mesh(Vector<double> &sol,
   solution_trans.prepare_for_coarsening_and_refinement(previous_solution);
 
   // -----complete the implementation of the sol transfer-----
-  
+
   // triangulation.execute_coarsening_and_refinement();
   // setup_ode_matrices();
 
@@ -481,9 +483,11 @@ HeatEquation<dim>::solve_ode()
   // in the directory other_files.
 
   // Here we store some relevant info on the time stepping
-  long int nsteps = 0;                  // Number of steps taken in the solver
-  double hlast = par.initial_step_size; // Step size taken on the last internal step
-  // double hcur = hlast;        // Step size to be attempted on the next internal step
+  long int nsteps = 0; // Number of steps taken in the solver
+  double   hlast =
+    par.initial_step_size; // Step size taken on the last internal step
+  // double hcur = hlast;        // Step size to be attempted on the next
+  // internal step
 
   // The following function is deputed to decide whether
   // a mesh refinement is needed at time t. In that case,
@@ -517,8 +521,7 @@ HeatEquation<dim>::solve_ode()
     // some ARKode functions that are not wrapped by deal.II
     ARKStepGetNumSteps(ode.get_arkode_memory(), &nsteps);
     ARKStepGetLastStep(ode.get_arkode_memory(), &hlast);
-    std::cout << "Number of ARKode steps taken so far: " << nsteps
-              << std::endl;
+    std::cout << "Number of ARKode steps taken so far: " << nsteps << std::endl;
     std::cout << "Step size taken on the last internal step: " << hlast
               << std::endl;
 

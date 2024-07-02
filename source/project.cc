@@ -567,15 +567,16 @@ HeatEquation<dim>::output_results(const Vector<double> &sol,
 
   data_out.build_patches();
 
-  const std::string filename = "output_" + std::to_string(dim) + "d/solution-" +
-                               Utilities::int_to_string(step_no, 3) + ".vtu";
-  std::ofstream output(filename);
+  const std::string dirname = "output_" + std::to_string(dim) + "d/";
+  const std::string filename =
+    "solution-" + Utilities::int_to_string(step_no, 3) + ".vtu";
+  std::ofstream output(dirname + filename);
   data_out.write_vtu(output);
 
   static std::vector<std::pair<double, std::string>> times_and_names;
   times_and_names.push_back({step_no, filename});
 
-  std::ofstream pvd_output("output_" + std::to_string(dim) + "d/solution.pvd");
+  std::ofstream pvd_output(dirname + "solution.pvd");
 
   DataOutBase::write_pvd_record(pvd_output, times_and_names);
 }

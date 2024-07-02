@@ -37,6 +37,9 @@ output_1d
 output_2d
 output_3d
 parameters
+project_1d
+project_2d
+project_3d
 *.g
 
 # Build-related files

@@ -93,6 +93,8 @@ namespace nmpdeProject
         prm.add_parameter("Refinement top fraction", refinement_top_fraction);
         prm.add_parameter("Refinement bottom fraction",
                           refinement_bottom_fraction);
+        prm.add_parameter("Minimum refinement level", min_refinement);
+        prm.add_parameter("Maximum refinement level", max_refinement);
         prm.add_parameter("Gamma for Nitsche's method", gamma);
       }
       prm.leave_subsection();
@@ -102,7 +104,7 @@ namespace nmpdeProject
         prm.add_parameter("Initial time", initial_time);
         prm.add_parameter("Final time", final_time);
         prm.add_parameter("Initial step size", initial_step_size);
-        prm.add_parameter("Number of solution outputs", nsteps);
+        prm.add_parameter("Number of solution outputs", out_steps);
         prm.add_parameter("Minimum step size", minimum_step_size);
         prm.add_parameter("Maximum order", maximum_order);
         prm.add_parameter("Absolute tolerance", absolute_tolerance);
@@ -119,8 +121,8 @@ namespace nmpdeProject
         {
           prm.parse_input("parameters/heat_" + std::to_string(dim) + "d.prm");
         }
-      // If .prm file does not exist, it is created with default values and then
-      // parsed
+      // If .prm file does not exist, it is created
+      // with default values and then parsed
       catch (dealii::PathSearch::ExcFileNotFound &exc)
         {
           std::cout << "Parameters file for " << dim << "D case not found."
@@ -189,7 +191,9 @@ namespace nmpdeProject
 
     // Parameters for the adaptive mesh refinement
     double refinement_top_fraction    = .3;
-    double refinement_bottom_fraction = 0.0;
+    double refinement_bottom_fraction = .1;
+    double min_refinement = 1;
+    double max_refinement = 6;
 
     // This is the gamma parameter for the penalty term in Nitsche's method
     double gamma = 10.0;
@@ -205,7 +209,7 @@ namespace nmpdeProject
 
     // In this variable we set the number of time steps, other than
     // initial_time, at which we want to produce a solution output
-    unsigned int nsteps = 100;
+    unsigned int out_steps = 100;
 
     // Function objects for the functions involved in the problem.
     // Since we will need to evaluate them at different times,
@@ -245,11 +249,13 @@ namespace nmpdeProject
     void
     assemble_ode_explicit_part(const double t);
     void
+    refine_mesh(Vector<double> &sol,
+                const unsigned int min_grid_level,
+                const unsigned int max_grid_level);
+    void
     solve_ode();
     void
     output_results(const Vector<double> &sol, const unsigned int step_no) const;
-    // void refine_mesh(const unsigned int min_grid_level,
-    //                  const unsigned int max_grid_level);
 
     const HeatParameters<dim> &par;
 
@@ -267,9 +273,6 @@ namespace nmpdeProject
     // Here are the solution and the vector for the explicit part
     Vector<double> solution;
     Vector<double> explicit_part;
-
-    // Vector<float>  estimated_error_per_cell;
-    // Vector<float>  kelly_estimated_error_per_cell;
   };
 
 } // namespace nmpdeProject

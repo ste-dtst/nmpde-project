@@ -56,6 +56,11 @@
 // This will be needed to integrate in time
 #include <deal.II/sundials/arkode.h>
 
+// In order to ask ARKode for some info on the time stepping,
+// we need to include some functionalities that are not
+// wrapped by deal.II: we need the ARKStep header itself
+#include <arkode/arkode_arkstep.h>
+
 // Finally, we import the custom namespace we have created
 using namespace nmpdeProject;
 
@@ -318,13 +323,73 @@ HeatEquation<dim>::assemble_ode_explicit_part(const double t)
 
 
 template <int dim>
+void HeatEquation<dim>::refine_mesh(Vector<double> &sol,
+                                    const unsigned int min_grid_level,
+                                    const unsigned int max_grid_level)
+{
+  // If we want to refine the mesh, we have to update the dimension
+  // of matrices and vectors accordingly, update mass_matrix and
+  // jacobian_matrix, transfer the solution to the new mesh.
+  // In particular, the solution vector to be transferred is the given
+  // sol instead of solution, because the refine_mesh routine is
+  // called in ode.solver_should_restart (check further on).
+
+  // We start with the Kelly error estimation
+  Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
+
+  // ---------check the call to this---------------
+  KellyErrorEstimator<dim>::estimate(
+    dof_handler,
+    QGauss<dim - 1>(fe.degree + 1),
+    std::map<types::boundary_id, const Function<dim> *>(),
+    sol,
+    estimated_error_per_cell);
+
+  // We then mark the cells that have to be refined or coarsed
+  GridRefinement::refine_and_coarsen_fixed_fraction(triangulation,
+                                                    estimated_error_per_cell,
+                                                    par.refinement_top_fraction,
+                                                    par.refinement_bottom_fraction);
+
+  // We clear the flags that would make the mesh too coarse or too fine
+  if (triangulation.n_levels() > max_grid_level)
+    for (const auto &cell :
+         triangulation.active_cell_iterators_on_level(max_grid_level))
+      cell->clear_refine_flag();
+  for (const auto &cell :
+       triangulation.active_cell_iterators_on_level(min_grid_level))
+    cell->clear_coarsen_flag();
+
+  // The following step is to transfer the solution to the new mesh
+  SolutionTransfer<dim> solution_trans(dof_handler);
+
+  Vector<double> previous_solution;
+  previous_solution = sol;
+  triangulation.prepare_coarsening_and_refinement();
+  solution_trans.prepare_for_coarsening_and_refinement(previous_solution);
+
+  // -----complete the implementation of the sol transfer-----
+  
+  // triangulation.execute_coarsening_and_refinement();
+  // setup_ode_matrices();
+
+  // solution_trans.interpolate(previous_solution, sol);
+  // constraints.distribute(sol);
+
+  // Finally, we update mass_matrix and jacobian_matrix
+  assemble_ode_matrices();
+}
+
+
+
+template <int dim>
 void
 HeatEquation<dim>::solve_ode()
 {
   // We set some additional data for the solver. In particular,
   // we want to exploit the fact that the mass matrix and the
   // Jacobian matrix are independent of time.
-  const double out_prd = (par.final_time - par.initial_time) / par.nsteps;
+  const double out_prd = (par.final_time - par.initial_time) / par.out_steps;
   SUNDIALS::ARKode<Vector<double>>::AdditionalData data(
     par.initial_time,        // Initial time
     par.final_time,          // Final time
@@ -415,16 +480,55 @@ HeatEquation<dim>::solve_ode()
   // ode.solve_linearized_system function, see temp_dummy.cc
   // in the directory other_files.
 
+  // Here we store some relevant info on the time stepping
+  long int nsteps = 0;                  // Number of steps taken in the solver
+  double hlast = par.initial_step_size; // Step size taken on the last internal step
+  // double hcur = hlast;        // Step size to be attempted on the next internal step
+
+  // The following function is deputed to decide whether
+  // a mesh refinement is needed at time t. In that case,
+  // it will call refine_mesh() and return true in order to
+  // trigger the reset() function of the ARKode solver.
+  // Otherwise, it will return false.
+  // ode.solver_should_restart = [&](const double t, Vector<double> &sol){
+  //   (void)t;
+  //   (void)sol;
+  //   // Find a satisfying condition, e.g. every 10 steps?
+  //   if (false)
+  //   {
+  //     refine_mesh(sol, par.min_refinement, par.max_refinement);
+  //     return true;
+  //   }
+  //   else
+  //     return false;
+  // };
+
   // We supply a function for the output at fixed time intervals
   ode.output_step = [&](const double          t,
                         const Vector<double> &sol,
                         const unsigned int    step_number) {
+    std::cout << "-------------------------------------------" << std::endl;
     std::cout << "Time step " << step_number << " at t = " << t << "."
               << std::endl;
     std::cout << "L_inf norm of solution: " << solution.linfty_norm()
               << std::endl;
 
-    // If the exact solution is known, we compute the error at time t
+    // Some info on the time stepping so far. Here we call
+    // some ARKode functions that are not wrapped by deal.II
+    ARKStepGetNumSteps(ode.get_arkode_memory(), &nsteps);
+    ARKStepGetLastStep(ode.get_arkode_memory(), &hlast);
+    std::cout << "Number of ARKode steps taken so far: " << nsteps
+              << std::endl;
+    std::cout << "Step size taken on the last internal step: " << hlast
+              << std::endl;
+
+    // // Some info on the mesh and on the number of degrees of freedom
+    // std::cout << "Number of active cells: " << triangulation.n_active_cells()
+    //         << std::endl
+    //         << "Number of degrees of freedom: " << dof_handler.n_dofs()
+    //         << std::endl;
+
+    // If the exact solution is known, we compute the L2 error at time t
     if (par.sol_is_known)
       {
         par.exact_solution.set_time(t);
@@ -437,6 +541,8 @@ HeatEquation<dim>::solve_ode()
                                           VectorTools::L2_norm);
         std::cout << "L2 error: " << error.l2_norm() << std::endl;
       }
+
+    // We output the solution at the current time step
     output_results(sol, step_number);
   };
 

@@ -63,7 +63,7 @@
 2.3 - Faster moving Gaussian with time-dependent magnitude:
 
   set Exact solution expression  = t*exp(-2* ( (x-0.5*cos(-10*pi*t))^2 + (y-0.5*sin(-10*pi*t))^2 ) )
-  set Right hand side expression = -t*16*(-y - 0.5*sin(10*pi*t))^2*exp(-2*(x - 0.5*cos(10*pi*t))^2 - 2*(y + 0.5*sin(10*pi*t))^2) + t*(-20.0*pi*(x - 0.5*cos(10*pi*t))*sin(10*pi*t) - 20.0*pi*(y + 0.5*sin(10*pi*t))*cos(10*pi*t))*exp(-2*(x - 0.5*cos(10*pi*t))^2 - 2*(y + 0.5*sin(10*pi*t))^2) + 4*t*exp(-2*(x - 0.5*cos(10*pi*t))^2 - 2*(y + 0.5*sin(10*pi*t))^2) - 8*t + exp(-2*(x - 0.5*cos(10*pi*t))^2 - 2*(y + 0.5*sin(10*pi*t))^2)
+  set Right hand side expression = -t*16*(-x + 0.5*cos(10*pi*t))^2*exp(-2*(x - 0.5*cos(10*pi*t))^2 - 2*(y + 0.5*sin(10*pi*t))^2) - t*16*(-y - 0.5*sin(10*pi*t))^2*exp(-2*(x - 0.5*cos(10*pi*t))^2 - 2*(y + 0.5*sin(10*pi*t))^2) + t*(-20.0*pi*(x - 0.5*cos(10*pi*t))*sin(10*pi*t) - 20.0*pi*(y + 0.5*sin(10*pi*t))*cos(10*pi*t))*exp(-2*(x - 0.5*cos(10*pi*t))^2 - 2*(y + 0.5*sin(10*pi*t))^2) + 8*t*exp(-2*(x - 0.5*cos(10*pi*t))^2 - 2*(y + 0.5*sin(10*pi*t))^2) + exp(-2*(x - 0.5*cos(10*pi*t))^2 - 2*(y + 0.5*sin(10*pi*t))^2)
   set Initial value expression   = 0
   set Boundary value expression  = t*exp(-2* ( (x-0.5*cos(-10*pi*t))^2 + (y-0.5*sin(-10*pi*t))^2 ) )
 

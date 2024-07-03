@@ -85,19 +85,16 @@ Steeper solutions require finer meshes. In particular, I found that tweaking `ga
 
 **Some tests - 2D case**
 
-Problem 0.1.
-
-Here, modifying the parameters in a way that "would reduce the error" seems to mess things up a lot. Instead, default settings are better. In any case, the numerical solution does not behave as expected: there is a lot of flickering around the boundary (things get worse when playing with the parameters) and a diagonal pattern emerges on the mesh. I've already seen this at laboratory when talking about mixed elements, so my thoughts are: maybe FE_Q is not the right choice for this problem?
+Problem 0.1:
 
 |  		  											| Error at final time | # ARKode steps | Last stepsize |
 | ------------------------------------------------- |:------------------: | :------------: | :-----------: |
 | Default settings    								| 0.0030494 		  | 635 		   | 0.00560729    |
 | (e.g.) Setting `fe_degree` = 2, `gamma` = 100 	| 0.00144382 		  | 2126 		   | 0.000838382   |
 
-<video width="844" height="532" controls>
-  <source src="0_1pbm_2d.avi" type="video/mp4">
-</video>
+Here, modifying the parameters in a way that "would reduce the error" seems to mess things up a lot. Instead, default settings are better. In any case, the numerical solution does not behave as expected: there is a lot of flickering around the boundary (things get worse when playing with the parameters) and a diagonal pattern emerges on the mesh. I've already seen this at laboratory when talking about mixed elements, so my thoughts are: maybe FE_Q is not the right choice for this problem?
 
+[insert video here]
 
 To_be_completed! (For instance, problems 2.2 and 2.3 are instead well behaved)
 

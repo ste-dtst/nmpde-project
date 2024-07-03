@@ -62,21 +62,21 @@ Also, in the code (*at the moment, but may not be necessary*) there is a `if con
 Problem 0.1:
 
 |  		  											| Error at final time | # ARKode steps | Last stepsize |
-| 													|:------------------: | :------------: | :-----------: |
+| ------------------------------------------------- |:------------------: | :------------: | :-----------: |
 | Default settings    								| 0.0170169 		  | 239 		   | 0.00863937    |
 | Setting `initial_refinement` = 5, `gamma` = 100 	| 0.000897367 		  | 4588 		   | 0.00131488    |
 
 Problem 0.2:
 
 |  		  											| Error at final time | # ARKode steps | Last stepsize |
-| 													|:------------------: | :------------: | :-----------: |
+| ------------------------------------------------- |:------------------: | :------------: | :-----------: |
 | Default settings    								| 0.170158	 		  | 223 		   | 0.00248579    |
 | Setting `initial_refinement` = 5, `gamma` = 100 	| 0.00905921 		  | 4945 		   | 0.00399241    |
 
 Problem 1.1:
 
 |  		  											| Error at final time | # ARKode steps | Last stepsize |
-| 													|:------------------: | :------------: | :-----------: |
+| ------------------------------------------------- |:------------------: | :------------: | :-----------: |
 | Default settings    								| 0.123111	 		  | 186 		   | 0.0015718     |
 | Setting `initial_refinement` = 5, `gamma` = 100 	| 0.00599535 		  | 3245 		   | 0.00176189    |
 

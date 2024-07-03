@@ -15,7 +15,7 @@
 0.2 - A steeper moving front, oscillatory:
 
   set Exact solution expression  = 2-10*(x-cos(pi*t))^2
-  set Right hand side expression = -10*pi*(x - cos(pi*t))*sin(pi*t) - pi*(10*x - 10*cos(pi*t))*sin(pi*t) + 20
+  set Right hand side expression = -20*pi*(x - cos(pi*t))*sin(pi*t) + 20
   set Initial value expression   = 2-10*(x+1)^2
   set Boundary value expression  = 2-10*(x-cos(pi*t))^2
 

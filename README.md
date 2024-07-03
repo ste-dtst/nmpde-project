@@ -95,7 +95,7 @@ Here, modifying the parameters in a way that "would reduce the error" seems to m
 | (e.g.) Setting `fe_degree` = 2, `gamma` = 100 	| 0.00144382 		  | 2126 		   | 0.000838382   |
 
 <video width="844" height="532" controls>
-  <source src="0_1pbm_2d.avi" type="video/avi">
+  <source src="0_1pbm_2d.avi" type="video/mp4">
 </video>
 
 

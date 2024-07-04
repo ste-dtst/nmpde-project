@@ -118,9 +118,11 @@ Problem 2.2
 | Default settings    								| 0.00291171 		  | 377 		   | 0.00645471    |
 | Setting `initial_refinement` = 4					| 0.000823405 		  | 649 		   | 0.00258124    |
 | Setting `initial_refinement` = 4, `gamma` = 20 	| 0.000788807 		  | 963 		   | 0.00158109    |
-| Setting `fe_degree` = 2, `gamma` = 100 			| 0.0112832 		  | 6375 		   | 0.00231946    |
+| Setting `fe_degree` = 2, `gamma` = 100 			| 0.000490699 		  | 1743 		   | 0.00110908    |
 
-Same considerations as in previous cases. With default settings, the approximation of the solution is better, but still a slight flickering effect can be appreciated (e.g. by warping the solution by a scalar in Paraview). The flickering becomes worse when changing parameters (even when the overall error becomes smaller).
+Same considerations as in previous cases. With default settings, the approximation of the solution is better, but still a slight flickering effect can be appreciated (e.g. by warping the solution by a scalar in Paraview). The flickering becomes a lot worse when changing parameters (even when the overall error becomes smaller). See the following frame for a bad example (it is frame 97 of the case `fe_degree` = 2, `gamma` = 100):
+
+![Problem 2.2 visualization](./1_2pbm_2d.png)
 
 
 **A (sketchy) 3D test**

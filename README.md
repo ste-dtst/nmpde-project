@@ -57,47 +57,83 @@ Make sure to create them in advance in the folder where you will put the executa
 Also, in the code (*at the moment, but may not be necessary*) there is a `if constexpr` statement, which requires your compiler to support at least C++17.
 
 
-**Some tests - 1D case**
+**Some (sketchy) tests - 1D case**
 
-Problem 0.1:
+Problem 0.1
 
 |  		  											| Error at final time | # ARKode steps | Last stepsize |
 | ------------------------------------------------- |:------------------: | :------------: | :-----------: |
 | Default settings    								| 0.0170169 		  | 239 		   | 0.00863937    |
 | Setting `initial_refinement` = 5, `gamma` = 100 	| 0.000897367 		  | 4588 		   | 0.00131488    |
 
-Problem 0.2:
+Problem 0.2
 
 |  		  											| Error at final time | # ARKode steps | Last stepsize |
 | ------------------------------------------------- |:------------------: | :------------: | :-----------: |
 | Default settings    								| 0.170158	 		  | 223 		   | 0.00248579    |
 | Setting `initial_refinement` = 5, `gamma` = 100 	| 0.00905921 		  | 4945 		   | 0.00399241    |
 
-Problem 1.1:
+Problem 1.1
 
 |  		  											| Error at final time | # ARKode steps | Last stepsize |
 | ------------------------------------------------- |:------------------: | :------------: | :-----------: |
 | Default settings    								| 0.123111	 		  | 186 		   | 0.0015718     |
 | Setting `initial_refinement` = 5, `gamma` = 100 	| 0.00599535 		  | 3245 		   | 0.00176189    |
 
-Steeper solutions require finer meshes. In particular, I found that tweaking `gamma` when raising the number of refinements is important, otherwise numerical solutions might explode.
+Just a sketch of comparison is reported for the moment. Steeper solutions require finer meshes to produce the same error, which makes sense. In particular, I found that tweaking `gamma` when raising the number of refinements is important, otherwise numerical solutions might explode.
 
 
-**Some tests - 2D case**
+**Some more tests - 2D case**
 
-Problem 0.1:
+Problem 0.1
 
 |  		  											| Error at final time | # ARKode steps | Last stepsize |
 | ------------------------------------------------- |:------------------: | :------------: | :-----------: |
 | Default settings    								| 0.0030494 		  | 635 		   | 0.00560729    |
 | (e.g.) Setting `fe_degree` = 2, `gamma` = 100 	| 0.00144382 		  | 2126 		   | 0.000838382   |
 
-Here, modifying the parameters in a way that "would reduce the error" seems to mess things up a lot. Instead, default settings are better. In any case, the numerical solution does not behave as expected: there is a lot of flickering around the boundary (things get worse when playing with the parameters) and a diagonal pattern emerges on the mesh. I've already seen this at laboratory when talking about mixed elements, so my thoughts are: maybe FE_Q is not the right choice for this problem?
+Here, modifying the parameters in a way that "would reduce the error" seems to mess things up a lot. Instead, default settings are better. In any case, the numerical solution does not behave as expected: there is a lot of flickering around the boundary (things get worse when playing with the parameters) and a diagonal pattern emerges on the mesh. Also the error has an oscillating behavior in time.
 
-[insert video here]
+<video src="https://github.com/ste-dtst/nmpde-project/0_1pbm_2d.avi" width="844" height="532" controls></video>
 
-To_be_completed! (For instance, problems 2.2 and 2.3 are instead well behaved)
+I've already seen this diagonal pattern at laboratory when talking about mixed elements, so my thoughts are: maybe FE_Q is not the right choice for this problem?
 
+Problem 0.2
+
+|  		  											| Error at final time | # ARKode steps | Last stepsize |
+| ------------------------------------------------- |:------------------: | :------------: | :-----------: |
+| Default settings    								| 0.0249788 		  | 1255 		   | 0.0062923     |
+| Setting `initial_refinement` = 4					| 0.00843335 		  | 2243 		   | 0.00419644    |
+| Setting `initial_refinement` = 4, `gamma` = 20 	| 0.00763045 		  | 3486 		   | 0.0022916     |
+| Setting `fe_degree` = 2, `gamma` = 100 			| 0.0112832 		  | 6375 		   | 0.00231946    |
+
+The solution obtained with default settings seems almost as expected. Still it shows some very slight flickering as the one of problem 0.1. In some frames, also the diagonal pattern mentioned above can be appreciated. Playing with parameters does not improve the situation, although not with the mess observed in problem 0.1. As a side note, increasing `gamma` (with everything else fixed) leads to a lot more ARKode steps.
+
+Problem 2.1: I won't go into detail here, it is similar to problem 0.2.
+
+Problem 2.2
+
+|  		  											| Error at final time | # ARKode steps | Last stepsize |
+| ------------------------------------------------- |:------------------: | :------------: | :-----------: |
+| Default settings    								| 0.00291171 		  | 377 		   | 0.00645471    |
+| Setting `initial_refinement` = 4					| 0.000823405 		  | 649 		   | 0.00258124    |
+| Setting `initial_refinement` = 4, `gamma` = 20 	| 0.000788807 		  | 963 		   | 0.00158109    |
+| Setting `fe_degree` = 2, `gamma` = 100 			| 0.0112832 		  | 6375 		   | 0.00231946    |
+
+Same considerations as in previous cases. With default settings, the approximation of the solution is better, but still a slight flickering effect can be appreciated (e.g. by warping the solution by a scalar in Paraview). The flickering becomes worse when changing parameters (even when the overall error becomes smaller).
+
+
+**A (sketchy) 3D test**
+
+Problem 0.1
+
+**Key points**
+
+- As a general behavior, it seems that using a stepsize lower than $\sim 10^{-3}$ in the time stepper may not be a good idea.
+
+- Setting `gamma` is not straightforward: if it is too low, then the method becomes unstable, if it is too high the computational cost is increased (a higher value of `gamma` leads to ARKode using a significantly lower timestep size, hence a lot more function evaluations and linear systems to be solved).
+
+- The 2D solutions show signs of flickering/instability and the approximation (almost always) doesn't become more accurate when setting parameters in a way that would theoretically improve accuracy. This doesn't happen in 1D (or at least the flickering effect is not appreciable). I can't tell if it fully depends on the `gamma` parameter or if it is also related to the FE choice.
 
 
 **ToDo list**

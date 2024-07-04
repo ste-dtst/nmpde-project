@@ -107,7 +107,7 @@ Problem 0.2
 | Setting `initial_refinement` = 4, `gamma` = 20 	| 0.00763045 		  | 3486 		   | 0.0022916     |
 | Setting `fe_degree` = 2, `gamma` = 100 			| 0.0112832 		  | 6375 		   | 0.00231946    |
 
-The solution obtained with default settings seems almost as expected. Still it shows some very slight flickering as the one of problem 0.1. In some frames, also the diagonal pattern mentioned above can be appreciated. Playing with parameters does not improve the situation, although not with the mess observed in problem 0.1. As a side note, increasing `gamma` (with everything else fixed) leads to a lot more ARKode steps.
+The solution obtained with default settings seems almost as expected. Still it shows some very slight flickering as the one of problem 0.1. In some frames, also the diagonal pattern mentioned above can be appreciated. Playing with parameters does not improve the situation, although the mess observed in problem 0.1 is avoided. As a side note, increasing `gamma` (with everything else fixed) leads to a lot more ARKode steps.
 
 Problem 2.1: I won't go into detail here, it is similar to problem 0.2.
 
@@ -122,12 +122,21 @@ Problem 2.2
 
 Same considerations as in previous cases. With default settings, the approximation of the solution is better, but still a slight flickering effect can be appreciated (e.g. by warping the solution by a scalar in Paraview). The flickering becomes a lot worse when changing parameters (even when the overall error becomes smaller). See the following frame for a bad example (it is frame 97 of the case `fe_degree` = 2, `gamma` = 100):
 
-![Problem 2.2 visualization](./1_2pbm_2d.png)
+![Problem 2.2 visualization](./2_2pbm_2d.png)
 
 
 **A (sketchy) 3D test**
 
 Problem 0.1
+
+|  		  											| Error at final time | # ARKode steps | Last stepsize |
+| ------------------------------------------------- |:------------------: | :------------: | :-----------: |
+| Default settings    								| 0.00424171 		  | 990 		   | 0.00186179    |
+
+At the moment I've done only this test because the simulation takes a while to be completed. Since it shows the same behavior as in 2D, I think it's more important to solve the issue before doing more 3D tests.
+
+![Problem 0.1 visualization (3D)](./0_1pbm_3d.png)
+
 
 **Key points**
 
@@ -135,7 +144,7 @@ Problem 0.1
 
 - Setting `gamma` is not straightforward: if it is too low, then the method becomes unstable, if it is too high the computational cost is increased (a higher value of `gamma` leads to ARKode using a significantly lower timestep size, hence a lot more function evaluations and linear systems to be solved).
 
-- The 2D solutions show signs of flickering/instability and the approximation (almost always) doesn't become more accurate when setting parameters in a way that would theoretically improve accuracy. This doesn't happen in 1D (or at least the flickering effect is not appreciable). I can't tell if it fully depends on the `gamma` parameter or if it is also related to the FE choice.
+- The 2D and 3D solutions show signs of flickering/instability and the approximation (almost always) doesn't become more accurate when setting parameters in a way that would theoretically improve accuracy. This doesn't happen in 1D (or at least the flickering effect is not appreciable). I can't tell if it fully depends on the `gamma` parameter or if it is also related to the FE choice.
 
 
 **ToDo list**

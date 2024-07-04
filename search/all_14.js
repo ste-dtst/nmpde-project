@@ -33,7 +33,7 @@ var searchData=
   ['job_5fidentifier_2eh_30',['job_identifier.h',['http://www.dealii.org/developer/doxygen/deal.II/job__identifier_8h.html',1,'']]],
   ['job_5fsupports_5fmpi_31',['job_supports_mpi',['http://www.dealii.org/developer/doxygen/deal.II/namespaceUtilities_1_1MPI.html#aa8e632a701db5e1ba05c4656a914e82b',1,'Utilities::MPI::job_supports_mpi()'],['http://www.dealii.org/developer/doxygen/deal.II/namespaceUtilities_1_1System.html#ab6cf1529dc2a64dee9db7a6332725bb5',1,'Utilities::System::job_supports_mpi()']]],
   ['jobidentifier_32',['JobIdentifier',['http://www.dealii.org/developer/doxygen/deal.II/classJobIdentifier.html',1,'JobIdentifier'],['http://www.dealii.org/developer/doxygen/deal.II/classJobIdentifier.html#a6aab7c6e497bfbda7c824ffbb431229d',1,'JobIdentifier::JobIdentifier()']]],
-  ['join_33',['join',['http://www.dealii.org/developer/doxygen/deal.II/classThreads_1_1Task.html#a9aed8f99d2b88bd0d6cfff95e38c3ac7',1,'Threads::Task']]],
+  ['join_33',['join',['http://www.dealii.org/developer/doxygen/deal.II/classThreads_1_1Task.html#a9aed8f99d2b88bd0d6cfff95e38c3ac7',1,'Threads::Task::join()'],['http://www.dealii.org/developer/doxygen/deal.II/classThreads_1_1TaskResult.html#ab90f89e7d54cc43b027f6d716e9193c5',1,'Threads::TaskResult::join()']]],
   ['join_5fall_34',['join_all',['http://www.dealii.org/developer/doxygen/deal.II/classThreads_1_1TaskGroup.html#a2917c607a567538f8e560c849fa88ac6',1,'Threads::TaskGroup']]],
   ['join_5fedges_35',['join_edges',['http://www.dealii.org/developer/doxygen/deal.II/namespaceOpenCASCADE.html#a59c5d614d74c4091fe75f61de5242b0a',1,'OpenCASCADE']]],
   ['joinable_36',['joinable',['http://www.dealii.org/developer/doxygen/deal.II/classThreads_1_1Task.html#a8e57e5df39fd8ff079f74507dcb51d85',1,'Threads::Task']]],

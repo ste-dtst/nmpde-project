@@ -6,7 +6,7 @@ Instead of using Rothe's method, we will use the method of lines to solve the he
 
 **The problem**
 
-We consider the heat equation $u_t(x,t) - \Delta u(x,t) = f(x,t)$, with initial condition $u_0(x)$ and boundary condition $g(x,t)$. The domain for the space variable $x$ is a `hyper_L` (2D and 3D case) or the interval $[-1,1]$ (1D case), while the time variable $t$ is in a given interval $[t_0,t_1]$. The user can customize $f$, $u_0$, $g$, $t_0$ and $t_1$ via a .prm file. If also the exact solution $u$ is provided, then the program will compute the $L^2$ error for the numerical solution. In particular, if you want to test a *manufactured solution*, you can use the Jupyter Notebook `other_files/manufactured_heat.ipynb` to compute the correct $f$ automatically, given $u$.
+We consider the heat equation $u_t(x,t) - \Delta u(x,t) = f(x,t)$, with initial condition $u_0(x)$ and boundary condition $g(x,t)$. The domain for the space variable $x$ is a `hyper_L` (2D and 3D case) or the interval $[-1,1]$ (1D case), while the time variable $t$ is in a given interval $[t_0,t_1]$. The user can customize $f$, $u_0$, $g$, $t_0$ and $t_1$ via a .prm file. If also the exact solution $u$ is provided, then the program will compute the $L^2$ error for the numerical solution. In particular, if you want to test a *manufactured solution*, you can find some examples in `other_files/test_functions.txt` or use the Jupyter Notebook `other_files/manufactured_heat.ipynb` to compute the correct $f$ automatically, given $u$.
 
 The weak form we obtain by using Nitsche's method is the following:
 
@@ -94,7 +94,7 @@ Problem 0.1
 
 Here, modifying the parameters in a way that "would reduce the error" seems to mess things up a lot. Instead, default settings are better. In any case, the numerical solution does not behave as expected: there is a lot of flickering around the boundary (things get worse when playing with the parameters) and a diagonal pattern emerges on the mesh. Also the error has an oscillating behavior in time.
 
-<video src="https://github.com/ste-dtst/nmpde-project/0_1pbm_2d.avi" width="844" height="532" controls></video>
+<video src="./0_1pbm_2d.avi" width="844" height="532" controls></video>
 
 I've already seen this diagonal pattern at laboratory when talking about mixed elements, so my thoughts are: maybe FE_Q is not the right choice for this problem?
 

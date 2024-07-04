@@ -94,7 +94,7 @@ Problem 0.1
 
 Here, modifying the parameters in a way that "would reduce the error" seems to mess things up a lot. Instead, default settings are better. In any case, the numerical solution does not behave as expected: there is a lot of flickering around the boundary (things get worse when playing with the parameters) and a diagonal pattern emerges on the mesh. Also the error has an oscillating behavior in time.
 
-<video src="./0_1pbm_2d.avi" width="844" height="532" controls></video>
+![Problem 0.1 visualization](./0_1pbm_2d.png)
 
 I've already seen this diagonal pattern at laboratory when talking about mixed elements, so my thoughts are: maybe FE_Q is not the right choice for this problem?
 

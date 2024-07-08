@@ -53,6 +53,12 @@
 #include <deal.II/numerics/solution_transfer.h>
 #include <deal.II/numerics/vector_tools.h>
 
+// We include the MeshWorker functionality in order to parallelize
+// the assembly of the matrices and vectors for the ODE
+#include <deal.II/meshworker/copy_data.h>
+#include <deal.II/meshworker/mesh_loop.h>
+#include <deal.II/meshworker/scratch_data.h>
+
 // This will be needed to integrate in time
 #include <deal.II/sundials/arkode.h>
 
@@ -118,108 +124,144 @@ void
 HeatEquation<dim>::assemble_ode_matrices()
 {
   // We assemble the mass matrix and the matrix for the implicit part
-  // of the ODE in the usual way.
+  // of the ODE using the MeshWorker framework.
+  // First, we need the ScratchData and CopyData objects.
 
-  // Declare the quadrature formulas
-  FEValues<dim> fe_values(fe,
-                          QGauss<dim>(fe.degree + 1),
-                          update_values | update_gradients |
-                            update_quadrature_points | update_JxW_values);
+  // Scratch data: declare the quadrature formulas
+  MeshWorker::ScratchData<dim> scratch_data(fe,
+                                            QGauss<dim>(fe.degree + 1),
+                                            update_values | update_gradients |
+                                              update_quadrature_points |
+                                              update_JxW_values,
+                                            QGauss<dim - 1>(fe.degree + 1),
+                                            update_values | update_gradients |
+                                              update_quadrature_points |
+                                              update_normal_vectors |
+                                              update_JxW_values);
 
-  FEFaceValues<dim> fe_face_values(fe,
-                                   QGauss<dim - 1>(fe.degree + 1),
-                                   update_values | update_gradients |
-                                     update_quadrature_points |
-                                     update_normal_vectors | update_JxW_values);
+  // Copy data: we need two matrices to store the local contributions
+  // to the mass matrix and the jacobian matrix, no vector.
+  MeshWorker::CopyData<2, 0, 1> copy_data(fe.n_dofs_per_cell());
 
-  // Set the usual cell-related objects
-  const unsigned int dofs_per_cell = fe.n_dofs_per_cell();
+  // Cell worker
+  const auto cell_worker = [&](const auto &cell, auto &scratch, auto &copy) {
+    // Initialize the fe_values to current cell
+    const auto &fe_values = scratch.reinit(cell);
 
-  FullMatrix<double> cell_mass_matrix(dofs_per_cell, dofs_per_cell);
-  FullMatrix<double> cell_jacobian_matrix(dofs_per_cell, dofs_per_cell);
+    // Get the cell matrices, cell explicit part, and local dof indices
+    auto &cell_mass_matrix     = copy.matrices[0];
+    auto &cell_jacobian_matrix = copy.matrices[1];
+    auto &local_dof_indices    = copy.local_dof_indices[0];
 
-  std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
+    // Initialize the matrices to zero
+    cell_mass_matrix     = 0;
+    cell_jacobian_matrix = 0;
 
-  // Loop over cells
-  for (const auto &cell : dof_handler.active_cell_iterators())
-    {
-      // Initialize the fe_values to current cell
-      fe_values.reinit(cell);
+    // Initialize the local dof indices to current cell
+    cell->get_dof_indices(local_dof_indices);
 
-      // Initialize the cell matrices to zero
-      cell_mass_matrix     = 0;
-      cell_jacobian_matrix = 0;
-
-      // The usual loop over quadrature points
-      for (const unsigned int q_index : fe_values.quadrature_point_indices())
-        for (const unsigned int i : fe_values.dof_indices())
-          for (const unsigned int j : fe_values.dof_indices())
-            {
-              cell_mass_matrix(i, j) +=
-                (fe_values.shape_value(i, q_index) * // phi_i(x_q)
-                 fe_values.shape_value(j, q_index) * // phi_j(x_q)
-                 fe_values.JxW(q_index));            // dx
-
-              cell_jacobian_matrix(i, j) -=
-                (fe_values.shape_grad(i, q_index) * // grad phi_i(x_q)
-                 fe_values.shape_grad(j, q_index) * // grad phi_j(x_q)
-                 fe_values.JxW(q_index));           // dx
-            }
-
-      // Loop over faces at the boundary of the current cell (if there are
-      // any)
-      for (auto &face : cell->face_iterators())
-        if (face->at_boundary())
-          {
-            // Initialize the fe_face_values to current face
-            fe_face_values.reinit(cell, face);
-
-            // Compute the diameter of the face, being aware that
-            // for dim = 1 it is not defined (-> we set it to 1).
-            // Here we use a constexpr if statement (C++17).
-            double face_diam;
-            if constexpr (dim == 1)
-              face_diam = 1;
-            else
-              face_diam = face->diameter();
-
-            // Loop over face quadrature points. The formulas are a bit
-            // condensed, in order to do less arithmetic operations.
-            for (const unsigned int q_index :
-                 fe_face_values.quadrature_point_indices())
-              for (const unsigned int i : fe_face_values.dof_indices())
-                for (const unsigned int j : fe_face_values.dof_indices())
-                  cell_jacobian_matrix(i, j) +=
-                    (((fe_face_values.shape_value(i, q_index) * // phi_i(x_q)
-                         fe_face_values.shape_grad(j,
-                                                   q_index) + // grad phi_j(x_q)
-                       fe_face_values.shape_grad(i,
-                                                 q_index) * // grad phi_i(x_q)
-                         fe_face_values.shape_value(j,
-                                                    q_index)) *  // phi_j(x_q)
-                        fe_face_values.normal_vector(q_index) -  // n
-                      par.gamma / face_diam *                    // gamma/h
-                        fe_face_values.shape_value(i, q_index) * // phi_i(x_q)
-                        fe_face_values.shape_value(j,
-                                                   q_index)) * // phi_j(x_q)
-                     fe_face_values.JxW(q_index));             // dx
-          }
-
-      // Initialize the local dof indices to current cell
-      cell->get_dof_indices(local_dof_indices);
-
-      // Distribute local to global
+    // The usual loop over quadrature points
+    for (const unsigned int q_index : fe_values.quadrature_point_indices())
       for (const unsigned int i : fe_values.dof_indices())
         for (const unsigned int j : fe_values.dof_indices())
           {
-            mass_matrix.add(local_dof_indices[i],
-                            local_dof_indices[j],
-                            cell_mass_matrix(i, j));
-            jacobian_matrix.add(local_dof_indices[i],
-                                local_dof_indices[j],
-                                cell_jacobian_matrix(i, j));
+            cell_mass_matrix(i, j) +=
+              (fe_values.shape_value(i, q_index) * // phi_i(x_q)
+               fe_values.shape_value(j, q_index) * // phi_j(x_q)
+               fe_values.JxW(q_index));            // dx
+
+            cell_jacobian_matrix(i, j) -=
+              (fe_values.shape_grad(i, q_index) * // grad phi_i(x_q)
+               fe_values.shape_grad(j, q_index) * // grad phi_j(x_q)
+               fe_values.JxW(q_index));           // dx
           }
-    }
+  };
+
+  // Boundary worker
+  const auto boundary_worker =
+    [&](const auto &cell, const auto &face_no, auto &scratch, auto &copy) {
+      // Initialize the fe_face_values to current face
+      auto &fe_face_values = scratch.reinit(cell, face_no);
+
+      // In the boundary worker we will work only for the jacobian matrix,
+      // therefore we create an alias only for it. We DO NOT reinitialize
+      // anything here, or we will overwrite data computed in the cell worker.
+      auto &cell_jacobian_matrix = copy.matrices[1];
+
+      // Since we already have initialized the local dof indices in the cell
+      // worker, we don't need to do it again here.
+
+      // Compute the diameter of the face, being aware that
+      // for dim = 1 it is not defined (-> we set it to 1).
+      // Here we use a constexpr if statement (C++17).
+      double face_diam;
+      if constexpr (dim == 1)
+        face_diam = 1;
+      else
+        face_diam = cell->face(face_no)->diameter();
+
+      // Loop over face quadrature points. The formulas are a bit
+      // condensed, in order to do less arithmetic operations.
+      for (const unsigned int q_index :
+           fe_face_values.quadrature_point_indices())
+        for (const unsigned int i : fe_face_values.dof_indices())
+          for (const unsigned int j : fe_face_values.dof_indices())
+            cell_jacobian_matrix(i, j) +=
+              (((fe_face_values.shape_value(i, q_index) *    // phi_i(x_q)
+                   fe_face_values.shape_grad(j, q_index) +   // grad phi_j(x_q)
+                 fe_face_values.shape_grad(i, q_index) *     // grad phi_i(x_q)
+                   fe_face_values.shape_value(j, q_index)) * // phi_j(x_q)
+                  fe_face_values.normal_vector(q_index) -    // n
+                par.gamma / face_diam *                      // gamma/h
+                  fe_face_values.shape_value(i, q_index) *   // phi_i(x_q)
+                  fe_face_values.shape_value(j, q_index)) *  // phi_j(x_q)
+               fe_face_values.JxW(q_index));                 // dx
+    };
+
+  // Copier function
+  const auto copier = [&](const auto &copy) {
+    auto &cell_mass_matrix     = copy.matrices[0];
+    auto &cell_jacobian_matrix = copy.matrices[1];
+    auto &local_dof_indices    = copy.local_dof_indices[0];
+
+    // Distribute local to global
+    for (unsigned int i = 0; i < size(local_dof_indices); ++i)
+      for (unsigned int j = 0; j < size(local_dof_indices); ++j)
+        {
+          mass_matrix.add(local_dof_indices[i],
+                          local_dof_indices[j],
+                          cell_mass_matrix(i, j));
+          jacobian_matrix.add(local_dof_indices[i],
+                              local_dof_indices[j],
+                              cell_jacobian_matrix(i, j));
+        }
+
+    // for (const unsigned int i : fe_values.dof_indices())
+    //   for (const unsigned int j : fe_values.dof_indices())
+    //     {
+    //       mass_matrix.add(local_dof_indices[i],
+    //                       local_dof_indices[j],
+    //                       cell_mass_matrix(i, j));
+    //       jacobian_matrix.add(local_dof_indices[i],
+    //                           local_dof_indices[j],
+    //                           cell_jacobian_matrix(i, j));
+    //     }
+
+    // constraints.distribute_local_to_global(
+    //   copy.matrices[0], copy.vectors[0], copy.local_dof_indices[0],
+    //   system_matrix, system_rhs);
+  };
+
+  // Finally, we run the MeshWorker loop
+  MeshWorker::mesh_loop(dof_handler.begin_active(),
+                        dof_handler.end(),
+                        cell_worker,
+                        copier,
+                        scratch_data,
+                        copy_data,
+                        MeshWorker::assemble_own_cells |
+                          MeshWorker::assemble_boundary_faces,
+                        boundary_worker);
 }
 
 
@@ -228,96 +270,124 @@ template <int dim>
 void
 HeatEquation<dim>::assemble_ode_explicit_part(const double t)
 {
-  // We assemble also the explicit part of the ODE in the usual way.
+  // We assemble also the explicit part of the ODE with MeshWorker.
 
   // First, we reinit the global vector to zero
   explicit_part.reinit(dof_handler.n_dofs());
-
-  // Declare the quadrature formulas
-  FEValues<dim> fe_values(fe,
-                          QGauss<dim>(fe.degree + 1),
-                          update_values | update_gradients |
-                            update_quadrature_points | update_JxW_values);
-
-  FEFaceValues<dim> fe_face_values(fe,
-                                   QGauss<dim - 1>(fe.degree + 1),
-                                   update_values | update_gradients |
-                                     update_quadrature_points |
-                                     update_normal_vectors | update_JxW_values);
-
-  // Set the cell-related objects
-  const unsigned int dofs_per_cell = fe.n_dofs_per_cell();
-
-  Vector<double> cell_explicit_part(dofs_per_cell);
-
-  std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
   // Set the right-hand side and boundary value's time to t
   par.right_hand_side.set_time(t);
   par.boundary_value.set_time(t);
 
-  // Loop over cells
-  for (const auto &cell : dof_handler.active_cell_iterators())
-    {
-      // Initialize the fe_values to current cell
-      fe_values.reinit(cell);
+  // Scratch data: declare the quadrature formulas
+  MeshWorker::ScratchData<dim> scratch_data(fe,
+                                            QGauss<dim>(fe.degree + 1),
+                                            update_values | update_gradients |
+                                              update_quadrature_points |
+                                              update_JxW_values,
+                                            QGauss<dim - 1>(fe.degree + 1),
+                                            update_values | update_gradients |
+                                              update_quadrature_points |
+                                              update_normal_vectors |
+                                              update_JxW_values);
 
-      // Initialize the cell vector to zero
-      cell_explicit_part = 0;
+  // Copy data: we need only a vector to store the local contributions
+  // to the explicit part of the ODE.
+  MeshWorker::CopyData<0, 1, 1> copy_data(fe.n_dofs_per_cell());
 
-      // The usual loop over quadrature points
-      for (const unsigned int q_index : fe_values.quadrature_point_indices())
+  // Cell worker
+  const auto cell_worker = [&](const auto &cell, auto &scratch, auto &copy) {
+    // Initialize the fe_values to current cell
+    const auto &fe_values = scratch.reinit(cell);
+
+    // Get the cell explicit part and the local dof indices
+    auto &cell_explicit_part = copy.vectors[0];
+    auto &local_dof_indices  = copy.local_dof_indices[0];
+
+    // Initialize the vector to zero
+    cell_explicit_part = 0;
+
+    // Initialize the local dof indices to current cell
+    cell->get_dof_indices(local_dof_indices);
+
+    // The usual loop over quadrature points
+    for (const unsigned int q_index : fe_values.quadrature_point_indices())
+      {
+        const auto &x_q = fe_values.quadrature_point(q_index);
+        for (const unsigned int i : fe_values.dof_indices())
+          cell_explicit_part(i) +=
+            (fe_values.shape_value(i, q_index) * // phi_i(x_q)
+             par.right_hand_side.value(x_q) *    // f(x_q)
+             fe_values.JxW(q_index));            // dx
+      }
+  };
+
+  // Boundary worker
+  const auto boundary_worker =
+    [&](const auto &cell, const auto &face_no, auto &scratch, auto &copy) {
+      // Initialize the fe_face_values to current face
+      auto &fe_face_values = scratch.reinit(cell, face_no);
+
+      // As done before, we DO NOT reinitialize anything here, or
+      // we will overwrite data computed in the cell worker.
+      auto &cell_explicit_part = copy.vectors[0];
+
+      // Since we already have initialized the local dof indices in the cell
+      // worker, we don't need to do it again here.
+
+      // Compute the diameter of the face, being aware that
+      // for dim = 1 it is not defined (-> we set it to 1).
+      // Here we use a constexpr if statement (C++17).
+      double face_diam;
+      if constexpr (dim == 1)
+        face_diam = 1;
+      else
+        face_diam = cell->face(face_no)->diameter();
+
+      // Loop over face quadrature points. The formula is a bit
+      // condensed, in order to do less arithmetic operations.
+      for (const unsigned int q_index :
+           fe_face_values.quadrature_point_indices())
         {
-          const auto &x_q = fe_values.quadrature_point(q_index);
-          for (const unsigned int i : fe_values.dof_indices())
+          const auto &x_q = fe_face_values.quadrature_point(q_index);
+          for (const unsigned int i : fe_face_values.dof_indices())
             cell_explicit_part(i) +=
-              (fe_values.shape_value(i, q_index) * // phi_i(x_q)
-               par.right_hand_side.value(x_q) *    // f(x_q)
-               fe_values.JxW(q_index));            // dx
+              ((par.gamma / face_diam *                    // gamma/h
+                  fe_face_values.shape_value(i, q_index) - // phi_i(x_q)
+                fe_face_values.shape_grad(i, q_index) *    // grad phi_i(x_q)
+                  fe_face_values.normal_vector(q_index)) * // n
+               par.boundary_value.value(x_q) *             // g(x_q)
+               fe_face_values.JxW(q_index));               // dx
         }
+    };
 
-      // Loop over faces at the boundary of the current cell (if there are
-      // any)
-      for (auto &face : cell->face_iterators())
-        if (face->at_boundary())
-          {
-            // Initialize the fe_face_values to current face
-            fe_face_values.reinit(cell, face);
+  // Copier function
+  const auto copier = [&](const auto &copy) {
+    auto &cell_explicit_part = copy.vectors[0];
+    auto &local_dof_indices  = copy.local_dof_indices[0];
 
-            // Compute the diameter of the face, being aware that
-            // for dim = 1 it is not defined (-> we set it to 1).
-            // Here we use a constexpr if statement (C++17).
-            double face_diam;
-            if constexpr (dim == 1)
-              face_diam = 1;
-            else
-              face_diam = face->diameter();
+    // Distribute local to global
+    for (unsigned int i = 0; i < size(local_dof_indices); ++i)
+      explicit_part(local_dof_indices[i]) += cell_explicit_part(i);
 
-            // Loop over face quadrature points. The formula is a bit
-            // condensed, in order to do less arithmetic operations.
-            for (const unsigned int q_index :
-                 fe_face_values.quadrature_point_indices())
-              {
-                const auto &x_q = fe_face_values.quadrature_point(q_index);
-                for (const unsigned int i : fe_face_values.dof_indices())
-                  cell_explicit_part(i) +=
-                    ((par.gamma / face_diam *                    // gamma/h
-                        fe_face_values.shape_value(i, q_index) - // phi_i(x_q)
-                      fe_face_values.shape_grad(i,
-                                                q_index) * // grad phi_i(x_q)
-                        fe_face_values.normal_vector(q_index)) * // n
-                     par.boundary_value.value(x_q) *             // g(x_q)
-                     fe_face_values.JxW(q_index));               // dx
-              }
-          }
+    // for (const unsigned int i : fe_values.dof_indices())
+    //   explicit_part(local_dof_indices[i]) += cell_explicit_part(i);
 
-      // Initialize the local dof indices to current cell
-      cell->get_dof_indices(local_dof_indices);
+    // constraints.distribute_local_to_global(
+    //   copy.matrices[0], copy.vectors[0], copy.local_dof_indices[0],
+    //   system_matrix, system_rhs);
+  };
 
-      // Distribute local to global
-      for (const unsigned int i : fe_values.dof_indices())
-        explicit_part(local_dof_indices[i]) += cell_explicit_part(i);
-    }
+  // Finally, we run the MeshWorker loop
+  MeshWorker::mesh_loop(dof_handler.begin_active(),
+                        dof_handler.end(),
+                        cell_worker,
+                        copier,
+                        scratch_data,
+                        copy_data,
+                        MeshWorker::assemble_own_cells |
+                          MeshWorker::assemble_boundary_faces,
+                        boundary_worker);
 }
 
 

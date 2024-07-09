@@ -166,7 +166,7 @@ Problem 0.1, for example
 |  		  											| Error at final time | # ARKode steps | Last stepsize |
 | ------------------------------------------------- |:------------------: | :------------: | :-----------: |
 | Default settings    								| 0.00424171 		  | 990 		   | 0.00186179    |
-| Setting `initial_refinement` = 2					| 0.00262032 		  | 630 		   | 0.00827368    |
+| Setting `initial_refinement` = 2					| 0.00827368 		  | 630 		   | 0.00262032    |
 
 
 An example of flickering:

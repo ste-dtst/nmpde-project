@@ -156,20 +156,36 @@ HeatEquation<dim>::assemble_ode_matrices()
     // Initialize the local dof indices to current cell
     cell->get_dof_indices(local_dof_indices);
 
-    // The usual loop over quadrature points
+    // The usual loop over quadrature points, with a slight variation.
+    // Since the matrices are symmetric, we do the calculations only
+    // for the lower triangular part and save some computational work.
     for (const unsigned int q_index : fe_values.quadrature_point_indices())
       for (const unsigned int i : fe_values.dof_indices())
-        for (const unsigned int j : fe_values.dof_indices())
+        for (unsigned int j = 0; j <= i; ++j)
           {
-            cell_mass_matrix(i, j) +=
-              (fe_values.shape_value(i, q_index) * // phi_i(x_q)
-               fe_values.shape_value(j, q_index) * // phi_j(x_q)
-               fe_values.JxW(q_index));            // dx
+            // Do the calculations
+            auto mass_temp = (fe_values.shape_value(i, q_index) * // phi_i(x_q)
+                              fe_values.shape_value(j, q_index) * // phi_j(x_q)
+                              fe_values.JxW(q_index));            // dx
 
-            cell_jacobian_matrix(i, j) -=
+            auto jacobian_temp =
               (fe_values.shape_grad(i, q_index) * // grad phi_i(x_q)
                fe_values.shape_grad(j, q_index) * // grad phi_j(x_q)
                fe_values.JxW(q_index));           // dx
+
+            // Update the matrices exploiting the symmetry
+            if (j == i)
+              {
+                cell_mass_matrix(i, j) += mass_temp;
+                cell_jacobian_matrix(i, j) -= jacobian_temp;
+              }
+            else // j < i
+              {
+                cell_mass_matrix(i, j) += mass_temp;
+                cell_mass_matrix(j, i) += mass_temp;
+                cell_jacobian_matrix(i, j) -= jacobian_temp;
+                cell_jacobian_matrix(j, i) -= jacobian_temp;
+              }
           }
   };
 
@@ -198,20 +214,33 @@ HeatEquation<dim>::assemble_ode_matrices()
 
       // Loop over face quadrature points. The formulas are a bit
       // condensed, in order to do less arithmetic operations.
+      // As before, we also exploit the symmetry of the matrices.
       for (const unsigned int q_index :
            fe_face_values.quadrature_point_indices())
         for (const unsigned int i : fe_face_values.dof_indices())
-          for (const unsigned int j : fe_face_values.dof_indices())
-            cell_jacobian_matrix(i, j) +=
-              (((fe_face_values.shape_value(i, q_index) *    // phi_i(x_q)
-                   fe_face_values.shape_grad(j, q_index) +   // grad phi_j(x_q)
-                 fe_face_values.shape_grad(i, q_index) *     // grad phi_i(x_q)
-                   fe_face_values.shape_value(j, q_index)) * // phi_j(x_q)
-                  fe_face_values.normal_vector(q_index) -    // n
-                par.gamma / face_diam *                      // gamma/h
-                  fe_face_values.shape_value(i, q_index) *   // phi_i(x_q)
-                  fe_face_values.shape_value(j, q_index)) *  // phi_j(x_q)
-               fe_face_values.JxW(q_index));                 // dx
+          for (unsigned int j = 0; j <= i; ++j)
+            {
+              // Do the calculations
+              auto jacobian_temp =
+                (((fe_face_values.shape_value(i, q_index) *  // phi_i(x_q)
+                     fe_face_values.shape_grad(j, q_index) + // grad phi_j(x_q)
+                   fe_face_values.shape_grad(i, q_index) *   // grad phi_i(x_q)
+                     fe_face_values.shape_value(j, q_index)) * // phi_j(x_q)
+                    fe_face_values.normal_vector(q_index) -    // n
+                  par.gamma / face_diam *                      // gamma/h
+                    fe_face_values.shape_value(i, q_index) *   // phi_i(x_q)
+                    fe_face_values.shape_value(j, q_index)) *  // phi_j(x_q)
+                 fe_face_values.JxW(q_index));                 // dx
+
+              // Update the matrix exploiting the symmetry
+              if (j == i)
+                cell_jacobian_matrix(i, j) += jacobian_temp;
+              else // j < i
+                {
+                  cell_jacobian_matrix(i, j) += jacobian_temp;
+                  cell_jacobian_matrix(j, i) += jacobian_temp;
+                }
+            }
     };
 
   // Copier function

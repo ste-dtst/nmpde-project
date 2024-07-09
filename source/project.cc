@@ -96,18 +96,16 @@ HeatEquation<dim>::setup_ode()
             << std::endl
             << std::endl;
 
-  // Useless call at the moment (there's no refinement)
-  // constraints.clear();
-  // DoFTools::make_hanging_node_constraints(dof_handler, constraints);
-  // constraints.close();
+  // We reinitialize the constraints object
+  constraints.clear();
+  DoFTools::make_hanging_node_constraints(dof_handler, constraints);
+  constraints.close();
 
   // We allocate the sparsity pattern for the matrices
   DynamicSparsityPattern dsp(dof_handler.n_dofs());
-  DoFTools::make_sparsity_pattern(dof_handler, dsp);
-  // DoFTools::make_sparsity_pattern(dof_handler,
-  //                                 dsp,
-  //                                 constraints,
-  //                                 /*keep_constrained_dofs = */ true);
+  DoFTools::make_sparsity_pattern(dof_handler,
+                                  dsp,
+                                  constraints);
   sparsity_pattern.copy_from(dsp);
 
   // Finally, we initialize the matrices and the solution vector
@@ -220,36 +218,15 @@ HeatEquation<dim>::assemble_ode_matrices()
 
   // Copier function
   const auto copier = [&](const auto &copy) {
-    auto &cell_mass_matrix     = copy.matrices[0];
-    auto &cell_jacobian_matrix = copy.matrices[1];
-    auto &local_dof_indices    = copy.local_dof_indices[0];
+    // auto &cell_mass_matrix     = copy.matrices[0];
+    // auto &cell_jacobian_matrix = copy.matrices[1];
+    // auto &local_dof_indices    = copy.local_dof_indices[0];
 
     // Distribute local to global
-    for (unsigned int i = 0; i < size(local_dof_indices); ++i)
-      for (unsigned int j = 0; j < size(local_dof_indices); ++j)
-        {
-          mass_matrix.add(local_dof_indices[i],
-                          local_dof_indices[j],
-                          cell_mass_matrix(i, j));
-          jacobian_matrix.add(local_dof_indices[i],
-                              local_dof_indices[j],
-                              cell_jacobian_matrix(i, j));
-        }
-
-    // for (const unsigned int i : fe_values.dof_indices())
-    //   for (const unsigned int j : fe_values.dof_indices())
-    //     {
-    //       mass_matrix.add(local_dof_indices[i],
-    //                       local_dof_indices[j],
-    //                       cell_mass_matrix(i, j));
-    //       jacobian_matrix.add(local_dof_indices[i],
-    //                           local_dof_indices[j],
-    //                           cell_jacobian_matrix(i, j));
-    //     }
-
-    // constraints.distribute_local_to_global(
-    //   copy.matrices[0], copy.vectors[0], copy.local_dof_indices[0],
-    //   system_matrix, system_rhs);
+    constraints.distribute_local_to_global(
+      copy.matrices[0], copy.local_dof_indices[0], mass_matrix);
+    constraints.distribute_local_to_global(
+      copy.matrices[1], copy.local_dof_indices[0], jacobian_matrix);
   };
 
   // Finally, we run the MeshWorker loop
@@ -363,19 +340,12 @@ HeatEquation<dim>::assemble_ode_explicit_part(const double t)
 
   // Copier function
   const auto copier = [&](const auto &copy) {
-    auto &cell_explicit_part = copy.vectors[0];
-    auto &local_dof_indices  = copy.local_dof_indices[0];
+    // auto &cell_explicit_part = copy.vectors[0];
+    // auto &local_dof_indices  = copy.local_dof_indices[0];
 
     // Distribute local to global
-    for (unsigned int i = 0; i < size(local_dof_indices); ++i)
-      explicit_part(local_dof_indices[i]) += cell_explicit_part(i);
-
-    // for (const unsigned int i : fe_values.dof_indices())
-    //   explicit_part(local_dof_indices[i]) += cell_explicit_part(i);
-
-    // constraints.distribute_local_to_global(
-    //   copy.matrices[0], copy.vectors[0], copy.local_dof_indices[0],
-    //   system_matrix, system_rhs);
+    constraints.distribute_local_to_global(
+      copy.vectors[0], copy.local_dof_indices[0], explicit_part);
   };
 
   // Finally, we run the MeshWorker loop

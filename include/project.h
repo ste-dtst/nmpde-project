@@ -263,7 +263,7 @@ namespace nmpdeProject
     FE_Q<dim>          fe;
     DoFHandler<dim>    dof_handler;
 
-    // AffineConstraints<double> constraints;
+    AffineConstraints<double> constraints;
 
     // Here we have the matrices involved in the ODE
     SparsityPattern      sparsity_pattern;

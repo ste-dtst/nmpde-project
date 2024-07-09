@@ -8,6 +8,7 @@ var classnmpde_project_1_1_heat_equation =
     [ "run", "classnmpde_project_1_1_heat_equation.html#ae9137ee32716b728a4d207e4a6bb2718", null ],
     [ "setup_ode", "classnmpde_project_1_1_heat_equation.html#aa019eb062013c05a74108ccfb7ba93ff", null ],
     [ "solve_ode", "classnmpde_project_1_1_heat_equation.html#a1a6a9a672de81cf1e9d9ec7c6f1ca3f3", null ],
+    [ "constraints", "classnmpde_project_1_1_heat_equation.html#a9eaa806b4e34f1d07dfb13dc7c46a59d", null ],
     [ "dof_handler", "classnmpde_project_1_1_heat_equation.html#a390b57207f8311ea772c67d918e9612c", null ],
     [ "explicit_part", "classnmpde_project_1_1_heat_equation.html#a1a993e30aaab572f82e945eece1af58b", null ],
     [ "fe", "classnmpde_project_1_1_heat_equation.html#adca5249f0f33f56eb847d178181167a4", null ],

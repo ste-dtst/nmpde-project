@@ -103,9 +103,7 @@ HeatEquation<dim>::setup_ode()
 
   // We allocate the sparsity pattern for the matrices
   DynamicSparsityPattern dsp(dof_handler.n_dofs());
-  DoFTools::make_sparsity_pattern(dof_handler,
-                                  dsp,
-                                  constraints);
+  DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints);
   sparsity_pattern.copy_from(dsp);
 
   // Finally, we initialize the matrices and the solution vector
@@ -223,10 +221,12 @@ HeatEquation<dim>::assemble_ode_matrices()
     // auto &local_dof_indices    = copy.local_dof_indices[0];
 
     // Distribute local to global
-    constraints.distribute_local_to_global(
-      copy.matrices[0], copy.local_dof_indices[0], mass_matrix);
-    constraints.distribute_local_to_global(
-      copy.matrices[1], copy.local_dof_indices[0], jacobian_matrix);
+    constraints.distribute_local_to_global(copy.matrices[0],
+                                           copy.local_dof_indices[0],
+                                           mass_matrix);
+    constraints.distribute_local_to_global(copy.matrices[1],
+                                           copy.local_dof_indices[0],
+                                           jacobian_matrix);
   };
 
   // Finally, we run the MeshWorker loop
@@ -344,8 +344,9 @@ HeatEquation<dim>::assemble_ode_explicit_part(const double t)
     // auto &local_dof_indices  = copy.local_dof_indices[0];
 
     // Distribute local to global
-    constraints.distribute_local_to_global(
-      copy.vectors[0], copy.local_dof_indices[0], explicit_part);
+    constraints.distribute_local_to_global(copy.vectors[0],
+                                           copy.local_dof_indices[0],
+                                           explicit_part);
   };
 
   // Finally, we run the MeshWorker loop

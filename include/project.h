@@ -90,6 +90,7 @@ namespace nmpdeProject
       {
         prm.add_parameter("Finite element degree", fe_degree);
         prm.add_parameter("Initial global refinement", initial_refinement);
+        prm.add_parameter("Refinement threshold", refinement_threshold);
         prm.add_parameter("Refinement top fraction", refinement_top_fraction);
         prm.add_parameter("Refinement bottom fraction",
                           refinement_bottom_fraction);
@@ -105,6 +106,7 @@ namespace nmpdeProject
         prm.add_parameter("Final time", final_time);
         prm.add_parameter("Initial step size", initial_step_size);
         prm.add_parameter("Number of solution outputs", out_steps);
+        prm.add_parameter("Error estimations per output period", est_steps);
         prm.add_parameter("Minimum step size", minimum_step_size);
         prm.add_parameter("Maximum order", maximum_order);
         prm.add_parameter("Absolute tolerance", absolute_tolerance);
@@ -189,6 +191,10 @@ namespace nmpdeProject
     // Global refinement steps to be performed before integration
     unsigned int initial_refinement = 3;
 
+    // Threshold for the l2 norm of the error estimator.
+    // Getting beyond this triggers adaptive mesh refinement
+    float refinement_threshold = 1.0;
+
     // Parameters for the adaptive mesh refinement
     double refinement_top_fraction    = .3;
     double refinement_bottom_fraction = .1;
@@ -210,6 +216,10 @@ namespace nmpdeProject
     // In this variable we set the number of time steps, other than
     // initial_time, at which we want to produce a solution output
     unsigned int out_steps = 100;
+
+    // This variable specifies how many times per "output period"
+    // we will be able to do a mesh refinement.
+    unsigned int est_steps = 1;
 
     // Function objects for the functions involved in the problem.
     // Since we will need to evaluate them at different times,
@@ -273,6 +283,16 @@ namespace nmpdeProject
     // Here are the solution and the vector for the explicit part
     Vector<double> solution;
     Vector<double> explicit_part;
+
+    // This vector will store the error estimator for the
+    // adaptive mesh refinement
+    Vector<float> estimated_error_per_cell;
+
+    // We add a counter to remember how many times the
+    // ARKode solver calls solve_should_restart without
+    // evolving time. This will prevent us from getting
+    // stuck in the mesh refinement process.
+    unsigned int consecutive_refinements = 0;
   };
 
 } // namespace nmpdeProject

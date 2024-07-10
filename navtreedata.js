@@ -162,6 +162,7 @@ var NAVTREE =
     [ "The step-9 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_9.html", null ],
     [ "The step-90 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_90.html", null ],
     [ "The 'Viscoelastoplastic topography evolution' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_CeresFE.html", null ],
+    [ "The 'Crystal growth problem using phase field modeling' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_Crystal_Growth_Phase_Field_Model.html", null ],
     [ "The 'Distributed LDG Method' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_Distributed_LDG_Method.html", null ],
     [ "The 'Distributed moving laser heating' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_Distributed_Moving_Laser_Heating.html", null ],
     [ "The 'Elastoplastic Torsion' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_ElastoplasticTorsion.html", null ],
@@ -174,6 +175,7 @@ var NAVTREE =
     [ "The 'Quasi-Static Finite-Strain Compressible Elasticity' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_Quasi_static_Finite_strain_Compressible_Elasticity.html", null ],
     [ "The 'Quasi-Static Finite-Strain Quasi-incompressible Visco-elasticity' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_Quasi_static_Finite_strain_Quasi_incompressible_ViscoElasticity.html", null ],
     [ "The 'Generalized Swift-Hohenberg Equation Solve' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_Swift_Hohenberg-Solver.html", null ],
+    [ "The 'Traveling-wave solutions of a qualitative model for combustion waves.' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_TravelingWaves.html", null ],
     [ "The 'Adaptive advection-reaction' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_advection_reaction_estimator.html", null ],
     [ "The 'Convection Diffusion Reaction' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_cdr.html", null ],
     [ "The 'Laplace equation coupled to an external simulation program' code gallery program", "http://www.dealii.org/developer/doxygen/deal.II/code_gallery_coupled_laplace_problem.html", null ],
@@ -209,7 +211,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CodeGallery.html",
-"structnmpde_project_1_1_heat_parameters.html#a693c187d98f00e891734026f36e68c9b"
+"structnmpde_project_1_1_heat_parameters.html#a505fae32f3ceb2c4aafd760798a69078"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -457,7 +457,7 @@ HeatEquation<dim>::solve_ode()
   // and have a loop in which we will call solve_ode_incrementally
   // and output the solution. SUNDIALS will take care of
   // calling solver_should_restart between outputs, as desired.
-  
+
   // At first, we have to fix the time period between two
   // solution outputs and the one between two error estimations.
   const double out_prd = (par.final_time - par.initial_time) / par.out_steps;
@@ -576,7 +576,8 @@ HeatEquation<dim>::solve_ode()
     void
     vmult(Vector<double> &dst, const Vector<double> &src) const
     {
-      op.vmult(dst, src); // Use the matrix-vector product of the SundialsOperator
+      op.vmult(dst,
+               src); // Use the matrix-vector product of the SundialsOperator
     }
 
   private:
@@ -590,7 +591,8 @@ HeatEquation<dim>::solve_ode()
         Vector<double>                                   &x,
         const Vector<double>                             &b,
         double                                            tol) {
-      // We forget about prec, since we want to provide our custom preconditioner
+      // We forget about prec, since we want to provide our custom
+      // preconditioner
       (void)prec;
 
       // Define the solver control and the CG solver
@@ -626,7 +628,7 @@ HeatEquation<dim>::solve_ode()
   // NOTA BENE: solver_should_restart is called recursively until it
   // returns false, so we can refine the mesh multiple times, but also
   // get stuck in a loop if we never meet the condition for returning false.
-  ode.solver_should_restart = [&](const double t, Vector<double> &sol){
+  ode.solver_should_restart = [&](const double t, Vector<double> &sol) {
     // We do the Kelly error estimation
     estimated_error_per_cell.reinit(triangulation.n_active_cells());
 
@@ -639,37 +641,37 @@ HeatEquation<dim>::solve_ode()
 
     // We check if the error is too large.
     if (estimated_error_per_cell.l2_norm() > par.refinement_threshold)
-    {
-      if (consecutive_refinements == 5)
-        {
-          // If we have already done 5 consecutive refinements,
-          // we stop the process and return false.
-          std::cout << "Too many refinements at time " << t << std::endl;
-          std::cout << "l2 norm of the error estimator: " <<
-              estimated_error_per_cell.l2_norm() <<std::endl;
-          consecutive_refinements = 0; // Reset the counter
-          return false;
-        }
-      else
-        {
-          // Otherwise, we refine the mesh and increase the counter
-          refine_mesh(sol, par.min_refinement, par.max_refinement);
-          ++consecutive_refinements;
-          return true;
-        }
-    }
+      {
+        if (consecutive_refinements == 5)
+          {
+            // If we have already done 5 consecutive refinements,
+            // we stop the process and return false.
+            std::cout << "Too many refinements at time " << t << std::endl;
+            std::cout << "l2 norm of the error estimator: "
+                      << estimated_error_per_cell.l2_norm() << std::endl;
+            consecutive_refinements = 0; // Reset the counter
+            return false;
+          }
+        else
+          {
+            // Otherwise, we refine the mesh and increase the counter
+            refine_mesh(sol, par.min_refinement, par.max_refinement);
+            ++consecutive_refinements;
+            return true;
+          }
+      }
     else
-    {
-      // If the error is small enough, we reset the counter
-      consecutive_refinements = 0;
-      return false;
-    }
+      {
+        // If the error is small enough, we reset the counter
+        consecutive_refinements = 0;
+        return false;
+      }
   };
 
   // Here we store some relevant info on the time stepping
-  double inter_time = par.initial_time; // Intermediate time
-  double curr_time = par.initial_time;  // Current time
-  long int nsteps = 0; // Number of steps taken in the solver
+  double   inter_time = par.initial_time; // Intermediate time
+  double   curr_time  = par.initial_time; // Current time
+  long int nsteps     = 0;                // Number of steps taken in the solver
   double   hlast =
     par.initial_step_size; // Step size taken on the last internal step
 
@@ -684,18 +686,20 @@ HeatEquation<dim>::solve_ode()
       // some ARKode functions that are not wrapped by deal.II
       ARKStepGetCurrentTime(ode.get_arkode_memory(), &curr_time);
       std::cout << "-------------------------------------------" << std::endl;
-      std::cout << "Time step " << step << " at t = "
-                << curr_time << "." << std::endl;
+      std::cout << "Time step " << step << " at t = " << curr_time << "."
+                << std::endl;
 
       // Some info on the time stepping so far.
       ARKStepGetNumSteps(ode.get_arkode_memory(), &nsteps);
       ARKStepGetLastStep(ode.get_arkode_memory(), &hlast);
-      std::cout << "Number of ARKode steps taken so far: " << nsteps << std::endl;
+      std::cout << "Number of ARKode steps taken so far: " << nsteps
+                << std::endl;
       std::cout << "Step size taken on the last internal step: " << hlast
                 << std::endl;
 
       // // Some info on the mesh and on the number of degrees of freedom
-      // std::cout << "Number of active cells: " << triangulation.n_active_cells()
+      // std::cout << "Number of active cells: " <<
+      // triangulation.n_active_cells()
       //         << std::endl
       //         << "Number of degrees of freedom: " << dof_handler.n_dofs()
       //         << std::endl;
@@ -772,8 +776,7 @@ HeatEquation<dim>::run()
   output_results(solution, 0);
 
   std::cout << "-------------------------------------------" << std::endl;
-  std::cout << "Time step 0 at t = "
-            << par.initial_time << "." << std::endl;
+  std::cout << "Time step 0 at t = " << par.initial_time << "." << std::endl;
 
   // If the exact solution is known, we compute the L2 error
   // at start time

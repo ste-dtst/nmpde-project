@@ -57,7 +57,7 @@ Make sure to create them in advance in the folder where you will put the executa
 Also, in the code (*at the moment, but may not be necessary*) there is a `if constexpr` statement, which requires your compiler to support at least C++17.
 
 
-**Some tests - 1D case**
+**Some tests without adaptive refinement - 1D case**
 
 Some key points:
 
@@ -79,6 +79,7 @@ Some key points:
 
 - In order to save some computational resources, it may be useful to tweak the absolute/relative tolerance of the ARKode solver accordingly to the expected accuracy of the FE discretization (how?).
 
+**N.B.** The following values cannot be reproduced anymore after the commit that added the dummy `solve_linearized_system` function, however the results given by the program are practically the same.
 
 Problem 0.1
 
@@ -175,8 +176,6 @@ An example of flickering:
 
 
 **ToDo list**
-
-- Implement adaptive mesh refinement.
 
 - Provide a good PCG solver to SUNDIALS and save some computational resources.
 

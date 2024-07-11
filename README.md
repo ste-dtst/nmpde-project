@@ -177,12 +177,12 @@ An example of flickering:
 
 **Some (brief) 2D tests with adaptive mesh refinement**
 
-This is a simulation of problem 2.1 with default settings, plus changing `gamma` = 20. The $L^2$ error at final time is 0.0118047.
+This is a simulation of problem 2.1 with default settings, plus setting `gamma` = 20. The $L^2$ error at final time is 0.0118047.
 
-![Problem 2.3 visualization](./2_3pbm_2d.gif)
+![Problem 2.1 visualization](./2_1pbm_2d.gif)
 
 
-This, instead, is a simulation of problem 2.3 with default settings, plus changing `refinement_threshold` = 0.05 and `gamma` = 20. The $L^2$ error at final time is 0.000421088.
+This, instead, is a simulation of problem 2.3 with default settings, plus setting `refinement_threshold` = 0.05 and `gamma` = 20. The $L^2$ error at final time is 0.000421088.
 
 ![Problem 2.3 visualization](./2_3pbm_2d.gif)
 

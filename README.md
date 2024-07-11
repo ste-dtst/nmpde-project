@@ -175,6 +175,18 @@ An example of flickering:
 ![Problem 0.1 visualization (3D)](./0_1pbm_3d.png)
 
 
+**Some (brief) 2D tests with adaptive mesh refinement**
+
+This is a simulation of problem 2.1 with default settings, plus changing `gamma` = 20. The $L^2$ error at final time is 0.0118047.
+
+![Problem 2.3 visualization](./2_3pbm_2d.gif)
+
+
+This, instead, is a simulation of problem 2.3 with default settings, plus changing `refinement_threshold` = 0.05 and `gamma` = 20. The $L^2$ error at final time is 0.000421088.
+
+![Problem 2.3 visualization](./2_3pbm_2d.gif)
+
+
 **ToDo list**
 
 - Provide a good PCG solver to SUNDIALS and save some computational resources.

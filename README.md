@@ -187,6 +187,11 @@ This, instead, is a simulation of problem 2.3 with default settings, plus settin
 ![Problem 2.3 visualization](./2_3pbm_2d.gif)
 
 
+Finally, a simulation of problem 2.4 with default settings, plus setting `refinement_threshold` = 0.1, `refinement_bottom_fraction` = 0.3 and `gamma` = 20. The $L^2$ error at final time is 0.000123987. It is interesting to compare this simulation to that of problem 2.3. In fact, when a solution tends to return to a flat state, we would like to have a coarser mesh. Hence we have to increase the refinement bottom fraction. Unfortunately, this clashes a bit with requiring the mesh to be finer when necessary, at least with the control on the parameters that we have so far.
+
+![Problem 2.4 visualization](./2_4pbm_2d.gif)
+
+
 **ToDo list**
 
 - Provide a good PCG solver to SUNDIALS and save some computational resources.

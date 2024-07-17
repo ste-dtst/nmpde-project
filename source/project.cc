@@ -85,15 +85,21 @@ template <int dim>
 void
 HeatEquation<dim>::setup_ode()
 {
+  // This function is lighter than usual. Normally, here we would
+  // (re)initialize also the matrices, but this would waste some
+  // computational resources in case we wanted to refine the mesh
+  // multiple times before continuing with the time integration.
+  // In fact, the error estimation is "matrices-independent".
+  // Hence, we move the matrix initialization in the function
+  // assemble_ode_matrices.
+
   // As usual, we distribute the degrees of freedom
   dof_handler.distribute_dofs(fe);
 
-  std::cout << std::endl
-            << "===========================================" << std::endl
+  std::cout << "===========================================" << std::endl
             << "Number of active cells: " << triangulation.n_active_cells()
             << std::endl
             << "Number of degrees of freedom: " << dof_handler.n_dofs()
-            << std::endl
             << std::endl;
 
   // We reinitialize the constraints object
@@ -101,15 +107,7 @@ HeatEquation<dim>::setup_ode()
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
 
-  // We allocate the sparsity pattern for the matrices
-  DynamicSparsityPattern dsp(dof_handler.n_dofs());
-  DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints);
-  sparsity_pattern.copy_from(dsp);
-
-  // Finally, we initialize the matrices and the solution vector
-  mass_matrix.reinit(sparsity_pattern);
-  jacobian_matrix.reinit(sparsity_pattern);
-
+  // Finally, we initialize the solution vector
   solution.reinit(dof_handler.n_dofs());
 }
 
@@ -119,8 +117,22 @@ template <int dim>
 void
 HeatEquation<dim>::assemble_ode_matrices()
 {
-  // We assemble the mass matrix and the matrix for the implicit part
-  // of the ODE using the MeshWorker framework.
+  // This function will be called every time the matrices
+  // need to be updated, in particular after a (chain of)
+  // mesh refinement(s). Here we do either the setup and
+  // the assembly of the matrices.
+
+  // We allocate the sparsity pattern for the matrices
+  DynamicSparsityPattern dsp(dof_handler.n_dofs());
+  DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints);
+  sparsity_pattern.copy_from(dsp);
+
+  // Finally, we initialize the matrices
+  mass_matrix.reinit(sparsity_pattern);
+  jacobian_matrix.reinit(sparsity_pattern);
+
+  // We now assemble the mass matrix and the matrix for the
+  // implicit part of the ODE using the MeshWorker framework.
   // First, we need the ScratchData and CopyData objects.
 
   // Scratch data: declare the quadrature formulas
@@ -401,6 +413,7 @@ HeatEquation<dim>::refine_mesh(Vector<double>    &sol,
   // If we want to refine the mesh, we have to update the dimension
   // of matrices and vectors accordingly, update mass_matrix and
   // jacobian_matrix, transfer the solution to the new mesh.
+  // This function takes care of the mesh and of the solution.
   // In particular, the solution vector to be transferred is the given
   // sol instead of solution, because the refine_mesh routine is
   // called in ode.solver_should_restart (check further on).
@@ -434,9 +447,6 @@ HeatEquation<dim>::refine_mesh(Vector<double>    &sol,
 
   solution_trans.interpolate(previous_solution, sol);
   constraints.distribute(sol);
-
-  // Finally, we update mass_matrix and jacobian_matrix
-  assemble_ode_matrices();
 }
 
 
@@ -621,6 +631,19 @@ HeatEquation<dim>::solve_ode()
       constraints.distribute(x);
     };
 
+  // Here we store some relevant info on the time stepping
+  double   inter_time = par.initial_time; // Intermediate time
+  double   curr_time  = par.initial_time; // Current time
+  long int nsteps     = 0;                // Number of steps taken in the solver
+  double   hlast =
+    par.initial_step_size; // Step size taken on the last internal step
+
+  // Each reset of the solver will also reset the counter of the
+  // number of steps in the internal ARKode memory, therefore we need
+  // an auxiliary variable to store the number of steps properly.
+  // The update of nsteps will be done in solver_should_restart.
+  long int nsteps_temp = 0;
+
   // With the following function, we decide whether a mesh refinement
   // is needed at time t. In that case, we call refine_mesh() and
   // return true in order to trigger the reset() function of the
@@ -628,6 +651,8 @@ HeatEquation<dim>::solve_ode()
   // NOTA BENE: solver_should_restart is called recursively until it
   // returns false, so we can refine the mesh multiple times, but also
   // get stuck in a loop if we never meet the condition for returning false.
+  // Moreover, the matrices are not involved in the error estimation,
+  // hence we can update them only after the last mesh refinement.
   ode.solver_should_restart = [&](const double t, Vector<double> &sol) {
     // We do the Kelly error estimation
     estimated_error_per_cell.reinit(triangulation.n_active_cells());
@@ -639,6 +664,15 @@ HeatEquation<dim>::solve_ode()
       sol,
       estimated_error_per_cell);
 
+    // Each output step comes right after a restart check.
+    // Therefore, we have to update hlast here, otherwise we would
+    // get 0 when the output step comes right after a refinement.
+    // It is a bit of an overkill, since we update it more times
+    // than needed, however the computational effort is negligible.
+    if (consecutive_refinements == 0)
+      ARKStepGetLastStep(ode.get_arkode_memory(), &hlast);
+    // else hlast is already updated
+
     // We check if the error is too large.
     if (estimated_error_per_cell.l2_norm() > par.refinement_threshold)
       {
@@ -646,10 +680,15 @@ HeatEquation<dim>::solve_ode()
           {
             // If we have already done 5 consecutive refinements,
             // we stop the process and return false.
-            std::cout << "Too many refinements at time " << t << std::endl;
-            std::cout << "l2 norm of the error estimator: "
+            std::cout << "===========================================" << std::endl
+                      << "5 refinements were not sufficient at time " << t
+                      << "." << std::endl
+                      << "l2 norm of the error estimator: "
                       << estimated_error_per_cell.l2_norm() << std::endl;
+
             consecutive_refinements = 0; // Reset the counter
+            assemble_ode_matrices();     // Do update the matrices
+
             return false;
           }
         else
@@ -657,52 +696,65 @@ HeatEquation<dim>::solve_ode()
             // Otherwise, we refine the mesh and increase the counter
             refine_mesh(sol, par.min_refinement, par.max_refinement);
             ++consecutive_refinements;
+
+            // Also, we update nsteps before the memory gets reset
+            ARKStepGetNumSteps(ode.get_arkode_memory(), &nsteps_temp);
+            nsteps += nsteps_temp;
+
             return true;
           }
       }
     else
       {
         // If the error is small enough, we reset the counter
-        consecutive_refinements = 0;
-        return false;
+        if (consecutive_refinements > 0)
+          {
+            std::cout << "===========================================" << std::endl
+                      << "Done " << consecutive_refinements
+                      << " refinement(s) at time " << t << "." << std::endl
+                      << "l2 norm of the error estimator: "
+                      << estimated_error_per_cell.l2_norm() << std::endl;
+
+            consecutive_refinements = 0; // Reset the counter
+            assemble_ode_matrices();     // Do update the matrices
+
+            return false;
+          }
+        else // If the error is small and the counter is 0, we just return false
+          return false;
       }
   };
-
-  // Here we store some relevant info on the time stepping
-  double   inter_time = par.initial_time; // Intermediate time
-  double   curr_time  = par.initial_time; // Current time
-  long int nsteps     = 0;                // Number of steps taken in the solver
-  double   hlast =
-    par.initial_step_size; // Step size taken on the last internal step
 
   // Finally, we are ready to solve the ODE
   for (unsigned int step = 1; step <= par.out_steps; ++step)
     {
       // Solve the ODE until inter_time
       inter_time += out_prd;
+      if (step == par.out_steps)
+        // At the last step, we may get past par.final_time
+        // due to rounding errors. We have to avoid that.
+        inter_time = std::min(inter_time, par.final_time);
       ode.solve_ode_incrementally(solution, inter_time);
 
-      // Give some info to the user. We will call below
-      // some ARKode functions that are not wrapped by deal.II
+      // Give some info to the user
       ARKStepGetCurrentTime(ode.get_arkode_memory(), &curr_time);
       std::cout << "-------------------------------------------" << std::endl;
       std::cout << "Time step " << step << " at t = " << curr_time << "."
                 << std::endl;
 
       // Some info on the time stepping so far.
-      ARKStepGetNumSteps(ode.get_arkode_memory(), &nsteps);
-      ARKStepGetLastStep(ode.get_arkode_memory(), &hlast);
-      std::cout << "Number of ARKode steps taken so far: " << nsteps
-                << std::endl;
-      std::cout << "Step size taken on the last internal step: " << hlast
+      // Note: since nsteps is updated to the last reset, the total
+      // number of steps taken so far is nsteps + a number that
+      // will be stored in nsteps_temp.
+      ARKStepGetNumSteps(ode.get_arkode_memory(), &nsteps_temp);
+      std::cout << "Number of ARKode steps taken so far: "
+                << nsteps + nsteps_temp << std::endl
+                << "Step size taken on the last internal step: " << hlast
                 << std::endl;
 
-      // // Some info on the mesh and on the number of degrees of freedom
-      // std::cout << "Number of active cells: " <<
-      // triangulation.n_active_cells()
-      //         << std::endl
-      //         << "Number of degrees of freedom: " << dof_handler.n_dofs()
-      //         << std::endl;
+      // Some info on the last error estimation
+      std::cout << "l2 norm of the error estimator: "
+                << estimated_error_per_cell.l2_norm() << std::endl;
 
       // If the exact solution is known, we compute the L2 error
       // at current time
@@ -716,7 +768,8 @@ HeatEquation<dim>::solve_ode()
                                             error,
                                             QGauss<dim>(fe.degree + 1),
                                             VectorTools::L2_norm);
-          std::cout << "L2 error: " << error.l2_norm() << std::endl;
+          std::cout << "L2 error on the solution: " << error.l2_norm()
+                    << std::endl;
         }
 
       // We output the solution at the current time step
@@ -758,7 +811,7 @@ template <int dim>
 void
 HeatEquation<dim>::run()
 {
-  // Mesh generation, DoF distribution and sparsity pattern allocation
+  // Mesh generation, DoF distribution and constraints setup
   if (dim == 1)
     GridGenerator::hyper_cube(triangulation, -1, 1);
   else

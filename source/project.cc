@@ -680,7 +680,8 @@ HeatEquation<dim>::solve_ode()
           {
             // If we have already done 5 consecutive refinements,
             // we stop the process and return false.
-            std::cout << "===========================================" << std::endl
+            std::cout << "==========================================="
+                      << std::endl
                       << "5 refinements were not sufficient at time " << t
                       << "." << std::endl
                       << "l2 norm of the error estimator: "
@@ -709,7 +710,8 @@ HeatEquation<dim>::solve_ode()
         // If the error is small enough, we reset the counter
         if (consecutive_refinements > 0)
           {
-            std::cout << "===========================================" << std::endl
+            std::cout << "==========================================="
+                      << std::endl
                       << "Done " << consecutive_refinements
                       << " refinement(s) at time " << t << "." << std::endl
                       << "l2 norm of the error estimator: "

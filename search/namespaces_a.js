@@ -28,7 +28,7 @@ var searchData=
   ['mgtools_25',['MGTools',['http://www.dealii.org/developer/doxygen/deal.II/namespaceMGTools.html',1,'']]],
   ['mgtools_3a_3ainternal_26',['internal',['http://www.dealii.org/developer/doxygen/deal.II/namespaceMGTools_1_1internal.html',1,'MGTools']]],
   ['mgtransferglobalcoarseningtools_27',['MGTransferGlobalCoarseningTools',['http://www.dealii.org/developer/doxygen/deal.II/namespaceMGTransferGlobalCoarseningTools.html',1,'']]],
-  ['mgtwoleveltransfer_28',['MGTwoLevelTransfer',['http://www.dealii.org/developer/doxygen/deal.II/structMGTwoLevelTransfer_1_1MGTransferScheme.html',1,'']]],
+  ['mgtwoleveltransfer_28',['MGTwoLevelTransfer',['http://www.dealii.org/developer/doxygen/deal.II/structMGTwoLevelTransfer_1_1MatrixFreeRelatedData.html',1,'']]],
   ['mgtwoleveltransfernonnested_29',['MGTwoLevelTransferNonNested',['http://www.dealii.org/developer/doxygen/deal.II/structMGTwoLevelTransferNonNested_1_1AdditionalData.html',1,'']]],
   ['multipleparameterloop_30',['MultipleParameterLoop',['http://www.dealii.org/developer/doxygen/deal.II/classMultipleParameterLoop_1_1Entry.html',1,'']]]
 ];

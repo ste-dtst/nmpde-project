@@ -2,6 +2,7 @@ var structnmpde_project_1_1_heat_parameters =
 [
     [ "HeatParameters", "structnmpde_project_1_1_heat_parameters.html#a07a7e1f78a28ed9480bb9f513175a56d", null ],
     [ "absolute_tolerance", "structnmpde_project_1_1_heat_parameters.html#a17c5387e76301d25dc86ac2c4eb3091f", null ],
+    [ "aggregation_threshold", "structnmpde_project_1_1_heat_parameters.html#ab9483c143cfd44bad95159eb661d84fd", null ],
     [ "boundary_expression", "structnmpde_project_1_1_heat_parameters.html#a505fae32f3ceb2c4aafd760798a69078", null ],
     [ "boundary_value", "structnmpde_project_1_1_heat_parameters.html#a85fbc0684e7c1cbdfdc0f20d8fd32045", null ],
     [ "est_steps", "structnmpde_project_1_1_heat_parameters.html#a4544c91391b8eaf1f1486b702355b31d", null ],

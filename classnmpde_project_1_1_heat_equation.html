@@ -135,12 +135,12 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:a03fe9ed6cbed7e3c39e269d619ca78fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2911472c4fa2e75eb2fbd84064706027" id="r_a2911472c4fa2e75eb2fbd84064706027"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2911472c4fa2e75eb2fbd84064706027">assemble_ode_explicit_part</a> (const double t)</td></tr>
 <tr class="separator:a2911472c4fa2e75eb2fbd84064706027"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad72a4c92ed035595afe93b5689271c9e" id="r_ad72a4c92ed035595afe93b5689271c9e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad72a4c92ed035595afe93b5689271c9e">refine_mesh</a> (<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html">Vector</a>&lt; double &gt; &amp;sol, const unsigned int min_grid_level, const unsigned int max_grid_level)</td></tr>
-<tr class="separator:ad72a4c92ed035595afe93b5689271c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59824820c8cfd154f292ab2b7fcdeeb1" id="r_a59824820c8cfd154f292ab2b7fcdeeb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59824820c8cfd154f292ab2b7fcdeeb1">refine_mesh</a> (<a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1MPI_1_1Vector.html">TrilinosWrappers::MPI::Vector</a> &amp;sol, const unsigned int min_grid_level, const unsigned int max_grid_level)</td></tr>
+<tr class="separator:a59824820c8cfd154f292ab2b7fcdeeb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a6a9a672de81cf1e9d9ec7c6f1ca3f3" id="r_a1a6a9a672de81cf1e9d9ec7c6f1ca3f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a6a9a672de81cf1e9d9ec7c6f1ca3f3">solve_ode</a> ()</td></tr>
 <tr class="separator:a1a6a9a672de81cf1e9d9ec7c6f1ca3f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdb01b8d75508d2ab51a8162330470e0" id="r_afdb01b8d75508d2ab51a8162330470e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdb01b8d75508d2ab51a8162330470e0">output_results</a> (const <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html">Vector</a>&lt; double &gt; &amp;sol, const unsigned int step_no) const</td></tr>
-<tr class="separator:afdb01b8d75508d2ab51a8162330470e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10f6a66b24694050889d9d59c794a085" id="r_a10f6a66b24694050889d9d59c794a085"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10f6a66b24694050889d9d59c794a085">output_results</a> (const <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1MPI_1_1Vector.html">TrilinosWrappers::MPI::Vector</a> &amp;sol, const unsigned int step_no) const</td></tr>
+<tr class="separator:a10f6a66b24694050889d9d59c794a085"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -154,16 +154,24 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a390b57207f8311ea772c67d918e9612c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9eaa806b4e34f1d07dfb13dc7c46a59d" id="r_a9eaa806b4e34f1d07dfb13dc7c46a59d"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classAffineConstraints.html">AffineConstraints</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9eaa806b4e34f1d07dfb13dc7c46a59d">constraints</a></td></tr>
 <tr class="separator:a9eaa806b4e34f1d07dfb13dc7c46a59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a784fb923f2dea16376e5d1b10c335086" id="r_a784fb923f2dea16376e5d1b10c335086"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSparsityPattern.html">SparsityPattern</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a784fb923f2dea16376e5d1b10c335086">sparsity_pattern</a></td></tr>
-<tr class="separator:a784fb923f2dea16376e5d1b10c335086"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39e9c44e4ea6195e8679ef856f27fd87" id="r_a39e9c44e4ea6195e8679ef856f27fd87"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSparseMatrix.html">SparseMatrix</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a39e9c44e4ea6195e8679ef856f27fd87">mass_matrix</a></td></tr>
-<tr class="separator:a39e9c44e4ea6195e8679ef856f27fd87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2743cdda89ac7691c46c5fab81b5ee59" id="r_a2743cdda89ac7691c46c5fab81b5ee59"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSparseMatrix.html">SparseMatrix</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2743cdda89ac7691c46c5fab81b5ee59">jacobian_matrix</a></td></tr>
-<tr class="separator:a2743cdda89ac7691c46c5fab81b5ee59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a80c05f637c44e84ab40e77cbb947dad8" id="r_a80c05f637c44e84ab40e77cbb947dad8"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html">Vector</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a80c05f637c44e84ab40e77cbb947dad8">solution</a></td></tr>
-<tr class="separator:a80c05f637c44e84ab40e77cbb947dad8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a993e30aaab572f82e945eece1af58b" id="r_a1a993e30aaab572f82e945eece1af58b"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html">Vector</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a993e30aaab572f82e945eece1af58b">explicit_part</a></td></tr>
-<tr class="separator:a1a993e30aaab572f82e945eece1af58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8efc1a9406e8c8d6aafbcfdd3d9c8581" id="r_a8efc1a9406e8c8d6aafbcfdd3d9c8581"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1SparseMatrix.html">TrilinosWrappers::SparseMatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8efc1a9406e8c8d6aafbcfdd3d9c8581">mass_matrix</a></td></tr>
+<tr class="separator:a8efc1a9406e8c8d6aafbcfdd3d9c8581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8466105ee301a6ad866b0649f167aeca" id="r_a8466105ee301a6ad866b0649f167aeca"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1SparseMatrix.html">TrilinosWrappers::SparseMatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8466105ee301a6ad866b0649f167aeca">jacobian_matrix</a></td></tr>
+<tr class="separator:a8466105ee301a6ad866b0649f167aeca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0a5dce087bad6e84b3c6fea418549ac" id="r_ac0a5dce087bad6e84b3c6fea418549ac"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1SparseMatrix.html">TrilinosWrappers::SparseMatrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0a5dce087bad6e84b3c6fea418549ac">lin_system_matrix</a></td></tr>
+<tr class="separator:ac0a5dce087bad6e84b3c6fea418549ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbaf4b564442ad07993586e6fdbc1637" id="r_acbaf4b564442ad07993586e6fdbc1637"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1MPI_1_1Vector.html">TrilinosWrappers::MPI::Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acbaf4b564442ad07993586e6fdbc1637">solution</a></td></tr>
+<tr class="separator:acbaf4b564442ad07993586e6fdbc1637"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6edefa4450f2d4b1ab5fb1f5348551b" id="r_ae6edefa4450f2d4b1ab5fb1f5348551b"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1MPI_1_1Vector.html">TrilinosWrappers::MPI::Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6edefa4450f2d4b1ab5fb1f5348551b">explicit_part</a></td></tr>
+<tr class="separator:ae6edefa4450f2d4b1ab5fb1f5348551b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcd68f482721ba4d0300c96372e4f2b9" id="r_adcd68f482721ba4d0300c96372e4f2b9"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1PreconditionAMG.html">TrilinosWrappers::PreconditionAMG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcd68f482721ba4d0300c96372e4f2b9">mass_preconditioner</a></td></tr>
+<tr class="separator:adcd68f482721ba4d0300c96372e4f2b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef7a974a2d860f6becbe486ea9c58d30" id="r_aef7a974a2d860f6becbe486ea9c58d30"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1PreconditionAMG.html">TrilinosWrappers::PreconditionAMG</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef7a974a2d860f6becbe486ea9c58d30">lin_system_preconditioner</a></td></tr>
+<tr class="separator:aef7a974a2d860f6becbe486ea9c58d30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2dc1dfe3152ab849602ad19234bc673" id="r_ae2dc1dfe3152ab849602ad19234bc673"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae2dc1dfe3152ab849602ad19234bc673">matrices_reinitialized</a> = false</td></tr>
+<tr class="separator:ae2dc1dfe3152ab849602ad19234bc673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab04ac9867df1fad4b330a4ff5814acd2" id="r_ab04ac9867df1fad4b330a4ff5814acd2"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/structTrilinosWrappers_1_1PreconditionAMG_1_1AdditionalData.html">TrilinosWrappers::PreconditionAMG::AdditionalData</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab04ac9867df1fad4b330a4ff5814acd2">amg_data</a></td></tr>
+<tr class="separator:ab04ac9867df1fad4b330a4ff5814acd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb3c2be7f7047e1bd4e85ccc8ea87b56" id="r_acb3c2be7f7047e1bd4e85ccc8ea87b56"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html">Vector</a>&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb3c2be7f7047e1bd4e85ccc8ea87b56">estimated_error_per_cell</a></td></tr>
 <tr class="separator:acb3c2be7f7047e1bd4e85ccc8ea87b56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7f5e5c69b367632f261a2c2210ff1ea" id="r_aa7f5e5c69b367632f261a2c2210ff1ea"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7f5e5c69b367632f261a2c2210ff1ea">consecutive_refinements</a> = 0</td></tr>
@@ -172,7 +180,7 @@ Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;int dim&gt;<br />
 class nmpdeProject::HeatEquation&lt; dim &gt;</div>
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00246">246</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00269">269</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac92f46921c469c0eec6c45f3bbf29aed" name="ac92f46921c469c0eec6c45f3bbf29aed"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac92f46921c469c0eec6c45f3bbf29aed">&#9670;&#160;</a></span>HeatEquation()</h2>
@@ -193,7 +201,7 @@ template&lt;int dim&gt; </div>
 
 <p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00076">76</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
 
-<p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/p4est__wrappers_8cc.html#ace00f2f80d9780ef9aa1007e1c22c6a4">triangulation</a>.</p>
+<p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/structTrilinosWrappers_1_1PreconditionAMG_1_1AdditionalData.html#a36b8fa00a7ce0a5ed1ab0cddd41e4f9f">TrilinosWrappers::PreconditionAMG::AdditionalData::aggregation_threshold</a>, <a class="el" href="project_8h_source.html#l00322">nmpdeProject::HeatEquation&lt; dim &gt;::amg_data</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/structTrilinosWrappers_1_1PreconditionAMG_1_1AdditionalData.html#a8bb24e061826fbdfb49aeb24f80e02fd">TrilinosWrappers::PreconditionAMG::AdditionalData::higher_order_elements</a>, <a class="el" href="project_8h_source.html#l00294">nmpdeProject::HeatEquation&lt; dim &gt;::par</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/p4est__wrappers_8cc.html#ace00f2f80d9780ef9aa1007e1c22c6a4">triangulation</a>.</p>
 
 </div>
 </div>
@@ -223,9 +231,9 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00289">289</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00314">314</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
 
-<p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceMeshWorker.html#ac7a9db8b34d398d7d398d1e8809874aaa35f26e2d96f28fb49e5b0865adc3ba9d">MeshWorker::assemble_boundary_faces</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceMeshWorker.html#ac7a9db8b34d398d7d398d1e8809874aaa44a76e905b1d4cd80af387b5fac4d8aa">MeshWorker::assemble_own_cells</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__MeshWorker.html#ga76ec61fbd188fb320fe8ca166a79b322">MeshWorker::mesh_loop()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52facbcc430975fa6af05f75ca786dc6fe20">update_gradients</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fa714204722e9eeb43aadbd0d5ddc48c85">update_JxW_values</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fa5e7366a91c84a50ca4e7dbd43ca6369f">update_normal_vectors</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fad5c9ff886b9615349a5d04a6c782df4a">update_quadrature_points</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fa4057ca2f127aa619c65886a9d3ad4aea">update_values</a>.</p>
+<p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceMeshWorker.html#ac7a9db8b34d398d7d398d1e8809874aaa35f26e2d96f28fb49e5b0865adc3ba9d">MeshWorker::assemble_boundary_faces</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceMeshWorker.html#ac7a9db8b34d398d7d398d1e8809874aaa44a76e905b1d4cd80af387b5fac4d8aa">MeshWorker::assemble_own_cells</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/index__set_8h.html#ad28b2e725afda38ffdef1bf61d5cadd4">complete_index_set()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__MeshWorker.html#ga76ec61fbd188fb320fe8ca166a79b322">MeshWorker::mesh_loop()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52facbcc430975fa6af05f75ca786dc6fe20">update_gradients</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fa714204722e9eeb43aadbd0d5ddc48c85">update_JxW_values</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fa5e7366a91c84a50ca4e7dbd43ca6369f">update_normal_vectors</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fad5c9ff886b9615349a5d04a6c782df4a">update_quadrature_points</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fa4057ca2f127aa619c65886a9d3ad4aea">update_values</a>.</p>
 
 </div>
 </div>
@@ -254,14 +262,14 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00118">118</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00122">122</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
 
 <p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceMeshWorker.html#ac7a9db8b34d398d7d398d1e8809874aaa35f26e2d96f28fb49e5b0865adc3ba9d">MeshWorker::assemble_boundary_faces</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceMeshWorker.html#ac7a9db8b34d398d7d398d1e8809874aaa44a76e905b1d4cd80af387b5fac4d8aa">MeshWorker::assemble_own_cells</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__constraints.html#ga432d35b9ef18d1802d48b576300b04fd">DoFTools::make_sparsity_pattern()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__MeshWorker.html#ga76ec61fbd188fb320fe8ca166a79b322">MeshWorker::mesh_loop()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52facbcc430975fa6af05f75ca786dc6fe20">update_gradients</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fa714204722e9eeb43aadbd0d5ddc48c85">update_JxW_values</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fa5e7366a91c84a50ca4e7dbd43ca6369f">update_normal_vectors</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fad5c9ff886b9615349a5d04a6c782df4a">update_quadrature_points</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__feaccess.html#ggaa94b67d2fdcc390690c523f28019e52fa4057ca2f127aa619c65886a9d3ad4aea">update_values</a>.</p>
 
 </div>
 </div>
-<a id="afdb01b8d75508d2ab51a8162330470e0" name="afdb01b8d75508d2ab51a8162330470e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afdb01b8d75508d2ab51a8162330470e0">&#9670;&#160;</a></span>output_results()</h2>
+<a id="a10f6a66b24694050889d9d59c794a085" name="a10f6a66b24694050889d9d59c794a085"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10f6a66b24694050889d9d59c794a085">&#9670;&#160;</a></span>output_results()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -274,7 +282,7 @@ template&lt;int dim&gt; </div>
         <tr>
           <td class="memname">void HeatEquation::output_results </td>
           <td>(</td>
-          <td class="paramtype">const <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html">Vector</a>&lt; double &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>sol</em></span>, </td>
+          <td class="paramtype">const <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1MPI_1_1Vector.html">TrilinosWrappers::MPI::Vector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>sol</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -289,14 +297,14 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00786">786</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00791">791</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
 
 <p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classDataOut__DoFData.html#ac43d3b1f6e67424f36e474627fe8e401">DataOut&lt; int dim, int spacedim &gt;::add_data_vector()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classDataOut__DoFData.html#a6ed7c846331069f406b8c9933c37fda4">DataOut&lt; int dim, int spacedim &gt;::attach_dof_handler()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classDataOut.html#a087f63e22f0614bca326dbdca288c646">DataOut&lt; int dim, int spacedim &gt;::build_patches()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceUtilities.html#a6195c5f009ea8c7c536c6ffdf108c32f">Utilities::int_to_string()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceDataOutBase.html#a9bcaee76160be3f2cee5c15ca7976a26">DataOutBase::write_pvd_record()</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classDataOutInterface.html#a93c780f93105e0daaa76c6c43694b4ae">DataOut&lt; int dim, int spacedim &gt;::write_vtu()</a>.</p>
 
 </div>
 </div>
-<a id="ad72a4c92ed035595afe93b5689271c9e" name="ad72a4c92ed035595afe93b5689271c9e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad72a4c92ed035595afe93b5689271c9e">&#9670;&#160;</a></span>refine_mesh()</h2>
+<a id="a59824820c8cfd154f292ab2b7fcdeeb1" name="a59824820c8cfd154f292ab2b7fcdeeb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59824820c8cfd154f292ab2b7fcdeeb1">&#9670;&#160;</a></span>refine_mesh()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -309,7 +317,7 @@ template&lt;int dim&gt; </div>
         <tr>
           <td class="memname">void HeatEquation::refine_mesh </td>
           <td>(</td>
-          <td class="paramtype"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html">Vector</a>&lt; double &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>sol</em></span>, </td>
+          <td class="paramtype"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1MPI_1_1Vector.html">TrilinosWrappers::MPI::Vector</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>sol</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -329,7 +337,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00409">409</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00435">435</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
 
 <p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSolutionTransfer.html#a1171abf820e35e02304017ef3daeeaa5">SolutionTransfer&lt; int dim, typename VectorType, int spacedim &gt;::interpolate()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSolutionTransfer.html#a7043b4ee85d2c132273385fe6cc3ec1f">SolutionTransfer&lt; int dim, typename VectorType, int spacedim &gt;::prepare_for_coarsening_and_refinement()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceGridRefinement.html#afafa5d897bd8b1e9eeee70ffcb6d1c1e">GridRefinement::refine_and_coarsen_fixed_fraction()</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/p4est__wrappers_8cc.html#ace00f2f80d9780ef9aa1007e1c22c6a4">triangulation</a>.</p>
 
@@ -352,7 +360,7 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00814">814</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00819">819</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
 
 <p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceGridGenerator.html#acea0cbcd68e52ce8113d1134b87de403">GridGenerator::hyper_cube()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceGridGenerator.html#a3b2a4ad8296c2b72a11d23b5969e8cc0">GridGenerator::hyper_L()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceVectorTools.html#a6cac27efbc9169a5119497cf08463d3b">VectorTools::integrate_difference()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceVectorTools.html#a35950c839da51812962d41ee4075b3b8">VectorTools::interpolate()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceVectorTools.html#a69967cb7a148a7169963126249213db1aa3903caf348e2d5dc54d1b49e15c1e8e">VectorTools::L2_norm</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html#a8ee1b8309a7a9ecf109c8a7116733ef8">Vector&lt; typename Number &gt;::l2_norm()</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/p4est__wrappers_8cc.html#ace00f2f80d9780ef9aa1007e1c22c6a4">triangulation</a>.</p>
 
@@ -385,9 +393,9 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00086">86</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00090">90</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
 
-<p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__constraints.html#ga3b4ea7dfd313e388d868c4e4aa685799">DoFTools::make_hanging_node_constraints()</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/p4est__wrappers_8cc.html#ace00f2f80d9780ef9aa1007e1c22c6a4">triangulation</a>.</p>
+<p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/index__set_8h.html#ad28b2e725afda38ffdef1bf61d5cadd4">complete_index_set()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__constraints.html#ga3b4ea7dfd313e388d868c4e4aa685799">DoFTools::make_hanging_node_constraints()</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/p4est__wrappers_8cc.html#ace00f2f80d9780ef9aa1007e1c22c6a4">triangulation</a>.</p>
 
 </div>
 </div>
@@ -416,13 +424,41 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00456">456</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8cc_source.html#l00485">485</a> of file <a class="el" href="project_8cc_source.html">project.cc</a>.</p>
 
-<p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespacePhysics_1_1Elasticity_1_1Kinematics.html#a85ec995f892fbfa61268d84cbe2fefea">b()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSparsityPattern.html#a96248eff3fbfa4270dfe21b0a4ea077b">SparsityPattern::copy_from()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classKellyErrorEstimator.html#a216266ef766cfb22c92f3e289ee189e7">KellyErrorEstimator&lt; int dim, int spacedim &gt;::estimate()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#a0a013ba6e91ed6fdf0d1f3d62b55eca3">SUNDIALS::ARKode&lt; typename VectorType &gt;::explicit_function</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#a23c34530eb9d883c11414d61a6df7872">SUNDIALS::ARKode&lt; typename VectorType &gt;::get_arkode_memory()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#a4854f9e8cf02352f71f17c3cbfa064e5">SUNDIALS::ARKode&lt; typename VectorType &gt;::implicit_function</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classPreconditionSSOR.html#a585014478420f71d04066abbd0565321">PreconditionSSOR&lt; typename MatrixType &gt;::initialize()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceVectorTools.html#a6cac27efbc9169a5119497cf08463d3b">VectorTools::integrate_difference()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#af19d617af58b008ec03a569e8dc52bf0">SUNDIALS::ARKode&lt; typename VectorType &gt;::jacobian_times_vector</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceVectorTools.html#a69967cb7a148a7169963126249213db1aa3903caf348e2d5dc54d1b49e15c1e8e">VectorTools::L2_norm</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html#a8ee1b8309a7a9ecf109c8a7116733ef8">Vector&lt; typename Number &gt;::l2_norm()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#ac25674d94b09546052bde6cbb47a3fe8">SUNDIALS::ARKode&lt; typename VectorType &gt;::mass_times_vector</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespacestd.html#a75a30aa280fd30aea596f82517daee0c">std::min()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSolverCG.html#aa52469650d9b9ef2f4cb4884caeb0723">SolverCG&lt; typename VectorType &gt;::solve()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#a481da5fd5c766f5f0e799c0bbc052837">SUNDIALS::ARKode&lt; typename VectorType &gt;::solve_linearized_system</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#ac2a7fcfde476976db3c04314f1f98eac">SUNDIALS::ARKode&lt; typename VectorType &gt;::solve_mass</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#ae4e2588e64fdbc405b259d2777d66392">SUNDIALS::ARKode&lt; typename VectorType &gt;::solve_ode_incrementally()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#a9d3bd452bc13970e9af93810d3d3beff">SUNDIALS::ARKode&lt; typename VectorType &gt;::solver_should_restart</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/p4est__wrappers_8cc.html#ace00f2f80d9780ef9aa1007e1c22c6a4">triangulation</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/structSUNDIALS_1_1SundialsOperator.html#adc645f27d1aca82f6fb0a8eb8584275a">SUNDIALS::SundialsOperator&lt; typename VectorType &gt;::vmult()</a>.</p>
+<p class="reference">References <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespacePhysics_1_1Elasticity_1_1Kinematics.html#a85ec995f892fbfa61268d84cbe2fefea">b()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classKellyErrorEstimator.html#a216266ef766cfb22c92f3e289ee189e7">KellyErrorEstimator&lt; int dim, int spacedim &gt;::estimate()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#a0a013ba6e91ed6fdf0d1f3d62b55eca3">SUNDIALS::ARKode&lt; typename VectorType &gt;::explicit_function</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#a23c34530eb9d883c11414d61a6df7872">SUNDIALS::ARKode&lt; typename VectorType &gt;::get_arkode_memory()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#a4854f9e8cf02352f71f17c3cbfa064e5">SUNDIALS::ARKode&lt; typename VectorType &gt;::implicit_function</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceVectorTools.html#a6cac27efbc9169a5119497cf08463d3b">VectorTools::integrate_difference()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#af19d617af58b008ec03a569e8dc52bf0">SUNDIALS::ARKode&lt; typename VectorType &gt;::jacobian_times_vector</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceVectorTools.html#a69967cb7a148a7169963126249213db1aa3903caf348e2d5dc54d1b49e15c1e8e">VectorTools::L2_norm</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html#a8ee1b8309a7a9ecf109c8a7116733ef8">Vector&lt; typename Number &gt;::l2_norm()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#ac25674d94b09546052bde6cbb47a3fe8">SUNDIALS::ARKode&lt; typename VectorType &gt;::mass_times_vector</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespacestd.html#a75a30aa280fd30aea596f82517daee0c">std::min()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSolverCG.html#aa52469650d9b9ef2f4cb4884caeb0723">SolverCG&lt; typename VectorType &gt;::solve()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#a481da5fd5c766f5f0e799c0bbc052837">SUNDIALS::ARKode&lt; typename VectorType &gt;::solve_linearized_system</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#ac2a7fcfde476976db3c04314f1f98eac">SUNDIALS::ARKode&lt; typename VectorType &gt;::solve_mass</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#ae4e2588e64fdbc405b259d2777d66392">SUNDIALS::ARKode&lt; typename VectorType &gt;::solve_ode_incrementally()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSUNDIALS_1_1ARKode.html#a9d3bd452bc13970e9af93810d3d3beff">SUNDIALS::ARKode&lt; typename VectorType &gt;::solver_should_restart</a>, and <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/p4est__wrappers_8cc.html#ace00f2f80d9780ef9aa1007e1c22c6a4">triangulation</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="ab04ac9867df1fad4b330a4ff5814acd2" name="ab04ac9867df1fad4b330a4ff5814acd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab04ac9867df1fad4b330a4ff5814acd2">&#9670;&#160;</a></span>amg_data</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int dim&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/structTrilinosWrappers_1_1PreconditionAMG_1_1AdditionalData.html">TrilinosWrappers::PreconditionAMG::AdditionalData</a> <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::amg_data</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00322">322</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="project_8cc_source.html#l00076">nmpdeProject::HeatEquation&lt; dim &gt;::HeatEquation()</a>.</p>
+
+</div>
+</div>
 <a id="aa7f5e5c69b367632f261a2c2210ff1ea" name="aa7f5e5c69b367632f261a2c2210ff1ea"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa7f5e5c69b367632f261a2c2210ff1ea">&#9670;&#160;</a></span>consecutive_refinements</h2>
 
@@ -445,7 +481,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00295">295</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00332">332</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
 </div>
 </div>
@@ -471,7 +507,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00276">276</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00300">300</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
 </div>
 </div>
@@ -497,7 +533,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00274">274</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00298">298</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
 </div>
 </div>
@@ -523,12 +559,12 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00289">289</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00326">326</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
 </div>
 </div>
-<a id="a1a993e30aaab572f82e945eece1af58b" name="a1a993e30aaab572f82e945eece1af58b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a993e30aaab572f82e945eece1af58b">&#9670;&#160;</a></span>explicit_part</h2>
+<a id="ae6edefa4450f2d4b1ab5fb1f5348551b" name="ae6edefa4450f2d4b1ab5fb1f5348551b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6edefa4450f2d4b1ab5fb1f5348551b">&#9670;&#160;</a></span>explicit_part</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -539,7 +575,7 @@ template&lt;int dim&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html">Vector</a>&lt;double&gt; <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::explicit_part</td>
+          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1MPI_1_1Vector.html">TrilinosWrappers::MPI::Vector</a> <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::explicit_part</td>
         </tr>
       </table>
   </td>
@@ -549,7 +585,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00285">285</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00312">312</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
 </div>
 </div>
@@ -575,12 +611,12 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00273">273</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00297">297</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
 </div>
 </div>
-<a id="a2743cdda89ac7691c46c5fab81b5ee59" name="a2743cdda89ac7691c46c5fab81b5ee59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2743cdda89ac7691c46c5fab81b5ee59">&#9670;&#160;</a></span>jacobian_matrix</h2>
+<a id="a8466105ee301a6ad866b0649f167aeca" name="a8466105ee301a6ad866b0649f167aeca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8466105ee301a6ad866b0649f167aeca">&#9670;&#160;</a></span>jacobian_matrix</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -591,7 +627,7 @@ template&lt;int dim&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSparseMatrix.html">SparseMatrix</a>&lt;double&gt; <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::jacobian_matrix</td>
+          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1SparseMatrix.html">TrilinosWrappers::SparseMatrix</a> <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::jacobian_matrix</td>
         </tr>
       </table>
   </td>
@@ -601,12 +637,12 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00281">281</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00307">307</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
 </div>
 </div>
-<a id="a39e9c44e4ea6195e8679ef856f27fd87" name="a39e9c44e4ea6195e8679ef856f27fd87"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39e9c44e4ea6195e8679ef856f27fd87">&#9670;&#160;</a></span>mass_matrix</h2>
+<a id="ac0a5dce087bad6e84b3c6fea418549ac" name="ac0a5dce087bad6e84b3c6fea418549ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0a5dce087bad6e84b3c6fea418549ac">&#9670;&#160;</a></span>lin_system_matrix</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -617,7 +653,7 @@ template&lt;int dim&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSparseMatrix.html">SparseMatrix</a>&lt;double&gt; <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::mass_matrix</td>
+          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1SparseMatrix.html">TrilinosWrappers::SparseMatrix</a> <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::lin_system_matrix</td>
         </tr>
       </table>
   </td>
@@ -627,7 +663,111 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00280">280</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00308">308</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+
+</div>
+</div>
+<a id="aef7a974a2d860f6becbe486ea9c58d30" name="aef7a974a2d860f6becbe486ea9c58d30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef7a974a2d860f6becbe486ea9c58d30">&#9670;&#160;</a></span>lin_system_preconditioner</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int dim&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1PreconditionAMG.html">TrilinosWrappers::PreconditionAMG</a> <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::lin_system_preconditioner</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00316">316</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+
+</div>
+</div>
+<a id="a8efc1a9406e8c8d6aafbcfdd3d9c8581" name="a8efc1a9406e8c8d6aafbcfdd3d9c8581"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8efc1a9406e8c8d6aafbcfdd3d9c8581">&#9670;&#160;</a></span>mass_matrix</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int dim&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1SparseMatrix.html">TrilinosWrappers::SparseMatrix</a> <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::mass_matrix</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00306">306</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+
+</div>
+</div>
+<a id="adcd68f482721ba4d0300c96372e4f2b9" name="adcd68f482721ba4d0300c96372e4f2b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcd68f482721ba4d0300c96372e4f2b9">&#9670;&#160;</a></span>mass_preconditioner</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int dim&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1PreconditionAMG.html">TrilinosWrappers::PreconditionAMG</a> <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::mass_preconditioner</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00315">315</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+
+</div>
+</div>
+<a id="ae2dc1dfe3152ab849602ad19234bc673" name="ae2dc1dfe3152ab849602ad19234bc673"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2dc1dfe3152ab849602ad19234bc673">&#9670;&#160;</a></span>matrices_reinitialized</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int dim&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::matrices_reinitialized = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00319">319</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
 </div>
 </div>
@@ -653,12 +793,14 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00270">270</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00294">294</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="project_8cc_source.html#l00076">nmpdeProject::HeatEquation&lt; dim &gt;::HeatEquation()</a>.</p>
 
 </div>
 </div>
-<a id="a80c05f637c44e84ab40e77cbb947dad8" name="a80c05f637c44e84ab40e77cbb947dad8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80c05f637c44e84ab40e77cbb947dad8">&#9670;&#160;</a></span>solution</h2>
+<a id="acbaf4b564442ad07993586e6fdbc1637" name="acbaf4b564442ad07993586e6fdbc1637"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbaf4b564442ad07993586e6fdbc1637">&#9670;&#160;</a></span>solution</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -669,7 +811,7 @@ template&lt;int dim&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classVector.html">Vector</a>&lt;double&gt; <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::solution</td>
+          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classTrilinosWrappers_1_1MPI_1_1Vector.html">TrilinosWrappers::MPI::Vector</a> <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::solution</td>
         </tr>
       </table>
   </td>
@@ -679,33 +821,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00284">284</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
-
-</div>
-</div>
-<a id="a784fb923f2dea16376e5d1b10c335086" name="a784fb923f2dea16376e5d1b10c335086"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a784fb923f2dea16376e5d1b10c335086">&#9670;&#160;</a></span>sparsity_pattern</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;int dim&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classSparsityPattern.html">SparsityPattern</a> <a class="el" href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a>&lt; dim &gt;::sparsity_pattern</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00279">279</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00311">311</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
 </div>
 </div>
@@ -731,7 +847,7 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00272">272</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00296">296</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
 </div>
 </div>
@@ -745,7 +861,7 @@ template&lt;int dim&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacenmpde_project.html">nmpdeProject</a></li><li class="navelem"><a class="el" href="classnmpde_project_1_1_heat_equation.html">HeatEquation</a></li>
-    <li class="footer">Generated on Wed Jul 17 2024 16:21:30 for Template Deal.II Application by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
+    <li class="footer">Generated on Sun Jul 21 2024 16:31:34 for Template Deal.II Application by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
   </ul>
 </div>
 </body>

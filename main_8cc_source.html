@@ -136,59 +136,75 @@ $(function(){initNavTree('main_8cc_source.html',''); initResizable(true); });
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keywordtype">int</span></div>
 <div class="foldopen" id="foldopen00024" data-start="{" data-end="}">
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="main_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">   24</a></span><a class="code hl_function" href="main_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>()</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="main_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">   24</a></span><a class="code hl_function" href="main_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[])</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>{</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keywordflow">try</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    {</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>      <span class="keyword">using namespace </span><a class="code hl_namespace" href="namespacenmpde_project.html">nmpdeProject</a>;</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>      <a class="code hl_struct" href="structnmpde_project_1_1_heat_parameters.html">HeatParameters&lt;DEAL_DIMENSION&gt;</a> par;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>      <a class="code hl_class" href="classnmpde_project_1_1_heat_equation.html">HeatEquation&lt;DEAL_DIMENSION&gt;</a>   heat_equation_solver(par);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>      heat_equation_solver.<a class="code hl_function" href="classnmpde_project_1_1_heat_equation.html#ae9137ee32716b728a4d207e4a6bb2718">run</a>();</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    }</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keywordflow">catch</span> (std::exception &amp;exc)</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    {</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>      std::cerr &lt;&lt; std::endl</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                &lt;&lt; std::endl</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                &lt;&lt; <span class="stringliteral">&quot;----------------------------------------------------&quot;</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      std::cerr &lt;&lt; <span class="stringliteral">&quot;Exception on processing: &quot;</span> &lt;&lt; std::endl</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                &lt;&lt; exc.what() &lt;&lt; std::endl</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                &lt;&lt; <span class="stringliteral">&quot;Aborting!&quot;</span> &lt;&lt; std::endl</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                &lt;&lt; <span class="stringliteral">&quot;----------------------------------------------------&quot;</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    }</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="keywordflow">catch</span> (...)</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    {</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>      std::cerr &lt;&lt; std::endl</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                &lt;&lt; std::endl</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                &lt;&lt; <span class="stringliteral">&quot;----------------------------------------------------&quot;</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>      std::cerr &lt;&lt; <span class="stringliteral">&quot;Unknown exception!&quot;</span> &lt;&lt; std::endl</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>      <span class="comment">// Even if we don&#39;t run our code in parallel,</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>      <span class="comment">// we still need to initialize MPI in order to use</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>      <span class="comment">// our Trilinos objects.</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>      <a class="code hl_classRef" href="http://www.dealii.org/developer/doxygen/deal.II/classUtilities_1_1MPI_1_1MPI__InitFinalize.html">Utilities::MPI::MPI_InitFinalize</a> mpi_initialization(</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        argc, argv, dealii::numbers::invalid_unsigned_int);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>      <span class="comment">// If the program is run in parallel, throw an exception.</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>      <a class="code hl_defineRef" href="http://www.dealii.org/developer/doxygen/deal.II/group__Exceptions.html#gafc0ca7ad85b3ebd64e8e51689ac85caf">AssertThrow</a>(<a class="code hl_functionRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespaceUtilities_1_1MPI.html#a4d61730f9aceb5a4ce86f90712262c46">Utilities::MPI::n_mpi_processes</a>(MPI_COMM_WORLD) == 1,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                  ExcMessage(</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                    <span class="stringliteral">&quot;This program can only be run in serial, use ./project_&quot;</span> +</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                    std::to_string(DEAL_DIMENSION) + <span class="stringliteral">&quot;d or ./project_&quot;</span> +</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                    std::to_string(DEAL_DIMENSION) + <span class="stringliteral">&quot;d.g instead&quot;</span>));</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>      <a class="code hl_struct" href="structnmpde_project_1_1_heat_parameters.html">HeatParameters&lt;DEAL_DIMENSION&gt;</a> par;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>      <a class="code hl_class" href="classnmpde_project_1_1_heat_equation.html">HeatEquation&lt;DEAL_DIMENSION&gt;</a>   heat_equation_solver(par);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>      heat_equation_solver.<a class="code hl_function" href="classnmpde_project_1_1_heat_equation.html#ae9137ee32716b728a4d207e4a6bb2718">run</a>();</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keywordflow">catch</span> (std::exception &amp;exc)</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>      std::cerr &lt;&lt; std::endl</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                &lt;&lt; std::endl</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                &lt;&lt; <span class="stringliteral">&quot;----------------------------------------------------&quot;</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>      std::cerr &lt;&lt; <span class="stringliteral">&quot;Exception on processing: &quot;</span> &lt;&lt; std::endl</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                &lt;&lt; exc.what() &lt;&lt; std::endl</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                &lt;&lt; <span class="stringliteral">&quot;Aborting!&quot;</span> &lt;&lt; std::endl</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                &lt;&lt; <span class="stringliteral">&quot;----------------------------------------------------&quot;</span></div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                &lt;&lt; std::endl;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>      <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    }</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>}</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    }</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  <span class="keywordflow">catch</span> (...)</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>      std::cerr &lt;&lt; std::endl</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                &lt;&lt; std::endl</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                &lt;&lt; <span class="stringliteral">&quot;----------------------------------------------------&quot;</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>      std::cerr &lt;&lt; <span class="stringliteral">&quot;Unknown exception!&quot;</span> &lt;&lt; std::endl</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                &lt;&lt; <span class="stringliteral">&quot;Aborting!&quot;</span> &lt;&lt; std::endl</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                &lt;&lt; <span class="stringliteral">&quot;----------------------------------------------------&quot;</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                &lt;&lt; std::endl;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>      <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}</div>
 </div>
-<div class="ttc" id="aclassnmpde_project_1_1_heat_equation_html"><div class="ttname"><a href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a></div><div class="ttdef"><b>Definition</b> <a href="project_8h_source.html#l00246">project.h:247</a></div></div>
-<div class="ttc" id="aclassnmpde_project_1_1_heat_equation_html_ae9137ee32716b728a4d207e4a6bb2718"><div class="ttname"><a href="classnmpde_project_1_1_heat_equation.html#ae9137ee32716b728a4d207e4a6bb2718">nmpdeProject::HeatEquation::run</a></div><div class="ttdeci">void run()</div><div class="ttdef"><b>Definition</b> <a href="project_8cc_source.html#l00814">project.cc:814</a></div></div>
-<div class="ttc" id="amain_8cc_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="main_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> <a href="#l00024">main.cc:24</a></div></div>
-<div class="ttc" id="anamespacenmpde_project_html"><div class="ttname"><a href="namespacenmpde_project.html">nmpdeProject</a></div><div class="ttdef"><b>Definition</b> <a href="project_8h_source.html#l00064">project.h:65</a></div></div>
+<div class="ttc" id="aclassUtilities_1_1MPI_1_1MPI__InitFinalize_html"><div class="ttname"><a href="http://www.dealii.org/developer/doxygen/deal.II/classUtilities_1_1MPI_1_1MPI__InitFinalize.html">Utilities::MPI::MPI_InitFinalize</a></div></div>
+<div class="ttc" id="aclassnmpde_project_1_1_heat_equation_html"><div class="ttname"><a href="classnmpde_project_1_1_heat_equation.html">nmpdeProject::HeatEquation</a></div><div class="ttdef"><b>Definition</b> <a href="project_8h_source.html#l00269">project.h:270</a></div></div>
+<div class="ttc" id="aclassnmpde_project_1_1_heat_equation_html_ae9137ee32716b728a4d207e4a6bb2718"><div class="ttname"><a href="classnmpde_project_1_1_heat_equation.html#ae9137ee32716b728a4d207e4a6bb2718">nmpdeProject::HeatEquation::run</a></div><div class="ttdeci">void run()</div><div class="ttdef"><b>Definition</b> <a href="project_8cc_source.html#l00819">project.cc:819</a></div></div>
+<div class="ttc" id="agroup__Exceptions_html_gafc0ca7ad85b3ebd64e8e51689ac85caf"><div class="ttname"><a href="http://www.dealii.org/developer/doxygen/deal.II/group__Exceptions.html#gafc0ca7ad85b3ebd64e8e51689ac85caf">AssertThrow</a></div><div class="ttdeci">#define AssertThrow(cond, exc)</div></div>
+<div class="ttc" id="amain_8cc_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="main_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition</b> <a href="#l00024">main.cc:24</a></div></div>
+<div class="ttc" id="anamespaceUtilities_1_1MPI_html_a4d61730f9aceb5a4ce86f90712262c46"><div class="ttname"><a href="http://www.dealii.org/developer/doxygen/deal.II/namespaceUtilities_1_1MPI.html#a4d61730f9aceb5a4ce86f90712262c46">Utilities::MPI::n_mpi_processes</a></div><div class="ttdeci">unsigned int n_mpi_processes(const MPI_Comm mpi_communicator)</div></div>
+<div class="ttc" id="anamespacenmpde_project_html"><div class="ttname"><a href="namespacenmpde_project.html">nmpdeProject</a></div><div class="ttdef"><b>Definition</b> <a href="project_8h_source.html#l00074">project.h:75</a></div></div>
 <div class="ttc" id="aproject_8h_html"><div class="ttname"><a href="project_8h.html">project.h</a></div></div>
-<div class="ttc" id="astructnmpde_project_1_1_heat_parameters_html"><div class="ttname"><a href="structnmpde_project_1_1_heat_parameters.html">nmpdeProject::HeatParameters</a></div><div class="ttdef"><b>Definition</b> <a href="project_8h_source.html#l00071">project.h:72</a></div></div>
+<div class="ttc" id="astructnmpde_project_1_1_heat_parameters_html"><div class="ttname"><a href="structnmpde_project_1_1_heat_parameters.html">nmpdeProject::HeatParameters</a></div><div class="ttdef"><b>Definition</b> <a href="project_8h_source.html#l00081">project.h:82</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_aa394cd1d9abb8ffe941d9aaafca8d03.html">github</a></li><li class="navelem"><a class="el" href="dir_c52569aa89a7adbb6029022c2fa60a11.html">workspace</a></li><li class="navelem"><a class="el" href="dir_37bdb9d2191b5493db509660c6a8c15a.html">source</a></li><li class="navelem"><a class="el" href="main_8cc.html">main.cc</a></li>
-    <li class="footer">Generated on Wed Jul 17 2024 16:21:30 for Template Deal.II Application by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
+    <li class="footer">Generated on Sun Jul 21 2024 16:31:34 for Template Deal.II Application by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
   </ul>
 </div>
 </body>

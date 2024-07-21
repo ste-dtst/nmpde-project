@@ -157,6 +157,7 @@ var NAVTREE =
     [ "The step-81 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_81.html", null ],
     [ "The step-82 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_82.html", null ],
     [ "The step-85 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_85.html", null ],
+    [ "The step-86 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_86.html", null ],
     [ "The step-87 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_87.html", null ],
     [ "The step-89 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_89.html", null ],
     [ "The step-9 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_9.html", null ],
@@ -211,7 +212,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CodeGallery.html",
-"structnmpde_project_1_1_heat_parameters.html#a505fae32f3ceb2c4aafd760798a69078"
+"structnmpde_project_1_1_heat_parameters.html#a43b5fcd61e881968b4926e1b739146e5"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

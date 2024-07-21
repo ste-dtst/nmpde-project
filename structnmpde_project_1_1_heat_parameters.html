@@ -178,13 +178,15 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a5985fcf937fcf17c6831f492d3be447e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4a640bea38f17a8ca95e7500ad15de2f" id="r_a4a640bea38f17a8ca95e7500ad15de2f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a640bea38f17a8ca95e7500ad15de2f">sol_is_known</a></td></tr>
 <tr class="separator:a4a640bea38f17a8ca95e7500ad15de2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9483c143cfd44bad95159eb661d84fd" id="r_ab9483c143cfd44bad95159eb661d84fd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab9483c143cfd44bad95159eb661d84fd">aggregation_threshold</a> = 0.02</td></tr>
+<tr class="separator:ab9483c143cfd44bad95159eb661d84fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeaea32d76c3de0cc6772c63e052b99a6" id="r_aeaea32d76c3de0cc6772c63e052b99a6"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html">ParameterHandler</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaea32d76c3de0cc6772c63e052b99a6">prm</a></td></tr>
 <tr class="separator:aeaea32d76c3de0cc6772c63e052b99a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;int dim&gt;<br />
 struct nmpdeProject::HeatParameters&lt; dim &gt;</div>
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00071">71</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00081">81</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a07a7e1f78a28ed9480bb9f513175a56d" name="a07a7e1f78a28ed9480bb9f513175a56d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a07a7e1f78a28ed9480bb9f513175a56d">&#9670;&#160;</a></span>HeatParameters()</h2>
@@ -211,9 +213,9 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00073">73</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00083">83</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">References <a class="el" href="project_8h_source.html#l00213">nmpdeProject::HeatParameters&lt; dim &gt;::absolute_tolerance</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a04b75c02037d19fd7fd781785fcefc79">ParameterHandler::add_parameter()</a>, <a class="el" href="project_8h_source.html#l00186">nmpdeProject::HeatParameters&lt; dim &gt;::boundary_expression</a>, <a class="el" href="project_8h_source.html#l00230">nmpdeProject::HeatParameters&lt; dim &gt;::boundary_value</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a46850e029553589417713db85362c128">ParameterHandler::enter_subsection()</a>, <a class="el" href="project_8h_source.html#l00222">nmpdeProject::HeatParameters&lt; dim &gt;::est_steps</a>, <a class="el" href="project_8h_source.html#l00228">nmpdeProject::HeatParameters&lt; dim &gt;::exact_solution</a>, <a class="el" href="project_8h_source.html#l00183">nmpdeProject::HeatParameters&lt; dim &gt;::exact_solution_expression</a>, <a class="el" href="project_8h_source.html#l00189">nmpdeProject::HeatParameters&lt; dim &gt;::fe_degree</a>, <a class="el" href="project_8h_source.html#l00209">nmpdeProject::HeatParameters&lt; dim &gt;::final_time</a>, <a class="el" href="project_8h_source.html#l00205">nmpdeProject::HeatParameters&lt; dim &gt;::gamma</a>, <a class="el" href="project_8h_source.html#l00185">nmpdeProject::HeatParameters&lt; dim &gt;::initial_expression</a>, <a class="el" href="project_8h_source.html#l00192">nmpdeProject::HeatParameters&lt; dim &gt;::initial_refinement</a>, <a class="el" href="project_8h_source.html#l00210">nmpdeProject::HeatParameters&lt; dim &gt;::initial_step_size</a>, <a class="el" href="project_8h_source.html#l00208">nmpdeProject::HeatParameters&lt; dim &gt;::initial_time</a>, <a class="el" href="project_8h_source.html#l00229">nmpdeProject::HeatParameters&lt; dim &gt;::initial_value</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classFunctionParser.html#a13966ac4c63e96a8f1bc933fd6176937">FunctionParser&lt; int dim &gt;::initialize()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a8364dda711b93753c6809eefe2a8e827a50ae66aa378db81bb360ce7cdf96e3e1">ParameterHandler::KeepDeclarationOrder</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a599462cacd492e2f712bf7369507dcff">ParameterHandler::leave_subsection()</a>, <a class="el" href="project_8h_source.html#l00202">nmpdeProject::HeatParameters&lt; dim &gt;::max_refinement</a>, <a class="el" href="project_8h_source.html#l00212">nmpdeProject::HeatParameters&lt; dim &gt;::maximum_order</a>, <a class="el" href="project_8h_source.html#l00201">nmpdeProject::HeatParameters&lt; dim &gt;::min_refinement</a>, <a class="el" href="project_8h_source.html#l00211">nmpdeProject::HeatParameters&lt; dim &gt;::minimum_step_size</a>, <a class="el" href="project_8h_source.html#l00218">nmpdeProject::HeatParameters&lt; dim &gt;::out_steps</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a0ddaa05c5463c6c0b7701e18005717a9">ParameterHandler::parse_input()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespacenumbers.html#a3e24f194a9cb9b6ff4442b8a7a877d4a">numbers::PI</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a4ac3a8b19ade16e96e8ea25906daf23a">ParameterHandler::print_parameters()</a>, <a class="el" href="project_8h_source.html#l00239">nmpdeProject::HeatParameters&lt; dim &gt;::prm</a>, <a class="el" href="project_8h_source.html#l00200">nmpdeProject::HeatParameters&lt; dim &gt;::refinement_bottom_fraction</a>, <a class="el" href="project_8h_source.html#l00196">nmpdeProject::HeatParameters&lt; dim &gt;::refinement_threshold</a>, <a class="el" href="project_8h_source.html#l00199">nmpdeProject::HeatParameters&lt; dim &gt;::refinement_top_fraction</a>, <a class="el" href="project_8h_source.html#l00214">nmpdeProject::HeatParameters&lt; dim &gt;::relative_tolerance</a>, <a class="el" href="project_8h_source.html#l00184">nmpdeProject::HeatParameters&lt; dim &gt;::rhs_expression</a>, <a class="el" href="project_8h_source.html#l00231">nmpdeProject::HeatParameters&lt; dim &gt;::right_hand_side</a>, and <a class="el" href="project_8h_source.html#l00235">nmpdeProject::HeatParameters&lt; dim &gt;::sol_is_known</a>.</p>
+<p class="reference">References <a class="el" href="project_8h_source.html#l00229">nmpdeProject::HeatParameters&lt; dim &gt;::absolute_tolerance</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a04b75c02037d19fd7fd781785fcefc79">ParameterHandler::add_parameter()</a>, <a class="el" href="project_8h_source.html#l00254">nmpdeProject::HeatParameters&lt; dim &gt;::aggregation_threshold</a>, <a class="el" href="project_8h_source.html#l00202">nmpdeProject::HeatParameters&lt; dim &gt;::boundary_expression</a>, <a class="el" href="project_8h_source.html#l00246">nmpdeProject::HeatParameters&lt; dim &gt;::boundary_value</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a46850e029553589417713db85362c128">ParameterHandler::enter_subsection()</a>, <a class="el" href="project_8h_source.html#l00238">nmpdeProject::HeatParameters&lt; dim &gt;::est_steps</a>, <a class="el" href="project_8h_source.html#l00244">nmpdeProject::HeatParameters&lt; dim &gt;::exact_solution</a>, <a class="el" href="project_8h_source.html#l00199">nmpdeProject::HeatParameters&lt; dim &gt;::exact_solution_expression</a>, <a class="el" href="project_8h_source.html#l00205">nmpdeProject::HeatParameters&lt; dim &gt;::fe_degree</a>, <a class="el" href="project_8h_source.html#l00225">nmpdeProject::HeatParameters&lt; dim &gt;::final_time</a>, <a class="el" href="project_8h_source.html#l00221">nmpdeProject::HeatParameters&lt; dim &gt;::gamma</a>, <a class="el" href="project_8h_source.html#l00201">nmpdeProject::HeatParameters&lt; dim &gt;::initial_expression</a>, <a class="el" href="project_8h_source.html#l00208">nmpdeProject::HeatParameters&lt; dim &gt;::initial_refinement</a>, <a class="el" href="project_8h_source.html#l00226">nmpdeProject::HeatParameters&lt; dim &gt;::initial_step_size</a>, <a class="el" href="project_8h_source.html#l00224">nmpdeProject::HeatParameters&lt; dim &gt;::initial_time</a>, <a class="el" href="project_8h_source.html#l00245">nmpdeProject::HeatParameters&lt; dim &gt;::initial_value</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classFunctionParser.html#a13966ac4c63e96a8f1bc933fd6176937">FunctionParser&lt; int dim &gt;::initialize()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a8364dda711b93753c6809eefe2a8e827a50ae66aa378db81bb360ce7cdf96e3e1">ParameterHandler::KeepDeclarationOrder</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a599462cacd492e2f712bf7369507dcff">ParameterHandler::leave_subsection()</a>, <a class="el" href="project_8h_source.html#l00218">nmpdeProject::HeatParameters&lt; dim &gt;::max_refinement</a>, <a class="el" href="project_8h_source.html#l00228">nmpdeProject::HeatParameters&lt; dim &gt;::maximum_order</a>, <a class="el" href="project_8h_source.html#l00217">nmpdeProject::HeatParameters&lt; dim &gt;::min_refinement</a>, <a class="el" href="project_8h_source.html#l00227">nmpdeProject::HeatParameters&lt; dim &gt;::minimum_step_size</a>, <a class="el" href="project_8h_source.html#l00234">nmpdeProject::HeatParameters&lt; dim &gt;::out_steps</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a0ddaa05c5463c6c0b7701e18005717a9">ParameterHandler::parse_input()</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/namespacenumbers.html#a3e24f194a9cb9b6ff4442b8a7a877d4a">numbers::PI</a>, <a class="elRef" href="http://www.dealii.org/developer/doxygen/deal.II/classParameterHandler.html#a4ac3a8b19ade16e96e8ea25906daf23a">ParameterHandler::print_parameters()</a>, <a class="el" href="project_8h_source.html#l00258">nmpdeProject::HeatParameters&lt; dim &gt;::prm</a>, <a class="el" href="project_8h_source.html#l00216">nmpdeProject::HeatParameters&lt; dim &gt;::refinement_bottom_fraction</a>, <a class="el" href="project_8h_source.html#l00212">nmpdeProject::HeatParameters&lt; dim &gt;::refinement_threshold</a>, <a class="el" href="project_8h_source.html#l00215">nmpdeProject::HeatParameters&lt; dim &gt;::refinement_top_fraction</a>, <a class="el" href="project_8h_source.html#l00230">nmpdeProject::HeatParameters&lt; dim &gt;::relative_tolerance</a>, <a class="el" href="project_8h_source.html#l00200">nmpdeProject::HeatParameters&lt; dim &gt;::rhs_expression</a>, <a class="el" href="project_8h_source.html#l00247">nmpdeProject::HeatParameters&lt; dim &gt;::right_hand_side</a>, and <a class="el" href="project_8h_source.html#l00251">nmpdeProject::HeatParameters&lt; dim &gt;::sol_is_known</a>.</p>
 
 </div>
 </div>
@@ -232,9 +234,29 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00213">213</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00229">229</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+
+</div>
+</div>
+<a id="ab9483c143cfd44bad95159eb661d84fd" name="ab9483c143cfd44bad95159eb661d84fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9483c143cfd44bad95159eb661d84fd">&#9670;&#160;</a></span>aggregation_threshold</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int dim&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="structnmpde_project_1_1_heat_parameters.html">nmpdeProject::HeatParameters</a>&lt; dim &gt;::aggregation_threshold = 0.02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00254">254</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -252,9 +274,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00186">186</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00202">202</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -280,9 +302,9 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00230">230</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00246">246</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -300,9 +322,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00222">222</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00238">238</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -328,9 +350,9 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00228">228</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00244">244</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -348,9 +370,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00183">183</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00199">199</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -368,9 +390,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00189">189</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00205">205</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -388,9 +410,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00209">209</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00225">225</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -408,9 +430,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00205">205</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00221">221</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -428,9 +450,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00185">185</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00201">201</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -448,9 +470,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00192">192</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00208">208</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -468,9 +490,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00210">210</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00226">226</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -488,9 +510,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00208">208</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00224">224</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -508,9 +530,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00229">229</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00245">245</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -528,9 +550,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00202">202</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00218">218</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -548,9 +570,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00212">212</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00228">228</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -568,9 +590,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00201">201</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00217">217</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -588,9 +610,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00211">211</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00227">227</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -608,9 +630,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00218">218</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00234">234</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -628,9 +650,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00239">239</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00258">258</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -648,9 +670,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00200">200</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00216">216</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -668,9 +690,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00196">196</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00212">212</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -688,9 +710,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00199">199</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00215">215</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -708,9 +730,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00214">214</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00230">230</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -728,9 +750,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00184">184</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00200">200</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -756,9 +778,9 @@ template&lt;int dim&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00231">231</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00247">247</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -776,9 +798,9 @@ template&lt;int dim&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00235">235</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="project_8h_source.html#l00251">251</a> of file <a class="el" href="project_8h_source.html">project.h</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00073">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="project_8h_source.html#l00083">nmpdeProject::HeatParameters&lt; dim &gt;::HeatParameters()</a>.</p>
 
 </div>
 </div>
@@ -791,7 +813,7 @@ template&lt;int dim&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacenmpde_project.html">nmpdeProject</a></li><li class="navelem"><a class="el" href="structnmpde_project_1_1_heat_parameters.html">HeatParameters</a></li>
-    <li class="footer">Generated on Wed Jul 17 2024 16:21:30 for Template Deal.II Application by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
+    <li class="footer">Generated on Sun Jul 21 2024 16:31:34 for Template Deal.II Application by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
   </ul>
 </div>
 </body>

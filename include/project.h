@@ -42,8 +42,18 @@
 
 #include <deal.II/lac/affine_constraints.h>
 #include <deal.II/lac/dynamic_sparsity_pattern.h>
-#include <deal.II/lac/sparse_matrix.h>
-#include <deal.II/lac/vector.h>
+
+// In this program, when solving the linear systems, we will
+// use an AMG preconditioner, which is implemented in the
+// Trilinos library. Trilinos objects are heavily dependent
+// on Epetra objects, therefore we switch to Trilinos sparse
+// matrices and vectors to take full advantage of the library.
+// These are all the necessary headers to do so.
+#include <deal.II/base/index_set.h>
+
+#include <deal.II/lac/trilinos_precondition.h>
+#include <deal.II/lac/trilinos_sparse_matrix.h>
+#include <deal.II/lac/trilinos_vector.h>
 
 // We include some headers to deal with parameters and
 // functions which are read from an input file
@@ -111,6 +121,12 @@ namespace nmpdeProject
         prm.add_parameter("Maximum order", maximum_order);
         prm.add_parameter("Absolute tolerance", absolute_tolerance);
         prm.add_parameter("Relative tolerance", relative_tolerance);
+      }
+      prm.leave_subsection();
+
+      prm.enter_subsection("AMG preconditioners parameters");
+      {
+        prm.add_parameter("Aggregation threshold", aggregation_threshold);
       }
       prm.leave_subsection();
 
@@ -234,6 +250,9 @@ namespace nmpdeProject
     // If it is, we will compute the L2 error at each output time.
     bool sol_is_known;
 
+    // Parameters for the AMG preconditioners
+    double aggregation_threshold = 0.02;
+
     // mutable ParsedConvergenceTable convergence_table;
 
     ParameterHandler prm;
@@ -241,7 +260,11 @@ namespace nmpdeProject
 
 
 
-  // This is the class that we use to solve the heat equation
+  // This is the class that we use to solve the heat equation.
+  // Notice that, apart from the vector for the error estimates,
+  // all the matrices and vectors are now Trilinos objects.
+  // In particular, they are not templated because Trilinos
+  // supports only double as a scalar type.
   template <int dim>
   class HeatEquation
   {
@@ -259,13 +282,14 @@ namespace nmpdeProject
     void
     assemble_ode_explicit_part(const double t);
     void
-    refine_mesh(Vector<double>    &sol,
-                const unsigned int min_grid_level,
-                const unsigned int max_grid_level);
+    refine_mesh(TrilinosWrappers::MPI::Vector &sol,
+                const unsigned int             min_grid_level,
+                const unsigned int             max_grid_level);
     void
     solve_ode();
     void
-    output_results(const Vector<double> &sol, const unsigned int step_no) const;
+    output_results(const TrilinosWrappers::MPI::Vector &sol,
+                   const unsigned int                   step_no) const;
 
     const HeatParameters<dim> &par;
 
@@ -275,14 +299,27 @@ namespace nmpdeProject
 
     AffineConstraints<double> constraints;
 
-    // Here we have the matrices involved in the ODE
-    SparsityPattern      sparsity_pattern;
-    SparseMatrix<double> mass_matrix;
-    SparseMatrix<double> jacobian_matrix;
+    // Here we have the matrices involved in the ODE.
+    // No SparsityPattern object is needed, as Trilinos
+    // matrices can be initialized directly with
+    // dynamic sparsity patterns.
+    TrilinosWrappers::SparseMatrix mass_matrix;
+    TrilinosWrappers::SparseMatrix jacobian_matrix;
+    TrilinosWrappers::SparseMatrix lin_system_matrix;
 
     // Here are the solution and the vector for the explicit part
-    Vector<double> solution;
-    Vector<double> explicit_part;
+    TrilinosWrappers::MPI::Vector solution;
+    TrilinosWrappers::MPI::Vector explicit_part;
+
+    // AMG preconditioners for the linear systems
+    TrilinosWrappers::PreconditionAMG mass_preconditioner;
+    TrilinosWrappers::PreconditionAMG lin_system_preconditioner;
+
+    // Boolean to check if the matrices have been reinitialized
+    bool matrices_reinitialized = false;
+
+    // Additional data to use for both the preconditioners
+    TrilinosWrappers::PreconditionAMG::AdditionalData amg_data;
 
     // This vector will store the error estimator for the
     // adaptive mesh refinement

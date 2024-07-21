@@ -21,11 +21,24 @@
 #include "project.h"
 
 int
-main()
+main(int argc, char *argv[])
 {
   try
     {
       using namespace nmpdeProject;
+
+      // Even if we don't run our code in parallel,
+      // we still need to initialize MPI in order to use
+      // our Trilinos objects.
+      Utilities::MPI::MPI_InitFinalize mpi_initialization(
+        argc, argv, dealii::numbers::invalid_unsigned_int);
+
+      // If the program is run in parallel, throw an exception.
+      AssertThrow(Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD) == 1,
+                  ExcMessage(
+                    "This program can only be run in serial, use ./project_" +
+                    std::to_string(DEAL_DIMENSION) + "d or ./project_" +
+                    std::to_string(DEAL_DIMENSION) + "d.g instead"));
 
       HeatParameters<DEAL_DIMENSION> par;
       HeatEquation<DEAL_DIMENSION>   heat_equation_solver(par);

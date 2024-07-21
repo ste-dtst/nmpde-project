@@ -77,7 +77,11 @@ HeatEquation<dim>::HeatEquation(const HeatParameters<dim> &par)
   : par(par)
   , fe(par.fe_degree)
   , dof_handler(triangulation)
-{}
+  , amg_data()
+{
+  amg_data.aggregation_threshold = par.aggregation_threshold;
+  amg_data.higher_order_elements = (par.fe_degree > 1) ? true : false;
+}
 
 
 
@@ -108,7 +112,7 @@ HeatEquation<dim>::setup_ode()
   constraints.close();
 
   // Finally, we initialize the solution vector
-  solution.reinit(dof_handler.n_dofs());
+  solution.reinit(complete_index_set(dof_handler.n_dofs()), MPI_COMM_WORLD);
 }
 
 
@@ -120,16 +124,25 @@ HeatEquation<dim>::assemble_ode_matrices()
   // This function will be called every time the matrices
   // need to be updated, in particular after a (chain of)
   // mesh refinement(s). Here we do either the setup and
-  // the assembly of the matrices.
+  // the assembly of the matrices. We also clear the
+  // preconditioners and reinit the auxiliary matrix
+  // for the linearized system.
 
-  // We allocate the sparsity pattern for the matrices
+  // Before starting, clear the preconditioners
+  mass_preconditioner.clear();
+  lin_system_preconditioner.clear();
+
+  // Allocate the sparsity pattern for the matrices
   DynamicSparsityPattern dsp(dof_handler.n_dofs());
   DoFTools::make_sparsity_pattern(dof_handler, dsp, constraints);
-  sparsity_pattern.copy_from(dsp);
 
-  // Finally, we initialize the matrices
-  mass_matrix.reinit(sparsity_pattern);
-  jacobian_matrix.reinit(sparsity_pattern);
+  // Finally, initialize the matrices
+  mass_matrix.reinit(dsp);
+  jacobian_matrix.reinit(dsp);
+  lin_system_matrix.reinit(dsp);
+
+  // Let the program know that the matrices have been reinitialized
+  matrices_reinitialized = true;
 
   // We now assemble the mass matrix and the matrix for the
   // implicit part of the ODE using the MeshWorker framework.
@@ -280,6 +293,18 @@ HeatEquation<dim>::assemble_ode_matrices()
                         MeshWorker::assemble_own_cells |
                           MeshWorker::assemble_boundary_faces,
                         boundary_worker);
+
+  // The matrices are ready, we can now reinit mass_preconditioner
+  mass_preconditioner.initialize(mass_matrix, amg_data);
+
+  // Here we cannot do more work on lin_system_matrix and on
+  // lin_system_preconditioner. In fact, the scaling factor
+  // sys_gamma for the matrix M - sys_gamma * J depends either
+  // on the RK stage and on the stepsize. Even if we stored
+  // a matrix and a preconditioner for each stage,
+  // those would change at each step. For this reason,
+  // we will update those objects every time the function
+  // ode.solve_linearized_system is called.
 }
 
 
@@ -291,7 +316,8 @@ HeatEquation<dim>::assemble_ode_explicit_part(const double t)
   // We assemble also the explicit part of the ODE with MeshWorker.
 
   // First, we reinit the global vector to zero
-  explicit_part.reinit(dof_handler.n_dofs());
+  explicit_part.reinit(complete_index_set(dof_handler.n_dofs()),
+                       MPI_COMM_WORLD);
 
   // Set the right-hand side and boundary value's time to t
   par.right_hand_side.set_time(t);
@@ -406,9 +432,9 @@ HeatEquation<dim>::assemble_ode_explicit_part(const double t)
 
 template <int dim>
 void
-HeatEquation<dim>::refine_mesh(Vector<double>    &sol,
-                               const unsigned int min_grid_level,
-                               const unsigned int max_grid_level)
+HeatEquation<dim>::refine_mesh(TrilinosWrappers::MPI::Vector &sol,
+                               const unsigned int             min_grid_level,
+                               const unsigned int             max_grid_level)
 {
   // If we want to refine the mesh, we have to update the dimension
   // of matrices and vectors accordingly, update mass_matrix and
@@ -434,10 +460,13 @@ HeatEquation<dim>::refine_mesh(Vector<double>    &sol,
        triangulation.active_cell_iterators_on_level(min_grid_level))
     cell->clear_coarsen_flag();
 
-  // The following step is to transfer the solution to the new mesh
-  SolutionTransfer<dim> solution_trans(dof_handler);
+  // The following step is to transfer the solution to the new mesh.
+  // Notice that the SolutionTransfer object is templated
+  // also on the vector type we are using.
+  SolutionTransfer<dim, TrilinosWrappers::MPI::Vector> solution_trans(
+    dof_handler);
 
-  Vector<double> previous_solution;
+  TrilinosWrappers::MPI::Vector previous_solution;
   previous_solution = sol;
   triangulation.prepare_coarsening_and_refinement();
   solution_trans.prepare_for_coarsening_and_refinement(previous_solution);
@@ -468,6 +497,9 @@ HeatEquation<dim>::solve_ode()
   // and output the solution. SUNDIALS will take care of
   // calling solver_should_restart between outputs, as desired.
 
+  // Friendly alias for the vector type
+  using VectorType = TrilinosWrappers::MPI::Vector;
+
   // At first, we have to fix the time period between two
   // solution outputs and the one between two error estimations.
   const double out_prd = (par.final_time - par.initial_time) / par.out_steps;
@@ -476,7 +508,7 @@ HeatEquation<dim>::solve_ode()
   // We set some additional data for the solver. In particular,
   // we want to exploit the fact that the mass matrix and the
   // Jacobian matrix are independent of time.
-  SUNDIALS::ARKode<Vector<double>>::AdditionalData data(
+  SUNDIALS::ARKode<VectorType>::AdditionalData data(
     par.initial_time,        // Initial time
     par.final_time,          // Final time
     par.initial_step_size,   // Initial step size
@@ -492,19 +524,19 @@ HeatEquation<dim>::solve_ode()
     par.relative_tolerance); // Relative tolerance
 
   // Here we declare the ARKode object
-  SUNDIALS::ARKode<Vector<double>> ode(data);
+  SUNDIALS::ARKode<VectorType> ode(data);
 
   // We have to tell the solver how to multiply the mass matrix
   // by a vector v
   ode.mass_times_vector =
-    [&](const double t, const Vector<double> &v, Vector<double> &Mv) {
+    [&](const double t, const VectorType &v, VectorType &Mv) {
       (void)t;
       mass_matrix.vmult(Mv, v);
     };
 
   // We set the explicit function
   ode.explicit_function =
-    [&](const double t, const Vector<double> &y, Vector<double> &explicit_f) {
+    [&](const double t, const VectorType &y, VectorType &explicit_f) {
       (void)y;
       assemble_ode_explicit_part(t);
       explicit_f = explicit_part;
@@ -512,7 +544,7 @@ HeatEquation<dim>::solve_ode()
 
   // We set the implicit function
   ode.implicit_function =
-    [&](const double t, const Vector<double> &y, Vector<double> &implicit_f) {
+    [&](const double t, const VectorType &y, VectorType &implicit_f) {
       (void)t;
       jacobian_matrix.vmult(implicit_f, y);
     };
@@ -520,11 +552,11 @@ HeatEquation<dim>::solve_ode()
   // Since the implicit function is linear, we can supply
   // the Jacobian matrix directly to solve the implicit part
   // of the ODE with a single Newton iteration.
-  ode.jacobian_times_vector = [&](const Vector<double> &v,
-                                  Vector<double>       &Jv,
-                                  const double          t,
-                                  const Vector<double> &y,
-                                  const Vector<double> &fy) {
+  ode.jacobian_times_vector = [&](const VectorType &v,
+                                  VectorType       &Jv,
+                                  const double      t,
+                                  const VectorType &y,
+                                  const VectorType &fy) {
     (void)t;
     (void)y;
     (void)fy;
@@ -538,95 +570,68 @@ HeatEquation<dim>::solve_ode()
   // version of GMRES. However, the mass matrix is symmetric and
   // positive definite, therefore we can use a preconditioned
   // conjugate gradient method. We have to specify this to the solver.
-  ode.solve_mass = [&](SUNDIALS::SundialsOperator<Vector<double>>       &op,
-                       SUNDIALS::SundialsPreconditioner<Vector<double>> &prec,
-                       Vector<double>                                   &x,
-                       const Vector<double>                             &b,
-                       double                                            tol) {
+  ode.solve_mass = [&](SUNDIALS::SundialsOperator<VectorType>       &op,
+                       SUNDIALS::SundialsPreconditioner<VectorType> &prec,
+                       VectorType                                   &x,
+                       const VectorType                             &b,
+                       double                                        tol) {
     // We forget about op and prec, since we want to provide
     // our custom preconditioner and solver
     (void)op;
     (void)prec;
 
     // We provide the solver and the preconditioner in the
-    // same way as we have done in previous tutorial programs
-    SolverControl            solver_control(1000, tol);
-    SolverCG<Vector<double>> solver(solver_control);
+    // same way as we have done in previous tutorial programs.
+    // In particular, here we use mass_preconditioner.
+    SolverControl        solver_control(1000, tol);
+    SolverCG<VectorType> solver(solver_control);
 
-    PreconditionSSOR<SparseMatrix<double>> preconditioner;
-    preconditioner.initialize(mass_matrix, 1.2);
-
-    solver.solve(mass_matrix, x, b, preconditioner);
+    solver.solve(mass_matrix, x, b, mass_preconditioner);
 
     constraints.distribute(x);
   };
 
-  // Also the matrix of the linearized system is
-  // positive definite for any legal choice of gamma.
-  // Therefore, we should use CG also for the implicit part of the ODE.
-
-  // First attempt at using a custom solver for the linearized system.
-  // I'm not satisfied, because it's a hard-coded workaround.
-  //
-  // ----to be improved, using it to test adaptive mesh refinement----
-  //
-  // Since the SundialsOperator in ode.solve_linearized_system will only know
-  // how to do matrix-vector products, we need to define a custom class
-  // that represents the matrix. This class will inherit from
-  // SparseMatrix<double> and will implement a virtual method for
-  // vmult, which is necessary for the SolverCG class, based on the
-  // SundialsOperator one.
-  class MyMatrix : public SparseMatrix<double>
-  {
-  public:
-    MyMatrix(SUNDIALS::SundialsOperator<Vector<double>> &op)
-      : op(op)
-    {}
-
-    void
-    vmult(Vector<double> &dst, const Vector<double> &src) const
-    {
-      op.vmult(dst,
-               src); // Use the matrix-vector product of the SundialsOperator
-    }
-
-  private:
-    SUNDIALS::SundialsOperator<Vector<double>> &op;
-  };
-
-  // Now we use this class in the solve_linearized_system function
+  // Also the matrix of the linearized system is symmetric
+  // and positive definite for any legal choice of gamma.
+  // Therefore, we provide a PCG solver for the linearized
+  // system, too.
   ode.solve_linearized_system =
-    [&](SUNDIALS::SundialsOperator<Vector<double>>       &op,
-        SUNDIALS::SundialsPreconditioner<Vector<double>> &prec,
-        Vector<double>                                   &x,
-        const Vector<double>                             &b,
-        double                                            tol) {
-      // We forget about prec, since we want to provide our custom
-      // preconditioner
+    [&](SUNDIALS::SundialsOperator<VectorType>       &op,
+        SUNDIALS::SundialsPreconditioner<VectorType> &prec,
+        VectorType                                   &x,
+        const VectorType                             &b,
+        double                                        tol) {
+      // We forget about op and prec, since we want to provide
+      // our custom preconditioner and solver
+      (void)op;
       (void)prec;
 
-      // Define the solver control and the CG solver
-      SolverControl            solver_control(1000, tol);
-      SolverCG<Vector<double>> solver(solver_control);
+      // Query ARKode for the current scaling factor sys_gamma
+      // to use for jacobian_matrix
+      double sys_gamma;
+      ARKStepGetCurrentGamma(ode.get_arkode_memory(), &sys_gamma);
 
-      // Define the system matrix and reinit its sparsity pattern,
-      // which is the same as the mass matrix and the Jacobian matrix
-      MyMatrix        sys_matrix(op);
-      SparsityPattern sparsity_pattern;
-      sparsity_pattern.copy_from(mass_matrix.get_sparsity_pattern());
-      sys_matrix.reinit(sparsity_pattern);
+      // Update the matrix of the linearized system
+      lin_system_matrix.copy_from(mass_matrix);
+      lin_system_matrix.add(-sys_gamma, jacobian_matrix);
 
-      // PROBLEM: the preconditioner cannot be initialized at this point,
-      // because we only know how sys_matrix acts for products... in
-      // particular, at the moment it is a sparse zero matrix.
-      // Is there a workaround for this, other than providing a
-      // jacobian_preconditioner_solve function?
+      // Update the preconditioner. If the sparsity pattern of
+      // lin_system_matrix hasn't changed since the last call
+      // (i.e. the mesh hasn't been refined), we can use reinit
+      // instead of initialize and save some computational effort.
+      if (matrices_reinitialized)
+        {
+          lin_system_preconditioner.initialize(lin_system_matrix, amg_data);
+          matrices_reinitialized = false;
+        }
+      else
+        lin_system_preconditioner.reinit();
 
-      // PreconditionSSOR<> preconditioner;
-      // preconditioner.initialize(matrix, 1.2);
+      // Solve the system as usual
+      SolverControl        solver_control(1000, tol);
+      SolverCG<VectorType> solver(solver_control);
 
-      // Solve the system with no preconditioner
-      solver.solve(sys_matrix, x, b, PreconditionIdentity());
+      solver.solve(lin_system_matrix, x, b, lin_system_preconditioner);
 
       constraints.distribute(x);
     };
@@ -653,7 +658,7 @@ HeatEquation<dim>::solve_ode()
   // get stuck in a loop if we never meet the condition for returning false.
   // Moreover, the matrices are not involved in the error estimation,
   // hence we can update them only after the last mesh refinement.
-  ode.solver_should_restart = [&](const double t, Vector<double> &sol) {
+  ode.solver_should_restart = [&](const double t, VectorType &sol) {
     // We do the Kelly error estimation
     estimated_error_per_cell.reinit(triangulation.n_active_cells());
 
@@ -783,8 +788,8 @@ HeatEquation<dim>::solve_ode()
 
 template <int dim>
 void
-HeatEquation<dim>::output_results(const Vector<double> &sol,
-                                  const unsigned int    step_no) const
+HeatEquation<dim>::output_results(const TrilinosWrappers::MPI::Vector &sol,
+                                  const unsigned int step_no) const
 {
   DataOut<dim> data_out;
 

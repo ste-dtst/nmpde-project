@@ -75,6 +75,7 @@ var NAVTREE =
     [ "Changes between Version 9.3.3 and 9.4.0", "http://www.dealii.org/developer/doxygen/deal.II/changes_between_9_3_3_and_9_4_0.html", null ],
     [ "Changes between Version 9.4.0 and 9.5.0", "http://www.dealii.org/developer/doxygen/deal.II/changes_between_9_4_0_and_9_5_0.html", null ],
     [ "Changes between Version 9.5.0 and 9.5.2", "http://www.dealii.org/developer/doxygen/deal.II/changes_between_9_5_0_and_9_5_2.html", null ],
+    [ "Changes between Version 9.5.2 and 9.6.0", "http://www.dealii.org/developer/doxygen/deal.II/changes_between_9_5_2_and_9_6_0.html", null ],
     [ "Changes since the last release", "http://www.dealii.org/developer/doxygen/deal.II/recent_changes.html", null ],
     [ "Tutorial programs", "http://www.dealii.org/developer/doxygen/deal.II/Tutorial.html", null ],
     [ "The step-1 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_1.html", null ],
@@ -124,7 +125,6 @@ var NAVTREE =
     [ "The step-5 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_5.html", null ],
     [ "The step-50 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_50.html", null ],
     [ "The step-51 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_51.html", null ],
-    [ "The step-52 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_52.html", null ],
     [ "The step-53 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_53.html", null ],
     [ "The step-54 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_54.html", null ],
     [ "The step-55 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_55.html", null ],
@@ -156,6 +156,7 @@ var NAVTREE =
     [ "The step-8 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_8.html", null ],
     [ "The step-81 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_81.html", null ],
     [ "The step-82 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_82.html", null ],
+    [ "The step-83 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_83.html", null ],
     [ "The step-85 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_85.html", null ],
     [ "The step-86 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_86.html", null ],
     [ "The step-87 tutorial program", "http://www.dealii.org/developer/doxygen/deal.II/step_87.html", null ],
@@ -212,7 +213,16 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CodeGallery.html",
-"structnmpde_project_1_1_heat_parameters.html#a43b5fcd61e881968b4926e1b739146e5"
+"group__Exceptions.html#gaaa393b358422d0557097303789f88316",
+"namespaceDataOutBase.html#ad5f1da20fc706db32c3355d79fa819ae",
+"namespaceFEValuesViews_1_1internal.html#a7a359c6efe13a5b57af4f5266a5fee1d",
+"namespaceIteratorState.html#a4e92f4a9d339ff987cc3eb5b0a1ac507af98b08616d77cbf04efaaa8b02bacae9",
+"namespaceNonMatching_1_1internal_1_1DiscreteQuadratureGeneratorImplementation.html#a9a50ad2854e569da87c5694b21e8def3",
+"namespaceTrilinosWrappers_1_1types.html#a0ab3247b28264ebfd78314acd47c558a",
+"namespaceVectorTools.html#a69967cb7a148a7169963126249213db1",
+"namespaceinternal_1_1DoFHandlerImplementation.html",
+"namespaceinternal_1_1parallel.html",
+"structSolverCG_1_1AdditionalData.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

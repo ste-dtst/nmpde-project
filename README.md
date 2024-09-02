@@ -15,7 +15,7 @@ $$
 (u_t, v) + (\nabla u, \nabla v) - \langle \nabla u \cdot n,v \rangle - \langle u, \nabla v \cdot n \rangle + \gamma \langle u,v \rangle = (f,v) - \langle g, \nabla v \cdot n \rangle + \gamma \langle g,v \rangle
 $$
 
-where $(\cdot,\cdot)$ is the inner product in $\Omega$, $\langle \cdot,\cdot \rangle$ the inner product in $\Gamma = \partial\Omega$ and $n$ is the normal to~$\Gamma$. The parameter $\gamma > 0$ is fixed.
+where $(\cdot,\cdot)$ is the inner product in $\Omega$, $\langle \cdot,\cdot \rangle$ the inner product in $\Gamma = \partial\Omega$ and $n$ is the normal to $\Gamma$. The parameter $\gamma > 0$ is fixed.
 
 Let $V_h$ be our FE space (we use Lagrange elements) and let $\phi_i$ be the basis functions. We assume that the numerical solution $u_h \in V_h$ can be written as $u_h(x,t) = \sum U_i(t) \phi_i(x)$, i.e. the degrees of freedom are time dependent. This leads to solving the following ODE:
 
@@ -74,6 +74,7 @@ The following one, instead, is frame 100 with `initial_refinement` = 4, `gamma` 
 ![Problem 2.2 visualization](./gallery/2_2pbm_2d(2).png)
 
 An animation of Problem 0.2 with `fe_degree` = 2, `gamma` = 20:
+
 ![Problem 0.2 visualization](./gallery/output_02_2d_fe_2_gam_20.gif)
 
 
